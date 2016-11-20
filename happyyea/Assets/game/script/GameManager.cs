@@ -22,6 +22,17 @@ public class GameManager : MonoBehaviour
         GAMEOVER
     }
 
+    [Serializable]
+    public struct ObstacleTemplate
+    {
+        public ObstacleEntity.State state;
+        public Sprite[] spriteRenderer;
+    }
+
+    public ObstacleTemplate[] m_ObstacleTemplate = new ObstacleTemplate[(int)ObstacleEntity.State._COUNTFLAG];
+
+    //public SpriteRenderer[] m_SpriteByState = new SpriteRenderer[(int)ObstacleEntity.State._COUNTFLAG];
+
     public Color backgroundColor = Color.white;
     public Color circleColor = Color.black;
     public Color playerColor = Color.white;
@@ -54,8 +65,9 @@ public class GameManager : MonoBehaviour
     public GameObject m_Particle;
     public GameObject m_ObstaclePrefab;
     public float m_ExpolsionForce = 200;
-
-
+    
+    private float _radiusBorder;
+    private Dictionary<ObstacleEntity.State, GameObject[]> _obstacleTemplatesInstaceDictionary;
     private int _pointScore = 0;
     private Player _player;
     private SoundManager _soundManager;
@@ -63,8 +75,6 @@ public class GameManager : MonoBehaviour
     private CanvasScaler _canvasScaler;
     private List<GameObject> _obstacleInstancesList;
     private Vector3 _expolsionPoint;
-    [NonSerialized]
-    public float m_RadiusBorder;
     private int _fractureCount = 10;
 
     void Awake()
@@ -74,20 +84,21 @@ public class GameManager : MonoBehaviour
        
         if (Time.realtimeSinceStartup < 1)
             DOTween.Init();
-
-
+        
         DOTween.KillAll();
+
+        _obstacleTemplatesInstaceDictionary = new Dictionary<ObstacleEntity.State, GameObject[]>();
+
+        PreloadObstacleTemplates();
 
         SetNewGame();
 
         GC.Collect();
         Resources.UnloadUnusedAssets();
         Application.targetFrameRate = 60;
-
-
+        
         Init();
-
-
+        
         if (FindObjectOfType<SpawnManager>() == null)
         {
             GameObject go = new GameObject();
@@ -109,13 +120,13 @@ public class GameManager : MonoBehaviour
         InstantiateCircle();
     }
 
-    void Init()
+    private void Init()
     {
         Camera cam = Camera.main;
         float height = 2f * cam.orthographicSize;
         float width = height * cam.aspect;
 
-        this.m_RadiusBorder = width * 0.80f / 2f;
+        this._radiusBorder = width * 0.80f / 2f;
 
     }
 
@@ -135,15 +146,14 @@ public class GameManager : MonoBehaviour
 
     public void InstantiateCircle()
     {
-        var radius = this.m_RadiusBorder;
+        var radius = this._radiusBorder;
 
         _player.DOStartPosition(radius, 0);
 
         var go = Instantiate(m_CirclePrefab) as GameObject;
 
         go.transform.position = new Vector3(0, 0, 98f);
-
-
+        
         var circle = go.GetComponent<Circle>();
 
         circle.SetRadius(radius);
@@ -160,7 +170,6 @@ public class GameManager : MonoBehaviour
         while (true)
         {
             var allObstacles = FindObjectsOfType<ObstacleEntity>();
-
             bool doInstantiateObstacle = false;
 
             if (allObstacles != null && allObstacles.Length > 1)
@@ -168,19 +177,12 @@ public class GameManager : MonoBehaviour
                 var allVisibleObtacles = Array.FindAll(allObstacles, o => o.m_IsVisible == true);
 
                 if (allVisibleObtacles != null && allVisibleObtacles.Length < _pointScore + 3)
-                {
                     doInstantiateObstacle = true;
-                }
-            }
-            else
-            {
+            }else
                 doInstantiateObstacle = true;
-            }
-
+            
             if (doInstantiateObstacle)
-            {
                 DOInstantiateObstacle();
-            }
 
             yield return new WaitForSeconds(Util.GetRandomNumber(0.20f, 0.5f));
         }
@@ -188,11 +190,24 @@ public class GameManager : MonoBehaviour
 
     void DOInstantiateObstacle()
     {
+        bool isCreateNew = false;
         GameObject objTmp = null;
+
+        var randomObstacleState = (ObstacleEntity.State)UnityEngine.Random.Range(0, (int)ObstacleEntity.State._COUNTFLAG);
+
+        var stateInstancesCount = _obstacleTemplatesInstaceDictionary[m_ObstacleTemplate[(int)randomObstacleState].state].Length;
+
+        var randomInstanceIndex = UnityEngine.Random.Range(0, stateInstancesCount);
+
+        var obstacleTemplate = _obstacleTemplatesInstaceDictionary[m_ObstacleTemplate[(int)randomObstacleState].state][randomInstanceIndex];
 
         if (_obstacleInstancesList.Count < m_MaxObstaclesCount)
         {
-            objTmp = Instantiate(m_ObstaclePrefab) as GameObject;
+            objTmp = Instantiate(obstacleTemplate) as GameObject;
+            objTmp.SetActive(true);
+
+            isCreateNew = true;
+
             _obstacleInstancesList.Add(objTmp);
         }
         else
@@ -202,9 +217,12 @@ public class GameManager : MonoBehaviour
             _obstacleInstancesList.Add(objTmp);
         }
 
-        ObstacleEntity obstacle = objTmp.GetComponent<ObstacleEntity>();
+        ObstacleEntity obstacleEntity = objTmp.GetComponent<ObstacleEntity>();
 
-        obstacle.Init(_player.GetRotation() - 30, Util.GetRandomNumber(0f, 100f) < 50);
+        if(isCreateNew)
+            obstacleEntity.m_State = obstacleTemplate.GetComponent<ObstacleEntity>().m_State;
+
+        obstacleEntity.Init(_player.GetRotation() - 30, Util.GetRandomNumber(0f, 100f) < 50);
     }
 
     public void DODeleteObstacleInstance(GameObject obstacleInstance)
@@ -333,5 +351,57 @@ public class GameManager : MonoBehaviour
 #endif
 
         });
+    }
+
+    private void PreloadObstacleTemplates()
+    {
+        for (int i = 0; i < m_ObstacleTemplate.Length; i++)
+        {
+
+            switch (m_ObstacleTemplate[i].state)
+            {
+                case ObstacleEntity.State.NORMAL:
+                    {
+                        List<GameObject> obstacleInstances = new List<GameObject>();
+
+                        foreach(Sprite sprite in m_ObstacleTemplate[i].spriteRenderer)
+                        {
+                            var objTmp = Instantiate(m_ObstaclePrefab) as GameObject;
+                            var obstacleEntity = objTmp.GetComponent<ObstacleEntity>();
+
+                            obstacleEntity.m_ObstacleSprite = sprite;
+                            obstacleEntity.SetNormal();
+
+                            objTmp.SetActive(false);
+
+                            obstacleInstances.Add(objTmp);
+                        }
+                        
+                        _obstacleTemplatesInstaceDictionary.Add(m_ObstacleTemplate[i].state, obstacleInstances.ToArray());
+                    }
+                    break;
+
+                case ObstacleEntity.State.DESTRUCTIBLE:
+                    {
+                        List<GameObject> obstacleInstances = new List<GameObject>();
+
+                        foreach (Sprite sprite in m_ObstacleTemplate[i].spriteRenderer)
+                        {
+                            var objTmp = Instantiate(m_ObstaclePrefab) as GameObject;
+                            var obstacleEntity = objTmp.GetComponent<ObstacleEntity>();
+
+                            obstacleEntity.m_ObstacleSprite = sprite;
+                            obstacleEntity.SetDestructible();
+
+                            objTmp.SetActive(false);
+
+                            obstacleInstances.Add(objTmp);
+                        }
+
+                        _obstacleTemplatesInstaceDictionary.Add(m_ObstacleTemplate[i].state, obstacleInstances.ToArray());
+                    }
+                    break;
+            }
+        }
     }
 }

@@ -532,7 +532,7 @@ PlayerSettings:
   - WebGL::template
   - additionalIl2CppArgs::additionalIl2CppArgs
   Analytics_ServiceEnabled::Analytics_ServiceEnabled: False
-  Build_ServiceEnabled::Build_ServiceEnabled: True
+  Build_ServiceEnabled::Build_ServiceEnabled: False
   Collab_ServiceEnabled::Collab_ServiceEnabled: False
   ErrorHub_ServiceEnabled::ErrorHub_ServiceEnabled: False
   Game_Performance_ServiceEnabled::Game_Performance_ServiceEnabled: False
@@ -581,7 +581,7 @@ PlayerSettings:
   XboxOne::VR::enabledDevices: []
   iOS::VR::enabledDevices: []
   tvOS::VR::enabledDevices: []
-  cloudProjectId: 5b41b222-208f-46ec-bd8f-52561d262ddf
-  projectName: Splash
-  organizationId: best2dgamesstudio
+  cloudProjectId: 3429a5cb-ddb9-4603-84ea-c3da639aca23
+  projectName: HappyYea
+  organizationId: gr1ns1de
   cloudEnabled: 0

@@ -160,8 +160,10 @@ namespace SplatterSystem {
 
 			// Make an array to grab the objects we're about to pre-spawn.
 			GameObject[] obs = new GameObject[qty];
+            GameObject parent = GameObject.FindObjectOfType<PoolPreload>().gameObject;
 			for (int i = 0; i < qty; i++) {
 				obs[i] = Spawn (prefab, Vector3.zero, Quaternion.identity);
+                obs[i].transform.SetParent(parent.transform);
 			}
 
 			// Now despawn them all.

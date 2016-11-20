@@ -22,7 +22,7 @@ public class CollisionDetection : MonoBehaviour
     {
         if (other.transform.tag == "Obstacle")
         {
-            Debug.Log("Collised");
+            Debug.Log(other.gameObject.GetComponentInParent<ObstacleEntity>().m_State + " " + other.transform.name);
             //Debug.Break();
 
         }

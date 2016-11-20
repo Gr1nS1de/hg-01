@@ -31,22 +31,23 @@ public class ObstacleEntity : MonoBehaviour
 
 	public GameObject       m_ObstacleObject;
 	public bool             m_IsVisible = false;
+    
+    [HideInInspector]
+    public Sprite           m_ObstacleSprite;
+    [HideInInspector]
+    public SpriteRenderer   m_ObstacleVisibilitySpriteRenderer;
 
-    private SpriteRenderer  _obstacleSpriteRenderer;
     private GameManager     _gameManager;
     private float           _decal = -1f;
-    private State          _currentState;
+    private State           _currentState;
 
 	void Awake()
 	{
 		_gameManager = FindObjectOfType<GameManager>();
 		m_ObstacleObject.SetActive(false);
-		_obstacleSpriteRenderer = m_ObstacleObject.GetComponent<SpriteRenderer>();
-		m_IsVisible = false;
-		Color c = _gameManager.hazardColor;
-		c.a = 0f;
-		_obstacleSpriteRenderer.color = c;
-	}
+        m_IsVisible = false;
+    }
+
 
 	public void Init(float rot, bool isDown)
 	{
@@ -56,41 +57,22 @@ public class ObstacleEntity : MonoBehaviour
 
 	IEnumerator DOStart(float rot, bool isDown)
 	{
-        //WHEN SCENE CAMERA LOOKS TOGETHER WITH GAME CAMERA = BUG { SpriteRenderer always isVisible = true }
-        if (!m_ObstacleObject.GetComponent<SpriteRenderer>())
-            Debug.Break();
-
-		_decal = m_ObstacleObject.GetComponent<SpriteRenderer>().sprite.bounds.size.y * m_ObstacleObject.transform.localScale.y/1.5f;
+		_decal = m_ObstacleSprite.bounds.size.y * m_ObstacleObject.transform.localScale.y/1.5f;
 
 		float obstacleLastPosition = -1000000f;
 
 		bool isAnimated = false;
-        int statesCount = (int)State._COUNTFLAG;
-
-        m_State = (State) UnityEngine.Random.Range(0, statesCount);
-
-		while(true)
+      
+        while (true)
 		{
-			if(!isAnimated)
-			{
-				Color c = _gameManager.hazardColor;
-				c.a = 0f;
-				_obstacleSpriteRenderer.color = c;
-			}
-
+			
 			if(obstacleLastPosition == m_ObstacleObject.transform.localPosition.x && !isAnimated)
 			{
-                SetupState();
-
 				m_ObstacleObject.SetActive(true);
 
-				isAnimated = true;
+                DOSetupState();
 
-				Color c = _gameManager.hazardColor;
-				c.a = 1f;
-
-                if(_obstacleSpriteRenderer)
-				    _obstacleSpriteRenderer.color = c;
+                isAnimated = true;
 
 				int sign = +1;
 
@@ -121,29 +103,41 @@ public class ObstacleEntity : MonoBehaviour
 		}
 	}
 
-    void SetupState()
+    private void DOSetupState()
     {
         switch(m_State)
         {
             case State.NORMAL:
-
                 break;
 
             case State.DESTRUCTIBLE:
-                    SetDestructible();
-                break;
-
-            default:
+                m_ObstacleVisibilitySpriteRenderer.transform.position = m_ObstacleObject.transform.position;
                 break;
         }
     }
 
-    void SetDestructible()
+    public void SetNormal()
     {
-        D2dDestructible destructibleC = null;
-        Texture2D obstacleSpriteTexture = _obstacleSpriteRenderer.sprite.texture;
+        m_State = State.NORMAL;
 
-        destructibleC = m_ObstacleObject.AddComponent<D2dDestructible>();
+        var normSR = m_ObstacleObject.GetComponent<SpriteRenderer>().sprite;//GetComponentInChildren<SpriteRenderer>().sprite;
+
+        normSR = m_ObstacleSprite;
+
+        m_ObstacleVisibilitySpriteRenderer = m_ObstacleObject.GetComponent<SpriteRenderer>();
+
+        Color c = _gameManager.hazardColor;
+        m_ObstacleVisibilitySpriteRenderer.color = c;
+
+    }
+
+    public void SetDestructible()
+    {
+        m_State = State.DESTRUCTIBLE;
+
+        D2dDestructible destructible = null;
+
+        destructible = m_ObstacleObject.AddComponent<D2dDestructible>();
         
         m_ObstacleObject.AddComponent<D2dRetainVelocity>();
 
@@ -155,28 +149,21 @@ public class ObstacleEntity : MonoBehaviour
         D2d_polygonCollider.Detail = 0.5f;
         D2d_polygonCollider.CellSize = 256;
 
-        _obstacleSpriteRenderer = AddSpriteHandler(gameObject);
+        m_ObstacleVisibilitySpriteRenderer = AddSpriteHandler(gameObject);
 
         m_ObstacleObject.GetComponent<Rigidbody2D>().isKinematic = false;
 
-        destructibleC.Color = Color.red;
-
-        //m_ObstacleObject.GetComponent<Rigidbody2D>().isKinematic = false;
-
-        if (destructibleC.AlphaTex != obstacleSpriteTexture)
-        {
-            Debug.Log("Replace texture");
-            destructibleC.ReplaceWith(_obstacleSpriteRenderer.sprite);
-        }
+        if (destructible.AlphaTex != m_ObstacleSprite)
+            destructible.ReplaceWith(m_ObstacleSprite);
     }
 
-	IEnumerator CheckVisibility()
+    IEnumerator CheckVisibility()
 	{
 		while(true)
 		{
-            if (_obstacleSpriteRenderer)
+            if (m_ObstacleVisibilitySpriteRenderer)
             {
-                if (!_obstacleSpriteRenderer.isVisible)
+                if (!m_ObstacleVisibilitySpriteRenderer.isVisible)
                 {
                     yield return new WaitForSeconds(1f);
 
@@ -215,7 +202,6 @@ public class ObstacleEntity : MonoBehaviour
 			mPos.z = 2f;
 
 			m_ObstacleObject.transform.position = mPos;
-
 			m_ObstacleObject.transform.localEulerAngles = new Vector3(0,0,-90);
 		}
 		else
@@ -228,21 +214,15 @@ public class ObstacleEntity : MonoBehaviour
 			mPos.z = 2f;
 
 			m_ObstacleObject.transform.position = mPos;
-
 			m_ObstacleObject.transform.localEulerAngles = new Vector3(0,0,+90);
 		}
 
 		transform.position = new Vector3(0,0,0);
 
 		transform.eulerAngles = rotation;
-
-
-		Color c = _gameManager.hazardColor;
-		c.a = 0f;
-		_obstacleSpriteRenderer.color = c;
-
+        
 	}
-
+    
     private SpriteRenderer AddSpriteHandler(GameObject toObject)
     {
         GameObject spriteHandler = new GameObject();
@@ -250,7 +230,7 @@ public class ObstacleEntity : MonoBehaviour
         spriteHandler.transform.position = m_ObstacleObject.transform.position;
         spriteHandler.AddComponent<SpriteRenderer>();
 
-        spriteHandler.name = "SpriteHandler";
+        spriteHandler.name = "VisibilitySpriteHandler";
 
         spriteHandler.transform.SetParent(toObject.transform);
 

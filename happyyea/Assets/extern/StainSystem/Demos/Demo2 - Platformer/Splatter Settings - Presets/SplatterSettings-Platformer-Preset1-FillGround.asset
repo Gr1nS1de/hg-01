@@ -11,20 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735bbf7ec794347c49beaec86c5345ec, type: 3}
   m_Name: SplatterSettings-Platformer-Preset1-FillGround
   m_EditorClassIdentifier: 
-  mode: 1
-  directionMode: 2
+  mode: 0
+  directionMode: 1
   spanAngle: 90
   directionReference: {fileID: 0}
   direction: {x: 0, y: -1, z: 0}
   orientation: 0
-  numBranchesMean: 8
+  numBranchesMean: 2.1
   numBranchesVariance: 1.5
   branchChildrenMean: 6
   branchChildrenVariance: 2.5
   scaleMean: 0.1
   scaleVariance: 0.1
   scaleMin: 0.1
-  centerPositionRange: 0
+  centerPositionRange: 0.09
   randomRotation: 1
   moveSpeedMean: 0.5
   moveSpeedVariance: 0.3
