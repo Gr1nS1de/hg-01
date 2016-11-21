@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 735bbf7ec794347c49beaec86c5345ec, type: 3}
-  m_Name: SplatterSettings-TopDown-Preset1-Damage
+  m_Name: PlayerSplatterSettings
   m_EditorClassIdentifier: 
   mode: 1
   directionMode: 0
@@ -24,12 +24,12 @@ MonoBehaviour:
   scaleMean: 0.5
   scaleVariance: 0.1
   scaleMin: 0.1
-  centerPositionRange: 0
-  randomRotation: 1
-  moveSpeedMean: 0
+  centerPositionRange: 0.4
+  randomRotation: 0
+  moveSpeedMean: 0.5
   moveSpeedVariance: 0.3
-  stepDuration: 0.016
-  damping: 1
+  stepDuration: 0.01
+  damping: 0.3
   colorMode: 1
   startColor: {r: 1, g: 0, b: 0, a: 1}
   colors: []

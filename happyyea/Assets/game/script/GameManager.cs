@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,12 +27,9 @@ public class GameManager : MonoBehaviour
     public struct ObstacleTemplate
     {
         public ObstacleEntity.State state;
-        public Sprite[] spriteRenderer;
+        public Sprite[] sprite;
+        public String spriteResourcesPath;
     }
-
-    public ObstacleTemplate[] m_ObstacleTemplate = new ObstacleTemplate[(int)ObstacleEntity.State._COUNTFLAG];
-
-    //public SpriteRenderer[] m_SpriteByState = new SpriteRenderer[(int)ObstacleEntity.State._COUNTFLAG];
 
     public Color backgroundColor = Color.white;
     public Color circleColor = Color.black;
@@ -57,6 +55,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public ObstacleTemplate[] m_ObstacleTemplate = new ObstacleTemplate[(int)ObstacleEntity.State._COUNTFLAG];
     public int m_MaxObstaclesCount = 10;
     public bool m_ActivateCameraShake = false;
     //	public int                  numberOfPlayToShowInterstitial = 5;
@@ -87,6 +86,8 @@ public class GameManager : MonoBehaviour
         
         DOTween.KillAll();
 
+        AddSpritesFromResource();
+
         _obstacleTemplatesInstaceDictionary = new Dictionary<ObstacleEntity.State, GameObject[]>();
 
         PreloadObstacleTemplates();
@@ -113,6 +114,23 @@ public class GameManager : MonoBehaviour
 
         _obstacleInstancesList = new List<GameObject>();
 
+    }
+
+    private void AddSpritesFromResource()
+    {
+        for (int i = 0; i < (int)ObstacleEntity.State._COUNTFLAG; i++)
+        {
+            var obstacleSprites = Resources.LoadAll<Sprite>(m_ObstacleTemplate[i].spriteResourcesPath);
+
+            Debug.Log(m_ObstacleTemplate[i].spriteResourcesPath  + " " + obstacleSprites.Length + " ");
+
+            m_ObstacleTemplate[i].sprite = new Sprite[obstacleSprites.Length];
+
+            for (int j = 0; j < obstacleSprites.Length; j++)
+            {
+                m_ObstacleTemplate[i].sprite[j] = obstacleSprites[j];
+            }
+        }
     }
 
     public void Start()
@@ -364,7 +382,7 @@ public class GameManager : MonoBehaviour
                     {
                         List<GameObject> obstacleInstances = new List<GameObject>();
 
-                        foreach(Sprite sprite in m_ObstacleTemplate[i].spriteRenderer)
+                        foreach(Sprite sprite in m_ObstacleTemplate[i].sprite)
                         {
                             var objTmp = Instantiate(m_ObstaclePrefab) as GameObject;
                             var obstacleEntity = objTmp.GetComponent<ObstacleEntity>();
@@ -385,7 +403,7 @@ public class GameManager : MonoBehaviour
                     {
                         List<GameObject> obstacleInstances = new List<GameObject>();
 
-                        foreach (Sprite sprite in m_ObstacleTemplate[i].spriteRenderer)
+                        foreach (Sprite sprite in m_ObstacleTemplate[i].sprite)
                         {
                             var objTmp = Instantiate(m_ObstaclePrefab) as GameObject;
                             var obstacleEntity = objTmp.GetComponent<ObstacleEntity>();
