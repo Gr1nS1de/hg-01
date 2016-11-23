@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEditor;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -72,7 +71,6 @@ public class GameManager : MonoBehaviour
     private SoundManager _soundManager;
     private GameStatus _currentGameStatus;
     private CanvasScaler _canvasScaler;
-    private List<GameObject> _obstacleInstancesList;
     private Vector3 _expolsionPoint;
     private int _fractureCount = 10;
 
@@ -111,8 +109,7 @@ public class GameManager : MonoBehaviour
             go.GetComponent<SpawnManager>().particle = this.m_Particle;
             go.GetComponent<SpawnManager>().Init();
         }
-
-        _obstacleInstancesList = new List<GameObject>();
+       
 
     }
 
@@ -159,7 +156,7 @@ public class GameManager : MonoBehaviour
 
         _soundManager.PlayTouch();
 
-        FindObjectOfType<Circle>().DOParticle();
+        //FindObjectOfType<Circle>().DOParticle();
     }
 
     public void InstantiateCircle()
@@ -170,7 +167,7 @@ public class GameManager : MonoBehaviour
 
         var go = Instantiate(m_CirclePrefab) as GameObject;
 
-        go.transform.position = new Vector3(0, 0, 98f);
+        go.transform.position = new Vector3(0, 0, 5f);
         
         var circle = go.GetComponent<Circle>();
 
@@ -208,45 +205,26 @@ public class GameManager : MonoBehaviour
 
     void DOInstantiateObstacle()
     {
-        bool isCreateNew = false;
         GameObject objTmp = null;
 
         var randomObstacleState = (ObstacleEntity.State)UnityEngine.Random.Range(0, (int)ObstacleEntity.State._COUNTFLAG);
-
         var stateInstancesCount = _obstacleTemplatesInstaceDictionary[m_ObstacleTemplate[(int)randomObstacleState].state].Length;
-
         var randomInstanceIndex = UnityEngine.Random.Range(0, stateInstancesCount);
 
-        var obstacleTemplate = _obstacleTemplatesInstaceDictionary[m_ObstacleTemplate[(int)randomObstacleState].state][randomInstanceIndex];
+        var obstacleRandomTemplate = _obstacleTemplatesInstaceDictionary[m_ObstacleTemplate[(int)randomObstacleState].state][randomInstanceIndex];
 
-        if (_obstacleInstancesList.Count < m_MaxObstaclesCount)
-        {
-            objTmp = Instantiate(obstacleTemplate) as GameObject;
-            objTmp.SetActive(true);
-
-            isCreateNew = true;
-
-            _obstacleInstancesList.Add(objTmp);
-        }
-        else
-        {
-            objTmp = _obstacleInstancesList[0];
-            _obstacleInstancesList.Remove(objTmp);
-            _obstacleInstancesList.Add(objTmp);
-        }
-
+        objTmp = Instantiate(obstacleRandomTemplate) as GameObject;
+        objTmp.SetActive(true);
+       
         ObstacleEntity obstacleEntity = objTmp.GetComponent<ObstacleEntity>();
-
-        if(isCreateNew)
-            obstacleEntity.m_State = obstacleTemplate.GetComponent<ObstacleEntity>().m_State;
+        
+        obstacleEntity.m_State = obstacleRandomTemplate.GetComponent<ObstacleEntity>().m_State;
 
         obstacleEntity.Init(_player.GetRotation() - 30, Util.GetRandomNumber(0f, 100f) < 50);
     }
 
     public void DODeleteObstacleInstance(GameObject obstacleInstance)
     {
-        if (_obstacleInstancesList.Contains(obstacleInstance))
-            _obstacleInstancesList.Remove(obstacleInstance);
 
         DestroyObject(obstacleInstance);
 

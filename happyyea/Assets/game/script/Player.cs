@@ -55,6 +55,11 @@ public class Player : MonoBehaviour
 		DOStart();
 	}
 
+    void Update()
+    {
+        Debug.Log(Time.deltaTime + " " + Time.deltaTime / 0.2f + " " + Time.deltaTime / 1.5f);
+    }
+
 	public float GetRotation()
 	{
 		return transform.eulerAngles.z;
@@ -106,6 +111,7 @@ public class Player : MonoBehaviour
             case PositionState.ON_INNER_CIRCLE:
                 {
                     var v = new Vector3(-jumpWidth, 0, 0);
+
                     m_PlayerSpriteRenderer.transform.DOLocalMove(v, 0.1f)
                         .OnComplete(OnCompleteJump);
 
@@ -116,6 +122,7 @@ public class Player : MonoBehaviour
             case PositionState.ON_OUTER_SIDE:
                 {
                     var v = new Vector3(+jumpWidth, 0, 0);
+
                     m_PlayerSpriteRenderer.transform.DOLocalMove(v, 0.1f)
                         .OnComplete(OnCompleteJump);
 

@@ -15,7 +15,7 @@ public class CameraManager : MonoBehaviour
 
 	public Transform toFollow;
 
-	float orthoSize = 2.3f;
+	float orthoSize = 2f;
 
 	void Awake()
 	{

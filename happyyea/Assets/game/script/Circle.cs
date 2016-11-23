@@ -9,7 +9,7 @@ public class Circle : MonoBehaviour
 {
 	GameManager gameManager;
 
-	int segments = 100;
+	int segments = 200;
 	LineRenderer line;
 
 	private float radius;

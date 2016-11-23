@@ -30,7 +30,7 @@ namespace SplatterSystem {
 				Vector2 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				Collider2D collider = Physics2D.OverlapPoint(worldPos);
 				if (collider != null) {
-					splatter.Spawn(worldPos);
+					//splatter.Spawn(worldPos);
 				}
 			}
 		}

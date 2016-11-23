@@ -29,8 +29,7 @@ public class PlayerSplatter : MonoBehaviour
         {
             m_LastSplatterTime = Time.time;
 
-            Debug.Log("Painting");
-            m_SplatterMeshManager.Spawn(m_SplatterSettings, _player.m_PlayerSpriteRenderer.transform.position, Vector3.zero - _player.m_PlayerSpriteRenderer.transform.position, Color.cyan);
+            m_SplatterMeshManager.Spawn(m_SplatterSettings, _player.m_PlayerSpriteRenderer.transform.position, Vector3.zero - _player.m_PlayerSpriteRenderer.transform.position, m_SplatterSettings.startColor);
 
         }
     }

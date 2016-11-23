@@ -45,3 +45,18 @@ TagManager:
   - name: UI
     uniqueID: 58496801
     locked: 0
+  - name: Player
+    uniqueID: 829026501
+    locked: 0
+  - name: Obstacle
+    uniqueID: 1998058725
+    locked: 0
+  - name: ForwardParticle
+    uniqueID: 1259882413
+    locked: 0
+  - name: PathCircle
+    uniqueID: 3961181793
+    locked: 0
+  - name: Background
+    uniqueID: 3120428391
+    locked: 0
