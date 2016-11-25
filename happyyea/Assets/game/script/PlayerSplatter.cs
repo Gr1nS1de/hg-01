@@ -25,7 +25,7 @@ public class PlayerSplatter : MonoBehaviour
     void Update()
     {
         // Paint.
-        if (m_UsePaint && (Time.time - m_LastSplatterTime > m_PaintTimeout) && _groundState.IsTouching() && _player.m_PositionState == Player.PositionState.ON_INNER_CIRCLE)
+        if (m_UsePaint && (Time.time - m_LastSplatterTime > m_PaintTimeout) && _groundState.IsTouching())// && _player.m_PositionState == Player.PositionState.ON_INNER_CIRCLE)
         {
             m_LastSplatterTime = Time.time;
 

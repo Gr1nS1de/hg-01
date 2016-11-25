@@ -11,21 +11,11 @@ public class CollisionDetection : MonoBehaviour
 	/// </summary>
 	public void OnTriggerEnter2D(Collider2D other)
 	{
-        if (other.tag == "Obstacle")
-        {
-            Debug.Log("Triggered");
-            //FindObjectOfType<Player>().DOOnImpactEnter2D(other.GetComponentInParent<ObstacleEntity>(), Vector2.zero);
-        }
+
 	}
 
     public void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.transform.tag == "Obstacle")
-        {
-            Debug.Log(other.gameObject.GetComponentInParent<ObstacleEntity>().m_State + " " + other.transform.name);
-            //Debug.Break();
-
-        }
         if (other.transform.tag == "Obstacle")
             FindObjectOfType<Player>().DOOnImpactEnter2D(other.transform.GetComponentInParent<ObstacleEntity>(), other.contacts[0].point);
     }

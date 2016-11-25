@@ -25,9 +25,7 @@ public class Circle : MonoBehaviour
 	}
 
 	public void SetRadius(float radius)
-	{
-		this.radius = radius;
-	}
+	{this.radius = radius;}
 
 	public float GetRadius()
 	{

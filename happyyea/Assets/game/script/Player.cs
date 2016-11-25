@@ -55,11 +55,6 @@ public class Player : MonoBehaviour
 		DOStart();
 	}
 
-    void Update()
-    {
-        Debug.Log(Time.deltaTime + " " + Time.deltaTime / 0.2f + " " + Time.deltaTime / 1.5f);
-    }
-
 	public float GetRotation()
 	{
 		return transform.eulerAngles.z;
@@ -137,9 +132,8 @@ public class Player : MonoBehaviour
 		if(DOTween.IsTweening(Camera.main))
 			return;
 		
-		_gameManager.Add1Point();
+		//_gameManager.Add1Point();
 		FindObjectOfType<CameraManager>().DOShake();
-	
 	}
 
 	public void AnimPlayer(float targetPos)

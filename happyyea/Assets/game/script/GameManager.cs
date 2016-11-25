@@ -55,9 +55,8 @@ public class GameManager : MonoBehaviour
     }
 
     public ObstacleTemplate[] m_ObstacleTemplate = new ObstacleTemplate[(int)ObstacleEntity.State._COUNTFLAG];
-    public int m_MaxObstaclesCount = 10;
+    public int m_MaxObstaclesCount;
     public bool m_ActivateCameraShake = false;
-    //	public int                  numberOfPlayToShowInterstitial = 5;
     public Text m_PointText;
     public GameObject m_CirclePrefab;
     public GameObject m_Particle;
@@ -118,8 +117,6 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < (int)ObstacleEntity.State._COUNTFLAG; i++)
         {
             var obstacleSprites = Resources.LoadAll<Sprite>(m_ObstacleTemplate[i].spriteResourcesPath);
-
-            Debug.Log(m_ObstacleTemplate[i].spriteResourcesPath  + " " + obstacleSprites.Length + " ");
 
             m_ObstacleTemplate[i].sprite = new Sprite[obstacleSprites.Length];
 
@@ -229,9 +226,6 @@ public class GameManager : MonoBehaviour
         DestroyObject(obstacleInstance);
 
         obstacleInstance = null;
-
-        //Debug.Log(obstacleInstance + " destroyed!");
-        //Debug.Break();
     }
 
     void SetNewGame()
@@ -254,6 +248,7 @@ public class GameManager : MonoBehaviour
                 break;
 
             case ObstacleEntity.State.DESTRUCTIBLE:
+                Add1Point();
                 DOBreakObstacle(obstacleEntity.m_ObstacleObject, collisionPoint);
                 break;
 
@@ -265,11 +260,7 @@ public class GameManager : MonoBehaviour
     public void DOBreakObstacle(GameObject obstacleSpriteObj, Vector2 collisionPoint)
     {
         var destructible = obstacleSpriteObj.GetComponent<D2dDestructible>();
-
-        Debug.Log(obstacleSpriteObj.GetComponent<D2dDestructible>());
-
-        //Debug.Break();
-
+        
         // Store explosion point (used in OnEndSplit)
         if (collisionPoint == Vector2.zero)
             _expolsionPoint = obstacleSpriteObj.transform.position;

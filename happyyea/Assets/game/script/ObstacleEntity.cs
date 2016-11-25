@@ -126,8 +126,7 @@ public class ObstacleEntity : MonoBehaviour
 
         m_ObstacleVisibilitySpriteRenderer = m_ObstacleObject.GetComponent<SpriteRenderer>();
 
-        Color c = _gameManager.hazardColor;
-        m_ObstacleVisibilitySpriteRenderer.color = c;
+
 
     }
 
