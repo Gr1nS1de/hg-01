@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
     private void Init()
     {
         Camera cam = Camera.main;
-        float height = 2f * cam.orthographicSize;
+        float height = 2.3f * cam.orthographicSize;
         float width = height * cam.aspect;
 
         this._radiusBorder = width * 0.80f / 2f;

@@ -27,6 +27,7 @@ GameObject:
   - 212: {fileID: 21280938}
   - 60: {fileID: 6051018}
   - 50: {fileID: 5097722}
+  - 114: {fileID: 114000011338051440}
   m_Layer: 8
   m_Name: ObstacleSprite
   m_TagString: Obstacle
@@ -41,7 +42,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 128540}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.592, y: -0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_Children: []
@@ -54,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101098}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.311, y: 0.022, z: -190.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -154,3 +155,24 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 101098}
   m_IsPrefabParent: 1
+--- !u!114 &114000011338051440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 128540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7b15544ddfa4e49b82852d600f44d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _verts:
+  - {x: 0.30357015, y: -0.29850632}
+  - {x: -0.29908934, y: -0.29688504}
+  - {x: 0.00091063976, y: 0.29207662}
+  _looped: 1
+  _shadowLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  _lightPenetration: 1
+  _opacity: 1
