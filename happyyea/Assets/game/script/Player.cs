@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 	void Awake()
 	{
 		_gameManager = FindObjectOfType<GameManager>();
-		m_PlayerSpriteRenderer.color = _gameManager.playerColor;
+		m_PlayerSpriteRenderer.color = _gameManager.m_PlayerColor;
 	}
 
 	void Start()

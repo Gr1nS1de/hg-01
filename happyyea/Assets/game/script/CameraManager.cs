@@ -21,7 +21,6 @@ public class CameraManager : MonoBehaviour
 	{
 		gameManager = FindObjectOfType<GameManager>();
 		cam = GetComponent<Camera>();
-		cam.backgroundColor = gameManager.backgroundColor;
 	}
 
 	IEnumerator Start()
@@ -30,6 +29,11 @@ public class CameraManager : MonoBehaviour
 
 		yield return 0;
 	}
+
+    void Update()
+    {
+        cam.backgroundColor = gameManager.m_ThemeDynamicColor;
+    }
 
 	public void DOStart(Action callback)
 	{

@@ -62,7 +62,7 @@ public class Circle : MonoBehaviour
 
 			angle += (360f / segments);
 
-			SpawnManager.instance.SpawnParticle(gameManager.backgroundColor, new Vector3(x,y,z), new Vector3(0,0,-angle));
+			SpawnManager.instance.SpawnParticle(gameManager.m_BackgroundColor, new Vector3(x,y,z), new Vector3(0,0,-angle));
 		}
 	}
 
@@ -73,7 +73,7 @@ public class Circle : MonoBehaviour
 		line.SetVertexCount (segments + 2);
 		line.useWorldSpace = false;
 		CreatePoints ();
-		line.material.color = gameManager.circleColor;
+		line.material.color = gameManager.m_CircleColor;
 		line.SetWidth(width,width);
 	}
 

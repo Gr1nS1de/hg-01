@@ -30,17 +30,6 @@ public class GameManager : MonoBehaviour
         public String spriteResourcesPath;
     }
 
-    public Color backgroundColor = Color.white;
-    public Color circleColor = Color.black;
-    public Color playerColor = Color.white;
-    public Color hazardColor
-    {
-        get
-        {
-            return backgroundColor;
-        }
-    }
-
     public GameStatus m_GameStatus
     {
         get
@@ -54,24 +43,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public ObstacleTemplate[] m_ObstacleTemplate = new ObstacleTemplate[(int)ObstacleEntity.State._COUNTFLAG];
-    public int m_MaxObstaclesCount;
-    public bool m_ActivateCameraShake = false;
-    public Text m_PointText;
-    public GameObject m_CirclePrefab;
-    public GameObject m_Particle;
-    public GameObject m_ObstaclePrefab;
-    public float m_ExpolsionForce = 200;
+    public Gradient[]           m_ThemeGradients;
+    public Color                m_BackgroundColor = Color.white;
+    public Color                m_CircleColor = Color.black;
+    public Color                m_PlayerColor = Color.white;
+    public Color                m_ThemeDynamicColor
+    {
+        get
+        {
+            return _dynamicColor;
+        }
+    }
+    public ObstacleTemplate[]   m_ObstacleTemplate = new ObstacleTemplate[(int)ObstacleEntity.State._COUNTFLAG];
+    public float                m_DynamicColorCycleDuration;
+    public int                  m_MaxObstaclesCount;
+    public bool                 m_ActivateCameraShake = false;
+    public Text                 m_PointText;
+    public GameObject           m_CirclePrefab;
+    public GameObject           m_Particle;
+    public GameObject           m_ObstaclePrefab;
+    public float                m_ExpolsionForce = 0.001f;
     
-    private float _radiusBorder;
+    private float               _radiusBorder;
+    private int                 _pointScore = 0;
+    private Player              _player;
+    private SoundManager        _soundManager;
+    private GameStatus          _currentGameStatus;
+    private CanvasScaler        _canvasScaler;
+    private Vector3             _expolsionPoint;
+    private int                 _fractureCount = 10;
+    private Color               _dynamicColor;
+
     private Dictionary<ObstacleEntity.State, GameObject[]> _obstacleTemplatesInstaceDictionary;
-    private int _pointScore = 0;
-    private Player _player;
-    private SoundManager _soundManager;
-    private GameStatus _currentGameStatus;
-    private CanvasScaler _canvasScaler;
-    private Vector3 _expolsionPoint;
-    private int _fractureCount = 10;
 
     void Awake()
     {
@@ -108,8 +111,12 @@ public class GameManager : MonoBehaviour
             go.GetComponent<SpawnManager>().particle = this.m_Particle;
             go.GetComponent<SpawnManager>().Init();
         }
-       
+    }
 
+    void Update()
+    {
+        float t = Mathf.PingPong( Time.time / m_DynamicColorCycleDuration, 1f );
+        _dynamicColor = m_ThemeGradients[0].Evaluate( t );
     }
 
     private void AddSpritesFromResource()
