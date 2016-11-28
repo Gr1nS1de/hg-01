@@ -17,7 +17,7 @@ public class PlayerSplatter : MonoBehaviour
 
     void Awake()
     {
-        _groundState = new GroundState(GetComponent<Player>().m_PlayerSpriteRenderer.gameObject);
+        _groundState = new GroundState(GetComponent<Player>().m_PlayerTransform.gameObject);
         _player = GetComponent<Player>();
         m_LastSplatterTime = Time.time;
     }
@@ -29,7 +29,7 @@ public class PlayerSplatter : MonoBehaviour
         {
             m_LastSplatterTime = Time.time;
 
-            m_SplatterMeshManager.Spawn(m_SplatterSettings, _player.m_PlayerSpriteRenderer.transform.position, Vector3.zero - _player.m_PlayerSpriteRenderer.transform.position, m_SplatterSettings.startColor);
+            m_SplatterMeshManager.Spawn(m_SplatterSettings, _player.m_PlayerTransform.position, Vector3.zero - _player.m_PlayerTransform.position, m_SplatterSettings.startColor);
 
         }
     }

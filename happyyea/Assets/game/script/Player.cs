@@ -30,7 +30,8 @@ public class Player : MonoBehaviour
 
     public Gradient         m_CircleSFLightGradient;
 	public Transform        m_PlayerTransformContainer;
-	public SpriteRenderer   m_PlayerSpriteRenderer;
+    public Transform        m_PlayerTransform;
+	public Sprite           m_PlayerSprite;
     public SFLight          m_CircleSFLight;
     public float            m_CircleSFLightGradientCycleDuration;
     public float            m_DeathDuration;
@@ -45,14 +46,14 @@ public class Player : MonoBehaviour
 	{
 		get
 		{
-			return FindObjectOfType<RoadCircle>().GetWidth()/2f - m_PlayerSpriteRenderer.sprite.bounds.size.x * 0.5f * m_PlayerSpriteRenderer.transform.localScale.x;		
+			return FindObjectOfType<RoadCircle>().GetWidth()/2f - m_PlayerSprite.bounds.size.x * 0.5f * m_PlayerTransform.localScale.x;		
 		}
 	}
 
 	void Awake()
 	{
 		_gameManager = FindObjectOfType<GameManager>();
-		m_PlayerSpriteRenderer.color = _gameManager.m_PlayerColor;
+		//m_PlayerSprite.color = _gameManager.m_PlayerColor;
 	}
 
 	void Start()
@@ -75,7 +76,7 @@ public class Player : MonoBehaviour
 	{
 		m_PlayerDefaultPosition = new Vector3(x,y,2f);
 		m_PlayerTransformContainer.position = m_PlayerDefaultPosition;
-		m_PlayerSpriteRenderer.transform.localPosition = new Vector3(-jumpWidth, 0, 0);
+		m_PlayerTransform.localPosition = new Vector3(-jumpWidth, 0, 0);
 
         m_PositionState = PositionState.ON_INNER_CIRCLE;
 	}
@@ -118,7 +119,7 @@ public class Player : MonoBehaviour
                 {
                     var v = new Vector3(-jumpWidth, 0, 0);
 
-                    m_PlayerSpriteRenderer.transform.DOLocalMove(v, 0.1f)
+                    m_PlayerTransform.DOLocalMove(v, 0.1f)
                         .OnComplete(OnCompleteJump);
 
                     m_PositionState = PositionState.ON_INNER_CIRCLE;
@@ -129,7 +130,7 @@ public class Player : MonoBehaviour
                 {
                     var v = new Vector3(+jumpWidth, 0, 0);
 
-                    m_PlayerSpriteRenderer.transform.DOLocalMove(v, 0.1f)
+                    m_PlayerTransform.DOLocalMove(v, 0.1f)
                         .OnComplete(OnCompleteJump);
 
                     m_PositionState = PositionState.ON_OUTER_SIDE;

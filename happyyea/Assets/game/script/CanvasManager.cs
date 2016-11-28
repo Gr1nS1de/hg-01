@@ -66,6 +66,8 @@ public class CanvasManager : MonoBehaviour
 
 			canvasGroupStart.alpha = 1;
 
+            DOTween.KillAll();
+
 			if(complete!=null)
 				complete();
 		});

@@ -62,8 +62,11 @@ public class GameManager : MonoBehaviour
     public GameObject           m_CirclePrefab;
     public GameObject           m_Particle;
     public GameObject           m_ObstaclePrefab;
-    public float                m_ExpolsionForce = 0.001f;
-    
+    public float                m_ObstacleExpolsionForce = 0.001f;
+    public float                m_PlayerExpolsionForce;
+    public int                  m_ObstacleFractureCount;
+    public int                  m_PlayerFractureCount;
+
     private float               _radiusBorder;
     private int                 _pointScore = 0;
     private Player              _player;
@@ -71,7 +74,6 @@ public class GameManager : MonoBehaviour
     private GameStatus          _currentGameStatus;
     private CanvasScaler        _canvasScaler;
     private Vector3             _expolsionPoint;
-    private int                 _fractureCount = 10;
     private Color               _dynamicColor;
 
     private Dictionary<ObstacleEntity.State, GameObject[]> _obstacleTemplatesInstaceDictionary;
@@ -247,16 +249,19 @@ public class GameManager : MonoBehaviour
     public void OnImpactObstacleByPlayer(GameObject obstacleEntityObj, Vector2 collisionPoint)
     {
         var obstacleEntity = obstacleEntityObj.GetComponent<ObstacleEntity>();
+        var obstacleRenderObject = obstacleEntity.m_ObstacleObject;
+        var obstacleDestructible = obstacleRenderObject.GetComponent<D2dDestructible>();
 
         switch (obstacleEntity.m_State)
         {
             case ObstacleEntity.State.NORMAL:
-                GameOver();
+                    obstacleRenderObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                    GameOver( collisionPoint );
                 break;
 
             case ObstacleEntity.State.DESTRUCTIBLE:
-                Add1Point();
-                DOBreakObstacle(obstacleEntity.m_ObstacleObject, collisionPoint);
+                    Add1Point();
+                    DOBreakObject( obstacleDestructible, collisionPoint, m_ObstacleFractureCount);
                 break;
 
             default:
@@ -264,24 +269,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DOBreakObstacle(GameObject obstacleSpriteObj, Vector2 collisionPoint)
+    public void DOBreakObject( D2dDestructible destructible, Vector2 collisionPoint, int fractureCount)
     {
-        var destructible = obstacleSpriteObj.GetComponent<D2dDestructible>();
         
         // Store explosion point (used in OnEndSplit)
         if (collisionPoint == Vector2.zero)
-            _expolsionPoint = obstacleSpriteObj.transform.position;
+            _expolsionPoint = destructible.transform.position;
         else
             _expolsionPoint = collisionPoint;
 
-        destructible.tag = "Untagged";
-        destructible.GetComponentInChildren<D2dCollider>().m_SpriteChildCollider.tag = "Untagged";
+        destructible.transform.tag = "Untagged";
+
+        if( destructible.GetComponentInChildren<D2dCollider>() )
+            destructible.GetComponentInChildren<D2dCollider>().m_SpriteChildCollider.tag = "Untagged";
 
         // Register split event
         destructible.OnEndSplit.AddListener(OnEndSplit);
 
         // Split via fracture
-        D2dQuadFracturer.Fracture(destructible, _fractureCount, 0.5f);
+        D2dQuadFracturer.Fracture(destructible, fractureCount, 0.5f);
 
         // Unregister split event
         destructible.OnEndSplit.RemoveListener(OnEndSplit);
@@ -304,13 +310,15 @@ public class GameManager : MonoBehaviour
                 // Get the vector between this point and the center of the destructible's current rect
                 var vector = clone.AlphaRect.center - localPoint;
 
+                var force = ( m_GameStatus == GameStatus.GAMEOVER ? m_PlayerExpolsionForce : m_ObstacleExpolsionForce );
+
                 // Apply relative force
-                rigidbody.AddRelativeForce(vector * m_ExpolsionForce, ForceMode2D.Impulse);
+                rigidbody.AddRelativeForce(vector * force, ForceMode2D.Impulse);
             }
         }
     }
 
-    public void GameOver()
+    public void GameOver( Vector2 collisionPoint )
     {
         if (m_GameStatus == GameStatus.GAMEOVER)
             return;
@@ -333,18 +341,23 @@ public class GameManager : MonoBehaviour
 
         _soundManager.PlayFail();
 
+        DOBreakObject(_player.m_PlayerTransform.GetComponent<D2dDestructible>(), collisionPoint, m_PlayerFractureCount);
+
         FindObjectOfType<CanvasManager>().OnGameOver(() =>
         {
 
-            DOTween.KillAll();
+            DOReloadScene();
+        });
+    }
+
+    private void DOReloadScene()
+    {
 
 #if UNITY_5_3_OR_NEWER
-            SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
+        SceneManager.LoadSceneAsync( 0, LoadSceneMode.Single );
 #else
 		    Application.LoadLevel(Application.loadedLevel);
 #endif
-
-        });
     }
 
     private void PreloadObstacleTemplates()

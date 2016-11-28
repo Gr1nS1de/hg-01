@@ -1662,6 +1662,19 @@ namespace Destructible2D
 						clone.transform.localPosition = transform.localPosition;
 						clone.transform.localRotation = transform.localRotation;
 						clone.transform.localScale    = transform.localScale;
+
+                        // Disable childrens
+                        if ( clone.transform.childCount > 0 )
+                            for ( int j = 0; j < clone.transform.childCount; j++ )
+                            {
+                                clone.transform.GetChild( j ).gameObject.SetActive( false );
+                                clone.transform.GetChild( j ).gameObject.isStatic = true;
+                            }
+
+                        //Disable all unity colliders on clones
+                        if ( clone.GetComponent<Collider2D>() )
+                            foreach ( Collider2D collider in clone.GetComponents<Collider2D>() )
+                                collider.enabled = false;
 					}
 
 					group.GenerateData();

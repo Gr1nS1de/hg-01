@@ -23,7 +23,7 @@ PlayerSettings:
   defaultScreenHeightWeb: 800
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  m_ActiveColorSpace: 0
+  m_ActiveColorSpace: 1
   m_MTRendering: 1
   m_MobileMTRendering: 1
   m_StackTraceTypes: 010000000100000001000000010000000100000001000000
@@ -211,6 +211,36 @@ PlayerSettings:
       m_Icon: {fileID: 2800000, guid: 9856ff90bb1e47f4cb019e1151bb3a7f, type: 3}
       m_Width: 36
       m_Height: 36
+  - m_BuildTarget: Standalone
+    m_Icons:
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 1024
+      m_Height: 1024
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 512
+      m_Height: 512
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 256
+      m_Height: 256
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 128
+      m_Height: 128
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 48
+      m_Height: 48
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 32
+      m_Height: 32
+    - serializedVersion: 2
+      m_Icon: {fileID: 0}
+      m_Width: 16
+      m_Height: 16
   m_BuildTargetBatching:
   - m_BuildTarget: Android
     m_StaticBatching: 1

@@ -7,21 +7,19 @@ using DG.Tweening;
 /// </summary>
 public class RoadCircle : MonoBehaviour
 {
-	GameManager gameManager;
-
 	int segments = 200;
 	LineRenderer line;
 
 	private float radius;
 	private float width = 0.3f;
 
-
-	Transform playerSpriteTransform;
+    private GameManager _gameManager;
+    private Transform _playerSpriteTransform;
 
 	void Awake()
 	{
-		this.playerSpriteTransform = FindObjectOfType<Player>().m_PlayerSpriteRenderer.transform;
-		this.gameManager = FindObjectOfType<GameManager>();
+		_playerSpriteTransform = FindObjectOfType<Player>().m_PlayerTransform;
+		_gameManager = FindObjectOfType<GameManager>();
 	}
 
 	public void SetRadius(float radius)
@@ -48,7 +46,7 @@ public class RoadCircle : MonoBehaviour
 		{
 			int sign = 1;
 
-			if(playerSpriteTransform.localPosition.x > 0)
+			if(_playerSpriteTransform.localPosition.x > 0)
 			{
 				sign = 1;
 			}
@@ -62,7 +60,7 @@ public class RoadCircle : MonoBehaviour
 
 			angle += (360f / segments);
 
-			SpawnManager.instance.SpawnParticle(gameManager.m_BackgroundColor, new Vector3(x,y,z), new Vector3(0,0,-angle));
+			SpawnManager.instance.SpawnParticle(_gameManager.m_BackgroundColor, new Vector3(x,y,z), new Vector3(0,0,-angle));
 		}
 	}
 
@@ -73,7 +71,7 @@ public class RoadCircle : MonoBehaviour
 		line.SetVertexCount (segments + 2);
 		line.useWorldSpace = false;
 		CreatePoints ();
-		line.material.color = gameManager.m_CircleColor;
+		line.material.color = _gameManager.m_CircleColor;
 		line.SetWidth(width,width);
 	}
 
