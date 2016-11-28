@@ -70,7 +70,7 @@ public class ObstacleEntity : MonoBehaviour
 			{
 				m_ObstacleObject.SetActive(true);
 
-                DOSetupState();
+                DOSetupForState();
 
                 isAnimated = true;
 
@@ -103,11 +103,12 @@ public class ObstacleEntity : MonoBehaviour
 		}
 	}
 
-    private void DOSetupState()
+    private void DOSetupForState()
     {
         switch(m_State)
         {
             case State.NORMAL:
+                    
                 break;
 
             case State.DESTRUCTIBLE:
@@ -116,7 +117,9 @@ public class ObstacleEntity : MonoBehaviour
         }
     }
 
-    public void SetNormal()
+    #region Templates setup for preload
+
+    public void SetNormalTemplate()
     {
         m_State = State.NORMAL;
 
@@ -126,11 +129,10 @@ public class ObstacleEntity : MonoBehaviour
 
         m_ObstacleVisibilitySpriteRenderer = m_ObstacleObject.GetComponent<SpriteRenderer>();
 
-
-
+        m_ObstacleObject.GetComponent<Rigidbody2D>().freezeRotation = true;
     }
 
-    public void SetDestructible()
+    public void SetDestructibleTemplate()
     {
         m_State = State.DESTRUCTIBLE;
 
@@ -155,6 +157,7 @@ public class ObstacleEntity : MonoBehaviour
         if (destructible.AlphaTex != m_ObstacleSprite)
             destructible.ReplaceWith(m_ObstacleSprite);
     }
+    #endregion
 
     IEnumerator CheckVisibility()
 	{

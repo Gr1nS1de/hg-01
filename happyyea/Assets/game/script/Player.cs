@@ -28,10 +28,15 @@ public class Player : MonoBehaviour
         }
     }
 
+    public Gradient         m_CircleSFLightGradient;
 	public Transform        m_PlayerTransformContainer;
 	public SpriteRenderer   m_PlayerSpriteRenderer;
-	public Vector3          m_PlayerDefaultPosition = Vector3.zero;
+    public SFLight          m_CircleSFLight;
+    public float            m_CircleSFLightGradientCycleDuration;
+    public float            m_DeathDuration;
 
+    [HideInInspector]
+	public Vector3          m_PlayerDefaultPosition = Vector3.zero;
 
     private GameManager     _gameManager;
     private PositionState   _positionState;
@@ -40,7 +45,7 @@ public class Player : MonoBehaviour
 	{
 		get
 		{
-			return FindObjectOfType<Circle>().GetWidth()/2f - m_PlayerSpriteRenderer.sprite.bounds.size.x * 0.5f * m_PlayerSpriteRenderer.transform.localScale.x;		
+			return FindObjectOfType<RoadCircle>().GetWidth()/2f - m_PlayerSpriteRenderer.sprite.bounds.size.x * 0.5f * m_PlayerSpriteRenderer.transform.localScale.x;		
 		}
 	}
 
@@ -54,6 +59,12 @@ public class Player : MonoBehaviour
 	{
 		DOStart();
 	}
+
+    void Update()
+    {
+        float t = Mathf.PingPong( Time.time / m_CircleSFLightGradientCycleDuration, 1f );
+        m_CircleSFLight.color = m_CircleSFLightGradient.Evaluate( t );
+    }
 
 	public float GetRotation()
 	{
@@ -153,7 +164,7 @@ public class Player : MonoBehaviour
 
 	public void DOOnImpactEnter2D(ObstacleEntity obstacleEntity, Vector2 collisionPoint)
 	{
-		FindObjectOfType<GameManager>().OnPlayerImpactObstacle(obstacleEntity.gameObject, collisionPoint);
+		FindObjectOfType<GameManager>().OnImpactObstacleByPlayer(obstacleEntity.gameObject, collisionPoint);
 	}
 
 }

@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
 
         go.transform.position = new Vector3(0, 0, 5f);
         
-        var circle = go.GetComponent<Circle>();
+        var circle = go.GetComponent<RoadCircle>();
 
         circle.SetRadius(radius);
         circle.DOStart();
@@ -244,7 +244,7 @@ public class GameManager : MonoBehaviour
         _player.transform.eulerAngles = Vector3.zero;
     }
 
-    public void OnPlayerImpactObstacle(GameObject obstacleEntityObj, Vector2 collisionPoint)
+    public void OnImpactObstacleByPlayer(GameObject obstacleEntityObj, Vector2 collisionPoint)
     {
         var obstacleEntity = obstacleEntityObj.GetComponent<ObstacleEntity>();
 
@@ -364,7 +364,7 @@ public class GameManager : MonoBehaviour
                             var obstacleEntity = objTmp.GetComponent<ObstacleEntity>();
 
                             obstacleEntity.m_ObstacleSprite = sprite;
-                            obstacleEntity.SetNormal();
+                            obstacleEntity.SetNormalTemplate();
 
                             objTmp.SetActive(false);
 
@@ -385,7 +385,7 @@ public class GameManager : MonoBehaviour
                             var obstacleEntity = objTmp.GetComponent<ObstacleEntity>();
 
                             obstacleEntity.m_ObstacleSprite = sprite;
-                            obstacleEntity.SetDestructible();
+                            obstacleEntity.SetDestructibleTemplate();
 
                             objTmp.SetActive(false);
 
