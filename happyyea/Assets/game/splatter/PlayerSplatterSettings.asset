@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735bbf7ec794347c49beaec86c5345ec, type: 3}
   m_Name: PlayerSplatterSettings
   m_EditorClassIdentifier: 
-  mode: 1
+  mode: 0
   directionMode: 0
   spanAngle: 180
   directionReference: {fileID: 0}
@@ -20,15 +20,15 @@ MonoBehaviour:
   numBranchesMean: 1
   numBranchesVariance: 0
   branchChildrenMean: 1
-  branchChildrenVariance: 0.49
+  branchChildrenVariance: 0.53
   scaleMean: 0.51
-  scaleVariance: 0.071
+  scaleVariance: 0.075
   scaleMin: 0.024
   centerPositionRange: 0
   randomRotation: 0
   moveSpeedMean: 0
   moveSpeedVariance: 1
-  stepDuration: 0.001
+  stepDuration: 0.25
   damping: 1
   colorMode: 1
   startColor: {r: 0, g: 0.84584165, b: 0.88235295, a: 1}
