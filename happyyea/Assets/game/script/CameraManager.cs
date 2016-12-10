@@ -11,7 +11,7 @@ public class CameraManager : MonoBehaviour
 {
 	Camera cam;
 
-	GameManager gameManager; 
+	GM gameManager; 
 
 	public Transform toFollow;
 
@@ -19,7 +19,7 @@ public class CameraManager : MonoBehaviour
 
 	void Awake()
 	{
-		gameManager = FindObjectOfType<GameManager>();
+		gameManager = FindObjectOfType<GM>();
 		cam = GetComponent<Camera>();
 	}
 

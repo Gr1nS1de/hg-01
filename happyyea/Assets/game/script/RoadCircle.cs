@@ -13,13 +13,13 @@ public class RoadCircle : MonoBehaviour
 	private float radius;
 	private float width = 0.3f;
 
-    private GameManager _gameManager;
+    private GM _gameManager;
     private Transform _playerSpriteTransform;
 
 	void Awake()
 	{
 		_playerSpriteTransform = FindObjectOfType<Player>().m_PlayerTransform;
-		_gameManager = FindObjectOfType<GameManager>();
+		_gameManager = FindObjectOfType<GM>();
 	}
 
 	public void SetRadius(float radius)

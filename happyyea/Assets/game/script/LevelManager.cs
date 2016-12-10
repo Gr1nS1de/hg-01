@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
         public float                m_BackgroundGradientDuration;
     }
     
-    public LevelTemplates[] m_LevelTemplates = new LevelTemplates[2];
+    public LevelTemplates[] m_LevelTemplates;
 
     private void Awake()
     {

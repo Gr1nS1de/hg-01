@@ -75,7 +75,7 @@ public class CanvasManager : MonoBehaviour
 
 	public void OnClickedStart()
 	{
-		FindObjectOfType<CameraManager>().DOStart(FindObjectOfType<GameManager>().DOStart);
+		FindObjectOfType<CameraManager>().DOStart(FindObjectOfType<GM>().DOStartGame);
 		OnStartGame(null);
 		FindObjectOfType<Player>().ActivateTouchControl();
 

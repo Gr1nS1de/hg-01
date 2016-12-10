@@ -37,13 +37,13 @@ public class ObstacleEntity : MonoBehaviour
     [HideInInspector]
     public SpriteRenderer   m_ObstacleVisibilitySpriteRenderer;
 
-    private GameManager     _gameManager;
+    private GM     _gameManager;
     private float           _decal = -1f;
     private State           _currentState;
 
 	void Awake()
 	{
-		_gameManager = FindObjectOfType<GameManager>();
+		_gameManager = FindObjectOfType<GM>();
 		m_ObstacleObject.SetActive(false);
         m_IsVisible = false;
     }
@@ -177,7 +177,7 @@ public class ObstacleEntity : MonoBehaviour
                             break;
 
                         case State.DESTRUCTIBLE:
-                                _gameManager.DODeleteObstacleInstance(gameObject);
+                                _gameManager.m_ObstacleManager.DODeleteObstacleInstance(gameObject);
                             break;
                     }
                     

@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     [HideInInspector]
 	public Vector3          m_PlayerDefaultPosition = Vector3.zero;
 
-    private GameManager     _gameManager;
+    private GM     _gameManager;
     private PositionState   _positionState;
 
     public float jumpWidth
@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
 
 	void Awake()
 	{
-		_gameManager = FindObjectOfType<GameManager>();
+		_gameManager = FindObjectOfType<GM>();
 		//m_PlayerSprite.color = _gameManager.m_PlayerColor;
 	}
 
@@ -152,7 +152,7 @@ public class Player : MonoBehaviour
 	{
 		StopAllCoroutines();
 
-		if(_gameManager.m_GameStatus == GameManager.GameStatus.GAMEOVER)
+		if(_gameManager.m_GameStatus == GM.GameStatus.GAMEOVER)
 			return;
 		
 		StartCoroutine(_AnimPlayer(targetPos));
@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
 
 	public void DOOnImpactEnter2D(ObstacleEntity obstacleEntity, Vector2 collisionPoint)
 	{
-		FindObjectOfType<GameManager>().OnImpactObstacleByPlayer(obstacleEntity.gameObject, collisionPoint);
+		FindObjectOfType<GM>().OnImpactObstacleByPlayer(obstacleEntity.gameObject, collisionPoint);
 	}
 
 }
