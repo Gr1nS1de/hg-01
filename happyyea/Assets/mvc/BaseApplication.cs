@@ -2,13 +2,13 @@
 using System.Collections;
 
 public abstract class BaseApplication<M, V, C> : BaseApplication
-	where M : Model
-	where V : View
-	where C : Controller
+	where M : Element
+	where V : Element
+	where C : Element
 {
-	public Model		model			{ get { return (M)(object)m_Model; } }
-	public View			view			{ get { return (V)(object)m_View; } }
-	public Controller	controller		{ get { return (C)(object)m_Controller; } }
+	public M model			{ get { return (M)(object)m_Model; } }
+	public V view			{ get { return (V)(object)m_View; } }
+	public C controller		{ get { return (C)(object)m_Controller; } }
 }
 
 public abstract class BaseApplication : Element
@@ -21,10 +21,16 @@ public abstract class BaseApplication : Element
 	private View        _view;
 	private Controller  _controller;
 
+	private void Awake()
+	{
+		Notify( N.GameLoadResources );
+	}
+
 	private void Start()
 	{
 		Notify(N.GameStart);
 	}
+
 
 	public void Notify( string alias, Object target, params object[] data )
 	{

@@ -24,7 +24,7 @@ public class PlayerSplatter : MonoBehaviour
 
     int i = 0;
 
-    void FixedUpdate()
+    void _FixedUpdate()
     {
         if ( i++ < 5 )
             return;

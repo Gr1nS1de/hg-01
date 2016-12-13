@@ -102,6 +102,7 @@ public class ObstacleManager : MonoBehaviour
 
     private void AddSpritesFromResource()
     {
+		Debug.Log("Add obstacle sprites from resource");
         for ( int i = 0; i < (int)ObstacleEntity.State._COUNTFLAG; i++ )
         {
             var obstacleSprites = Resources.LoadAll<Sprite>( m_ObstacleTemplate[i].spriteResourcesPath );

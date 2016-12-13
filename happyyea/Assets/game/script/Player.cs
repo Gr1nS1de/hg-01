@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    public Gradient         m_CircleSFLightGradient;
+    public Gradient         m_LightGradient;
 	public Transform        m_PlayerTransformContainer;
     public Transform        m_PlayerTransform;
 	public Sprite           m_PlayerSprite;
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     [HideInInspector]
 	public Vector3          m_PlayerDefaultPosition = Vector3.zero;
 
-    private GM     _gameManager;
+    private GM				_gameManager;
     private PositionState   _positionState;
 
     public float jumpWidth
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         float t = Mathf.PingPong( Time.time / m_CircleSFLightGradientCycleDuration, 1f );
-        m_CircleSFLight.color = m_CircleSFLightGradient.Evaluate( t );
+        m_CircleSFLight.color = m_LightGradient.Evaluate( t );
     }
 
 	public float GetRotation()

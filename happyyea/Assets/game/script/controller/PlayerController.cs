@@ -1,9 +1,24 @@
-﻿using System;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 public class PlayerController : Controller<Game>
 {
+	public override void OnNotification( string alias, Object target, params object[] data )
+	{
+		switch ( alias )
+		{
+			case N.GameStart:
+				{
+					OnStart();
+
+					break;
+				}
+		}
+	}
+
+	private void OnStart()
+	{
+
+	}
 
 }

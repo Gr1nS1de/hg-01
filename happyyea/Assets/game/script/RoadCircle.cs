@@ -11,7 +11,7 @@ public class RoadCircle : MonoBehaviour
 	LineRenderer line;
 
 	private float radius;
-	private float width = 0.3f;
+	private float width = 1f;
 
     private GM _gameManager;
     private Transform _playerSpriteTransform;

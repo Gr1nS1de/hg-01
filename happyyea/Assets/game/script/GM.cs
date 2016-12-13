@@ -123,7 +123,7 @@ public class GM : MonoBehaviour
         float height = 2.3f * cam.orthographicSize;
         float width = height * cam.aspect;
 
-        this._radiusBorder = width * 0.80f / 2f;
+        this._radiusBorder = width * 0.80f / 1.5f;
 
     }
 
