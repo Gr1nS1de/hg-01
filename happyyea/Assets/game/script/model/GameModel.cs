@@ -9,6 +9,7 @@ public class GameModel : Model<Game>
 	public DestructibleObstacleModel	destructibleObstacleModel	{ get { return _destructibleObstacleModel = SearchLocal<DestructibleObstacleModel>( _destructibleObstacleModel, "DestructibleObstacleModel" ); } }
 	public PlayerModel					playerModel					{ get { return _playerModel = SearchLocal<PlayerModel>(								_playerModel,				"PlayerModel" ); } }
 	public SoundModel					soundModel					{ get { return _soundModel = SearchLocal<SoundModel>(								_soundModel,				"SoundModel" ); } }
+	public RCModel						RCModel						{ get { return _RCModel = SearchLocal<RCModel>(										_RCModel,					"RCModel" ); } }
 
 	private CameraModel					_cameraModel;
 	private ThemeModel                  _themeModel;
@@ -16,5 +17,5 @@ public class GameModel : Model<Game>
 	private DestructibleObstacleModel   _destructibleObstacleModel;
 	private PlayerModel					_playerModel;
 	private SoundModel					_soundModel;
-
+	private RCModel						_RCModel;
 }

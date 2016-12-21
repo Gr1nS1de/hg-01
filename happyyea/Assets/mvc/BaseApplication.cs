@@ -23,7 +23,7 @@ public abstract class BaseApplication : Element
 
 	private void Awake()
 	{
-		Notify( N.GameLoadResources );
+		Notify( N.RCStartLoad );
 	}
 
 	private void Start()

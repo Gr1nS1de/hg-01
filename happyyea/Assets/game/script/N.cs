@@ -13,12 +13,14 @@ public class N : MonoBehaviour
 	#endregion
 
 	#region Game notifications
-	public const string GameLoadResources	= "game.load.resources";
-
 	//States
 	public const string GameStart			= "game.start";
 	public const string GamePlay			= "game.play";
 	public const string GamePause			= "game.pause";
 	public const string GameOver			= "game.over";
+	#endregion
+
+	#region ResourcesController notifications
+	public const string RCStartLoad			= "rc.start.load";
 	#endregion
 }

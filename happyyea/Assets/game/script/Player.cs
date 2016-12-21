@@ -119,7 +119,7 @@ public class Player : MonoBehaviour
                 {
                     var v = new Vector3(-jumpWidth, 0, 0);
 
-                    m_PlayerTransform.DOLocalMove(v, 0.1f)
+                    m_PlayerTransform.DOLocalMove(v, 0.3f)
                         .OnComplete(OnCompleteJump);
 
                     m_PositionState = PositionState.ON_INNER_CIRCLE;
@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
                 {
                     var v = new Vector3(+jumpWidth, 0, 0);
 
-                    m_PlayerTransform.DOLocalMove(v, 0.1f)
+                    m_PlayerTransform.DOLocalMove(v, 0.3f)
                         .OnComplete(OnCompleteJump);
 
                     m_PositionState = PositionState.ON_OUTER_SIDE;

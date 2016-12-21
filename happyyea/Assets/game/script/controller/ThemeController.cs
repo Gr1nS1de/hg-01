@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
 
 public class ThemeController : Controller<Game>
@@ -8,13 +7,6 @@ public class ThemeController : Controller<Game>
 	{
 		switch ( alias )
 		{
-			case N.GameLoadResources:
-				{
-					PreloadThemes();
-
-					break;
-				}
-
 			case N.GameStart:
 				{
 					OnStart();
@@ -33,23 +25,5 @@ public class ThemeController : Controller<Game>
 	{
 		
 	}
-
-	private void PreloadThemes()
-	{
-		var themesPath = Application.dataPath + "/game/sprite/Resources";
-		Sprite[] themeSprites = null;
-		string[] themeDirs = System.IO.Directory.GetDirectories( themesPath );
 		
-		for(int i = 0; i < themeDirs.Length; i++ )
-		{
-			var themeDir = themeDirs[0].Split(new char[] { '\\' } )[1];
-
-			themeSprites = Resources.LoadAll<Sprite>( themeDir + "/theme" );
-
-			var themeSprite = themeSprites[0];
-		}
-
-
-
-	}
 }

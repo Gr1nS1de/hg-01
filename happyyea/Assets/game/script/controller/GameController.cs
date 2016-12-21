@@ -9,6 +9,9 @@ public class GameController : Controller<Game>
 	public DestructibleObstacleController	destructibleObstacleController	{ get { return _destructibleObstacleController = SearchLocal<DestructibleObstacleController>(	_destructibleObstacleController,	"DestructibleObstacleController" ); } }
 	public PlayerController					playerController				{ get { return _playerController = SearchLocal<PlayerController>(								_playerController,					"PlayerController" ); } }
 	public SoundController					soundController					{ get { return _soundController = SearchLocal<SoundController>(									_soundController,					"SoundController" ); } }
+	public RoadController					roadController					{ get { return _roadController = SearchLocal<RoadController>(									_roadController,					"RoadController" ); } }
+	public ResourcesController				resourcesController				{ get { return _resourcesController = SearchLocal<ResourcesController>(							_resourcesController,				"ResourcesController" ); } }
+
 
 	private CameraController				_cameraController;
 	private ThemeController					_themeController;
@@ -16,6 +19,8 @@ public class GameController : Controller<Game>
 	private DestructibleObstacleController	_destructibleObstacleController;
 	private PlayerController				_playerController;
 	private SoundController					_soundController;
+	private RoadController					_roadController;
+	private ResourcesController				_resourcesController;
 
 	public override void OnNotification( string alias, Object target, params object[] data )
 	{
@@ -31,17 +36,7 @@ public class GameController : Controller<Game>
 
 	private void OnStart()
 	{
-		LoadPlayerSprites();
-		LoadObstacleSprites();
 	}
 
-	private void LoadPlayerSprites()
-	{
 
-	}
-
-	private void LoadObstacleSprites()
-	{
-
-	}
 }
