@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public abstract class BaseApplication<M, V, C> : BaseApplication
 	where M : Element
@@ -13,9 +14,9 @@ public abstract class BaseApplication<M, V, C> : BaseApplication
 
 public abstract class BaseApplication : Element
 {
-	public Model		m_Model			{ get { return _model; } }
-	public View			m_View			{ get { return _view; } }
-	public Controller	m_Controller	{ get { return _controller; } }
+	public Model		m_Model			{ get { return _model 		= SearchLocal<Model>(_model); } }
+	public View			m_View			{ get { return _view		= SearchLocal<View>(_view); } }
+	public Controller	m_Controller	{ get { return _controller	= SearchLocal<Controller>(_controller); } }
 
 	private Model		_model;
 	private View        _view;
@@ -23,6 +24,7 @@ public abstract class BaseApplication : Element
 
 	private void Awake()
 	{
+		InitTweening ();
 		Notify( N.RCStartLoad );
 	}
 
@@ -43,5 +45,11 @@ public abstract class BaseApplication : Element
 
 			return true;
 		} );
+	}
+
+	private void InitTweening()
+	{
+		if (Time.realtimeSinceStartup < 1)
+			DOTween.KillAll();				//Lazy init
 	}
 }

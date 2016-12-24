@@ -272,7 +272,7 @@ public class GM : MonoBehaviour
 
         DOBreakObject(_player.m_PlayerTransform.GetComponent<D2dDestructible>(), collisionPoint, m_PlayerFractureCount);
 
-        FindObjectOfType<CanvasManager>().OnGameOver(() =>
+        FindObjectOfType<CanvasController>().OnGameOver(() =>
         {
             DOReloadScene();
         });

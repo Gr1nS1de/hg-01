@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ThemeView : View<Game>
+public class PlayerInputModel : Model<Game> 
 {
-	
+
 }

@@ -7,7 +7,7 @@ using System;
 /// <summary>
 /// Class in charge to handle UI elements.
 /// </summary>
-public class CanvasManager : MonoBehaviour 
+public class CanvasController : Controller<Game> 
 {
 	public CanvasGroup canvasGroupStart;
 	public CanvasGroup canvasGroupInGame;
@@ -75,8 +75,12 @@ public class CanvasManager : MonoBehaviour
 
 	public void OnClickedStart()
 	{
-		FindObjectOfType<CameraManager>().DOStart(FindObjectOfType<GM>().DOStartGame);
+		FindObjectOfType<CameraManager>().DOStart(() => {
+			Notify(N.GamePlay);
+		});
+
 		OnStartGame(null);
+
 		FindObjectOfType<Player>().ActivateTouchControl();
 
 	}

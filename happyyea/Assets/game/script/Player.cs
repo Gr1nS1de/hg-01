@@ -11,8 +11,8 @@ public class Player : MonoBehaviour
 { 
     public enum PositionState
     {
-        ON_INNER_CIRCLE,
-        ON_OUTER_SIDE
+        ON_CIRCLE,
+        OUT_CIRCLE
     }
 
     public PositionState m_PositionState
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
 		m_PlayerTransformContainer.position = m_PlayerDefaultPosition;
 		m_PlayerTransform.localPosition = new Vector3(-jumpWidth, 0, 0);
 
-        m_PositionState = PositionState.ON_INNER_CIRCLE;
+        m_PositionState = PositionState.ON_CIRCLE;
 	}
 
 	public void DOStart()
@@ -100,12 +100,12 @@ public class Player : MonoBehaviour
 	{
         switch(m_PositionState)
         {
-            case PositionState.ON_INNER_CIRCLE:
-                    DOPlayerJump(PositionState.ON_OUTER_SIDE);
+            case PositionState.ON_CIRCLE:
+                    DOPlayerJump(PositionState.OUT_CIRCLE);
                 break;
 
-            case PositionState.ON_OUTER_SIDE:
-                    DOPlayerJump(PositionState.ON_INNER_CIRCLE);
+            case PositionState.OUT_CIRCLE:
+                    DOPlayerJump(PositionState.ON_CIRCLE);
                 break;
         }
 
@@ -115,25 +115,25 @@ public class Player : MonoBehaviour
     { 
         switch(positionState)
         {
-            case PositionState.ON_INNER_CIRCLE:
+            case PositionState.ON_CIRCLE:
                 {
                     var v = new Vector3(-jumpWidth, 0, 0);
 
                     m_PlayerTransform.DOLocalMove(v, 0.3f)
                         .OnComplete(OnCompleteJump);
 
-                    m_PositionState = PositionState.ON_INNER_CIRCLE;
+                    m_PositionState = PositionState.ON_CIRCLE;
                 }
                 break;
 
-            case PositionState.ON_OUTER_SIDE:
+            case PositionState.OUT_CIRCLE:
                 {
                     var v = new Vector3(+jumpWidth, 0, 0);
 
                     m_PlayerTransform.DOLocalMove(v, 0.3f)
                         .OnComplete(OnCompleteJump);
 
-                    m_PositionState = PositionState.ON_OUTER_SIDE;
+                    m_PositionState = PositionState.OUT_CIRCLE;
                 }
                 break;
         }

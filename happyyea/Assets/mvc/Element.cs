@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public abstract class Element<T> : Element where T : BaseApplication
 {
-
+	public T game { get { return (T)m_Game;}}
 }
 
 public abstract class Element : MonoBehaviour
@@ -18,6 +18,10 @@ public abstract class Element : MonoBehaviour
 
 	public T SearchGlobal<T> (T obj, string storeKey = "", bool update = false ) where T : Object
 	{
+		if (obj)
+			Debug.Log ("Start search: " + obj.name + " SK = " + storeKey);
+		else
+			Debug.Log ("Store key = " + storeKey);
 		if ( m_Storage.ContainsKey( storeKey ) && storeKey != "" && !update )
 			return (T)m_Storage[storeKey];
 
@@ -30,6 +34,8 @@ public abstract class Element : MonoBehaviour
 
 			m_Storage.Add( storeKey, searchFor );
 		}
+
+		Debug.Log ("Return " + searchFor);
 
 		return searchFor;
 	}

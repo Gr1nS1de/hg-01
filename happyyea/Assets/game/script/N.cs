@@ -13,6 +13,8 @@ public class N : MonoBehaviour
 	#endregion
 
 	#region Game notifications
+	public const string RoadChanged			= "game.road.changed";
+
 	//States
 	public const string GameStart			= "game.start";
 	public const string GamePlay			= "game.play";
