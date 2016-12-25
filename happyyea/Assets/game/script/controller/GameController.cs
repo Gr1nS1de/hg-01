@@ -12,7 +12,7 @@ public class GameController : Controller<Game>
 	public RoadFactoryController			roadFactoryController			{ get { return _roadFactoryController = SearchLocal<RoadFactoryController>(						_roadFactoryController,				"RoadFactoryController" ); } }
 	public ObstacleController				obstacleController				{ get { return _obstacleController = SearchLocal<ObstacleController>(							_obstacleController,				"ObstacleController" ); } }
 	public ObstacleFactoryController		obstacleFactoryController		{ get { return _obstacleFactoryController = SearchLocal<ObstacleFactoryController>(				_obstacleFactoryController,			"ObstacleFactoryController" ); } }
-	public DestructibleObstacleController	destructibleObstacleController	{ get { return _destructibleObstacleController = SearchLocal<DestructibleObstacleController>(	_destructibleObstacleController,	"DestructibleObstacleController" ); } }
+	public DestructibleController			destructibleController			{ get { return _destructibleController = SearchLocal<DestructibleController>(					_destructibleController,			"DestructibleController" ); } }
 	public PlayerController					playerController				{ get { return _playerController = SearchLocal<PlayerController>(								_playerController,					"PlayerController" ); } }
 	public PlayerInputController			playerInputController			{ get { return _playerInputController = SearchLocal<PlayerInputController>(						_playerInputController,				"PlayerInputController" ); } }
 	public SoundController					soundController					{ get { return _soundController = SearchLocal<SoundController>(									_soundController,					"SoundController" ); } }
@@ -23,7 +23,7 @@ public class GameController : Controller<Game>
 	private RoadFactoryController 			_roadFactoryController;
 	private ObstacleController				_obstacleController;
 	private ObstacleFactoryController 		_obstacleFactoryController;
-	private DestructibleObstacleController	_destructibleObstacleController;
+	private DestructibleController			_destructibleController;
 	private PlayerController				_playerController;
 	private PlayerInputController			_playerInputController;
 	private SoundController					_soundController;
@@ -31,7 +31,6 @@ public class GameController : Controller<Game>
 	#endregion
 
 	private PlayerModel 					_playerModel;
-	private Vector3 						_entityBreakPoint;
 
 	public override void OnNotification( string alias, Object target, params object[] data )
 	{
@@ -49,7 +48,7 @@ public class GameController : Controller<Game>
 					break;
 				}
 
-			case N.RoadChanged:
+			case N.GameRoadChanged:
 				{
 					break;
 				}
@@ -87,75 +86,33 @@ public class GameController : Controller<Game>
 		//FindObjectOfType<Circle>().DOParticle();
 	}
 
-	public void OnImpactObstacleByPlayer(GameObject obstacleEntityObj, Vector2 collisionPoint)
+	public void OnImpactObstacleByPlayer(ObstacleView obstacleView, Vector2 collisionPoint)
 	{
-		var obstacleEntity = obstacleEntityObj.GetComponent<ObstacleEntity>();
-		var obstacleRenderObject = obstacleEntity.m_ObstacleObject;
-		var obstacleDestructible = obstacleRenderObject.GetComponent<D2dDestructible>();
+		var obstacleModel = game.model.obstacleFactoryModel.obstacleModelsDictionary[obstacleView];
 
-		switch (obstacleEntity.m_State)
+		switch (obstacleModel.state)
 		{
-			case ObstacleEntity.State.NORMAL:
-				obstacleRenderObject.GetComponent<Rigidbody2D>().isKinematic = true;
-				GameOver( collisionPoint );
-				break;
+			case ObstacleState.HARD:
+				{
+					//obstacleRenderObject.GetComponent<Rigidbody2D> ().isKinematic = true;
 
-			case ObstacleEntity.State.DESTRUCTIBLE:
-				Add1Point();
-				BreakEntity( obstacleDestructible, game.model.destructibleObstacleFractureCount, collisionPoint);
-				break;
+					GameOver (collisionPoint);
 
+					break;
+				}
+
+			case ObstacleState.DESTRUCTIBLE:
+				{
+					var obstacleDestructible = obstacleView.GetComponent<D2dDestructible> ();
+
+					Add1Point ();
+
+					Notify (N.GameBreakEntity, obstacleDestructible, game.model.destructibleModel.destructibleObstacleFractureCount, collisionPoint);
+
+					break;
+				}
 			default:
 				break;
-		}
-	}
-
-	public void BreakEntity( D2dDestructible destructible, int fractureCount, Vector2 collisionPoint)
-	{
-
-		// Store explosion point (used in OnEndSplit)
-		if (collisionPoint == Vector2.zero)
-			_entityBreakPoint = destructible.transform.position;
-		else
-			_entityBreakPoint = collisionPoint;
-
-		destructible.transform.tag = "Untagged";
-
-		if( destructible.GetComponentInChildren<D2dCollider>() )
-			destructible.GetComponentInChildren<D2dCollider>().m_SpriteChildCollider.tag = "Untagged";
-
-		// Register split event
-		destructible.OnEndSplit.AddListener(OnEndSplit);
-
-		// Split via fracture
-		D2dQuadFracturer.Fracture(destructible, fractureCount, 0.5f);
-
-		// Unregister split event
-		destructible.OnEndSplit.RemoveListener(OnEndSplit);
-	}
-
-	private void OnEndSplit(List<D2dDestructible> clones)
-	{
-		// Go through all clones in the clones list
-		for (var i = clones.Count - 1; i >= 0; i--)
-		{
-			var clone = clones[i];
-			var rigidbody = clone.GetComponent<Rigidbody2D>();
-
-			// Does this clone have a Rigidbody2D?
-			if (rigidbody != null)
-			{
-				// Get the local point of the explosion that called this split event
-				var localPoint = (Vector2)clone.transform.InverseTransformPoint(_entityBreakPoint);
-
-				// Get the vector between this point and the center of the destructible's current rect
-				var vector = clone.AlphaRect.center - localPoint;
-
-				var force = ( game.model.gameState == GameState.GAMEOVER ? _playerModel.breakForce : game.model.destructibleObstacleModel.breakForce );
-
-				// Apply relative force
-				rigidbody.AddRelativeForce(vector * force, ForceMode2D.Impulse);
-			}
 		}
 	}
 
@@ -179,7 +136,7 @@ public class GameController : Controller<Game>
 
 		//_soundManager.PlayFail();
 
-		BreakEntity(_playerModel.playerDestructible, game.model.playerFtactureCount, collisionPoint);
+		Notify(N.GameBreakEntity, _playerModel.playerDestructible, game.model.destructibleModel.playerFtactureCount, collisionPoint);
 
 		FindObjectOfType<CanvasController>().OnGameOver(() =>
 		{

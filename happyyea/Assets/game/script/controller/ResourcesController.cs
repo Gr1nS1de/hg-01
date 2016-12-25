@@ -3,6 +3,9 @@ using System.Collections;
 
 public class ResourcesController : Controller<Game> 
 {
+	private PlayerModel 			_playerModel;
+	private ObstacleFactoryModel 	_obstacleFactoryModel;
+	private RoadFactoryModel 		_roadFactoryModel;
 
 	public override void OnNotification (string alias, Object target, params object[] data)
 	{
@@ -18,14 +21,27 @@ public class ResourcesController : Controller<Game>
 
 	private void OnStartLoad()
 	{
+		_playerModel = game.model.playerModel;
+		_obstacleFactoryModel = game.model.obstacleFactoryModel;
+		_roadFactoryModel = game.model.roadFactoryModel;
+
 		LoadPlayerSprites();
 		LoadObstacleSprites();
-		LoadThemes();
+		LoadRoads();
 	}
 
 	public void LoadPlayerSprites()
 	{
-		
+		Debug.Log("Add player sprites from resource");
+
+		var obstacleSprites = Resources.LoadAll<Sprite>( _playerModel.spriteResourcesPath );
+
+		_playerModel.sprites = new Sprite[obstacleSprites.Length];
+
+		for ( int j = 0; j < obstacleSprites.Length; j++ )
+		{
+			_playerModel.sprites[j] = obstacleSprites[j];
+		}
 	}
 
 	private void LoadObstacleSprites()
@@ -33,7 +49,7 @@ public class ResourcesController : Controller<Game>
 
 	}
 
-	private void LoadThemes()
+	private void LoadRoads()
 	{
 		var themesPath = Application.dataPath + "/game/sprite/Resources";
 		Sprite[] themeSprites = null;
