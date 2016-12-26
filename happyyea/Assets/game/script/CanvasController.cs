@@ -7,7 +7,7 @@ using System;
 /// <summary>
 /// Class in charge to handle UI elements.
 /// </summary>
-public class CanvasController : Controller<Game> 
+public class CanvasController : Controller
 {
 	public CanvasGroup canvasGroupStart;
 	public CanvasGroup canvasGroupInGame;

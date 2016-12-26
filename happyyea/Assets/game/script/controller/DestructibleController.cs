@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Destructible2D;
 
-public class DestructibleController : Controller<Game>
+public class DestructibleController : Controller
 {
-	private DestructibleModel _destructibleModel;
+	private DestructibleModel _destructibleModel	{ get { return game.model.destructibleModel; } }
 
 	public override void OnNotification (string alias, Object target, params object[] data)
 	{
@@ -33,7 +33,6 @@ public class DestructibleController : Controller<Game>
 
 	private void OnStart()
 	{
-		_destructibleModel = game.model.destructibleModel;
 	}
 
 	public void BreakEntity( D2dDestructible destructible, int fractureCount, Vector2 collisionPoint)

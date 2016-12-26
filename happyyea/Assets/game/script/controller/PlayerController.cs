@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using DG.Tweening;
 
-public class PlayerController : Controller<Game>
+public class PlayerController : Controller
 {
-	private PlayerModel 				_playerModel;
-	private PlayerView					_playerView;
+	private PlayerModel 	_playerModel 	{ get { return game.model.playerModel;}}
+	private PlayerView		_playerView		{ get { return game.view.playerView;}}
+
 
 	public override void OnNotification( string alias, Object target, params object[] data )
 	{
@@ -18,9 +19,17 @@ public class PlayerController : Controller<Game>
 					break;
 				}
 
-			case N.PlayerJump:
+			case N.GameRoadInstantiated:
 				{
-					PlayerJump ();
+					InitPlayer ();
+					
+					break;
+				}
+
+			case N.InputOnTouchDown:
+				{
+					if(game.model.gameState == GameState.PLAYING)
+						PlayerJump ();
 
 					break;
 				}
@@ -29,10 +38,7 @@ public class PlayerController : Controller<Game>
 
 	private void OnStart()
 	{
-		_playerModel = game.model.playerModel;
-		_playerView = game.view.playerView;
-
-		InitPlayer ();
+		Debug.Log ("Start player controller");
 	}
 
 	private void Update()
@@ -43,11 +49,9 @@ public class PlayerController : Controller<Game>
 
 	private void InitPlayer()
 	{
-		_playerView.transform.position = new Vector2(0, 0f);
-
 		_playerModel.currentSprite = _playerModel.sprites [0];
-		_playerModel.playerSpriteContainer.transform.position = new Vector2(game.model.currentRoadModel.radius, 0f);
-		_playerModel.playerSpriteView.transform.localPosition = new Vector3(-_playerModel.jumpWidth, 0, 0);
+		game.view.playerSpriteContainerView.transform.position = new Vector2(game.model.roadModel.radius, 0f);
+		game.view.playerSpriteView.transform.localPosition = new Vector3(-_playerModel.jumpWidth, 0, 0);
 
 		_playerModel.positionState = PlayerPositionState.ON_CIRCLE;
 		
@@ -56,39 +60,44 @@ public class PlayerController : Controller<Game>
 
 	private void PlayerJump()
 	{ 
+		Debug.Log ("Player jump");
 		switch(_playerModel.positionState)
 		{
 			case PlayerPositionState.ON_CIRCLE:
 				{
 					var v = new Vector3(-_playerModel.jumpWidth, 0, 0);
 
-					_playerView.transform.DOLocalMove(v, _playerModel.jumpSpeed)
+					game.view.playerSpriteView.transform.DOLocalMove(v, _playerModel.jumpSpeed)
 						.OnComplete(OnCompleteJump);
 
-					_playerModel.positionState = PlayerPositionState.ON_CIRCLE;
+					_playerModel.positionState = PlayerPositionState.OUT_CIRCLE;
+
+					break;
 				}
-				break;
 
 			case PlayerPositionState.OUT_CIRCLE:
 				{
 					var v = new Vector3(+_playerModel.jumpWidth, 0, 0);
 
-					_playerView.transform.DOLocalMove(v, _playerModel.jumpSpeed)
+					game.view.playerSpriteView.transform.DOLocalMove(v, _playerModel.jumpSpeed)
 						.OnComplete(OnCompleteJump);
 
-					_playerModel.positionState = PlayerPositionState.OUT_CIRCLE;
+					_playerModel.positionState = PlayerPositionState.ON_CIRCLE;
+
+					break;
 				}
-				break;
 		}
 	}
 
 	private void OnCompleteJump()
 	{
+		Debug.Log ("Complete jump");
+
 		if(DOTween.IsTweening(Camera.main))
 			return;
 
 		//_gameManager.Add1Point();
-		FindObjectOfType<CameraManager>().DOShake();
+		//FindObjectOfType<CameraManager>().DOShake();
 	}
 		
 }

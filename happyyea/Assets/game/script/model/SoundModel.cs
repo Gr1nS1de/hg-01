@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SoundModel : Model<Game>
+public class SoundModel : Model
 {
 
 

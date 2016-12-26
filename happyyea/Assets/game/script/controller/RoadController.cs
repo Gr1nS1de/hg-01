@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RoadController : Controller<Game>
+public class RoadController : Controller
 {
-	private RoadFactoryModel 			_roadFactoryModel;
-	public Dictionary<int, RoadModel> 	_roadModelsDictionary;
+	private RoadFactoryModel 			_roadFactoryModel		{ get { return game.model.roadFactoryModel; } }
 
 	public override void OnNotification (string alias, Object target, params object[] data)
 	{
@@ -28,8 +27,7 @@ public class RoadController : Controller<Game>
 
 	private void OnStart()
 	{
-		_roadFactoryModel = game.model.roadFactoryModel;
-		_roadModelsDictionary = _roadFactoryModel.roadModelsDictionary;
+
 	}
 		
 

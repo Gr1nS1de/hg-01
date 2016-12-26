@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class View<T> : View where T : BaseApplication
+public abstract class View<T> : View
 {
-	public T game { get { return (T)m_Game; } }
+	public GameApplication 	game 	{ get { return (GameApplication)m_Game; } }
+	public UIApplication 	ui		{ get { return (UIApplication)m_UI; } }
 }
+
 
 public abstract class View : Element
 {
-
+	public GameApplication 	game 	{ get { return (GameApplication)m_Game; } }
+	public UIApplication 	ui		{ get { return (UIApplication)m_UI; } }
 }
 
 

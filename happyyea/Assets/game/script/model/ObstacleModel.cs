@@ -7,11 +7,13 @@ public enum ObstacleState
 	DESTRUCTIBLE
 }
 
-public class ObstacleModel : Model<Game>
+public class ObstacleModel : Model
 {
 	public ObstacleState	state				{ get { return _state;}}
+	public ObstacleView		obstacleView		{ get { return _obstacleView;} set { _obstacleView = value;}}
 
 	[SerializeField]
 	private ObstacleState	_state;
+	private ObstacleView	_obstacleView;
 
 }

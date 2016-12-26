@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RoadFactoryController : Controller<Game> 
+public class RoadFactoryController : Controller
 {
-	private RoadFactoryModel 	_roadFactoryModel;
+	private RoadFactoryModel 	_roadFactoryModel	{ get { return game.model.roadFactoryModel; } }
 
 	public override void OnNotification (string alias, Object target, params object[] data)
 	{
@@ -20,21 +20,21 @@ public class RoadFactoryController : Controller<Game>
 
 	private void OnStart()
 	{
-		_roadFactoryModel = game.model.roadFactoryModel;
+		InstantiateRoad ();
 
-		game.model.currentRoadModel = InstantiateRoad (0);
+		Notify (N.GameRoadInstantiated);
 	}
 
-	public RoadModel InstantiateRoad(int templateId)
+	public RoadModel InstantiateRoad()
 	{
-		var roadObject = Instantiate(_roadFactoryModel.roadTemplates[0]) as RoadView;
-		var roadView = roadObject.GetComponent<RoadView>();
-		var roadModel = roadObject.GetComponent<RoadModel> ();
-		var roadModelCopy = roadModel.GetCopyOf<RoadModel> (roadModel);
+		RoadView roadObject = Instantiate(_roadFactoryModel.roadTemplate) as RoadView;
+		RoadView roadView = roadObject.GetComponent<RoadView>();
+		RoadModel roadModel = roadObject.GetComponent<RoadModel> ();
+		RoadModel roadModelCopy = roadModel.GetCopyOf<RoadModel> (roadModel);
 
 		Destroy (roadModel);
 
-		_roadFactoryModel.roadModelsDictionary.Add (roadModel.id, roadModelCopy);
+		game.model.roadModel.GetCopyOf<RoadModel>(roadModelCopy);
 
 		roadView.OnStart (roadModelCopy);
 

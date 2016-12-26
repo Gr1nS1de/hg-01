@@ -32,7 +32,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        cam.backgroundColor = gameManager.m_ThemeDynamicColor;
+        //cam.backgroundColor = gameManager.m_ThemeDynamicColor;
     }
 
 	public void DOStart(Action callback)

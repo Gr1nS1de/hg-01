@@ -22,7 +22,7 @@ PlayerSettings:
   defaultScreenWidthWeb: 600
   defaultScreenHeightWeb: 800
   m_RenderingPath: 1
-  m_MobileRenderingPath: 3
+  m_MobileRenderingPath: 1
   m_ActiveColorSpace: 1
   m_MTRendering: 1
   m_MobileMTRendering: 1
@@ -413,7 +413,7 @@ PlayerSettings:
   psp2InfoBarColor: 0
   psp2UseDebugIl2cppLibs: 0
   psmSplashimage: {fileID: 0}
-  spritePackerPolicy: DefaultPackerPolicy
+  spritePackerPolicy: TightPackerPolicy
   scriptingDefineSymbols:
     4: 
     7: 

@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Destructible2D;
 
-public class GameController : Controller<Game>
+public class GameController : Controller
 {
 	#region Declare controllers reference
 	public CameraController					cameraController				{ get { return _cameraController = SearchLocal<CameraController>(								_cameraController,					"CameraController" ); } }
@@ -14,7 +14,6 @@ public class GameController : Controller<Game>
 	public ObstacleFactoryController		obstacleFactoryController		{ get { return _obstacleFactoryController = SearchLocal<ObstacleFactoryController>(				_obstacleFactoryController,			"ObstacleFactoryController" ); } }
 	public DestructibleController			destructibleController			{ get { return _destructibleController = SearchLocal<DestructibleController>(					_destructibleController,			"DestructibleController" ); } }
 	public PlayerController					playerController				{ get { return _playerController = SearchLocal<PlayerController>(								_playerController,					"PlayerController" ); } }
-	public PlayerInputController			playerInputController			{ get { return _playerInputController = SearchLocal<PlayerInputController>(						_playerInputController,				"PlayerInputController" ); } }
 	public SoundController					soundController					{ get { return _soundController = SearchLocal<SoundController>(									_soundController,					"SoundController" ); } }
 	public ResourcesController				resourcesController				{ get { return _resourcesController = SearchLocal<ResourcesController>(							_resourcesController,				"ResourcesController" ); } }
 
@@ -25,12 +24,11 @@ public class GameController : Controller<Game>
 	private ObstacleFactoryController 		_obstacleFactoryController;
 	private DestructibleController			_destructibleController;
 	private PlayerController				_playerController;
-	private PlayerInputController			_playerInputController;
 	private SoundController					_soundController;
 	private ResourcesController				_resourcesController;
 	#endregion
 
-	private PlayerModel 					_playerModel;
+	private PlayerModel 					_playerModel	{ get { return game.model.playerModel;}}
 
 	public override void OnNotification( string alias, Object target, params object[] data )
 	{
@@ -39,22 +37,25 @@ public class GameController : Controller<Game>
 			case N.GameStart:
 				{
 					OnStart();
-
 					break;
 				}
 
 			case N.GamePlay:
 				{
+					game.model.gameState = GameState.PLAYING;
 					break;
 				}
 
-			case N.GameRoadChanged:
+			case N.GameChangeRoad:
 				{
 					break;
 				}
 
 			case N.GameOver:
 				{
+					var collisionPoint = (Vector2)data [0];
+
+					GameOver (collisionPoint);
 					break;
 				}
 		}
@@ -62,8 +63,6 @@ public class GameController : Controller<Game>
 
 	private void OnStart()
 	{
-		_playerModel = game.model.playerModel;
-
 		SetNewGame ();
 	}
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RotatableComponent : View<Game>
+public class RotatableComponent : View
 {
 	public float m_Speed;
 

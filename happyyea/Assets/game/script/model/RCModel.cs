@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RCModel : MonoBehaviour {
+public class RCModel : MonoBehaviour 
+{
+	public string			playerSpriteResourcePath	{ get { return _playerSpriteResourcePath;}}
+	public string			roadsPrefabPath				{ get { return Application.dataPath + _roadsPrefabPath;}}
+	public string			roadsSpritePath				{ get { return Application.dataPath + _roadsSpritePath;}}
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	[SerializeField]
+	private string			_playerSpriteResourcePath;
+	[SerializeField]
+	private string			_roadsPrefabPath;
+	[SerializeField]
+	private string			_roadsSpritePath;
+
 }

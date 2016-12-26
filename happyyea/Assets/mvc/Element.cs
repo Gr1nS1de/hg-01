@@ -1,27 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public abstract class Element<T> : Element where T : BaseApplication
+public abstract class Element<T> : Element
 {
-	public T game { get { return (T)m_Game;}}
+	public GameApplication 	game 	{ get { return (GameApplication)m_Game; } }
+	public UIApplication 	ui		{ get { return (UIApplication)m_UI; } }
 }
 
 public abstract class Element : MonoBehaviour
 {
-	public BaseApplication				m_Game			{ get { return _game = !_game ? SearchGlobal<BaseApplication>(_game) : _game; } }
+	public GameApplication				m_Game			{ get { return _game 	= !_game ? 	SearchGlobal<GameApplication>(_game, "GameApplication") : 	_game; } }
+	public UIApplication				m_UI			{ get { return _ui 		= !_ui ? 	SearchGlobal<UIApplication> (_ui, "UIApplication") : 	_ui;}}
 	public Dictionary<string, object>	m_Storage		{ get { return _storage == null ? _storage = new Dictionary<string, object>() : _storage; } }
 
-	private BaseApplication				_game;
+	private GameApplication				_game;
+	private UIApplication 				_ui;
 	private Dictionary<string, object> _storage;
 
-	public void Notify( string alias, params object[] data ) { m_Game.Notify( alias, this, data ); }
+	public void Notify( string alias, params object[] data ) { m_Game.Notify( alias, this, data ); m_UI.Notify ( alias, this, data ); }
 
 	public T SearchGlobal<T> (T obj, string storeKey = "", bool update = false ) where T : Object
 	{
+		/*
 		if (obj)
 			Debug.Log ("Start search: " + obj.name + " SK = " + storeKey);
 		else
 			Debug.Log ("Store key = " + storeKey);
+		*/
+		
 		if ( m_Storage.ContainsKey( storeKey ) && storeKey != "" && !update )
 			return (T)m_Storage[storeKey];
 
@@ -35,7 +41,7 @@ public abstract class Element : MonoBehaviour
 			m_Storage.Add( storeKey, searchFor );
 		}
 
-		Debug.Log ("Return " + searchFor);
+		//Debug.Log ("Return " + searchFor);
 
 		return searchFor;
 	}

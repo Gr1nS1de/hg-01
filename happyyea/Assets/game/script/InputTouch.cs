@@ -117,13 +117,4 @@ public class InputTouch : MonoBehaviour
 		#endif
 	}
 }
-
-/// <summary>
-/// 3 type of touch: left if on the left of the screen, right if on the right of the screen, or none
-/// </summary>
-public enum TouchDirection
-{
-	none,
-	left,
-	right
-}
+	

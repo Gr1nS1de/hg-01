@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using Destructible2D;
 
-public class ResourcesController : Controller<Game> 
+public class ResourcesController : Controller
 {
-	private PlayerModel 			_playerModel;
-	private ObstacleFactoryModel 	_obstacleFactoryModel;
-	private RoadFactoryModel 		_roadFactoryModel;
+	private RCModel 				_RCModel				{ get { return game.model.RCModel; } }
+	private PlayerModel 			_playerModel			{ get { return game.model.playerModel; } }
+	private ObstacleFactoryModel 	_obstacleFactoryModel 	{ get { return game.model.obstacleFactoryModel; } }
+	private RoadFactoryModel 		_roadFactoryModel 		{ get { return game.model.roadFactoryModel; } }
 
 	public override void OnNotification (string alias, Object target, params object[] data)
 	{
@@ -13,56 +15,135 @@ public class ResourcesController : Controller<Game>
 		{
 			case N.RCStartLoad:
 				{
-					OnStartLoad ();
+					var roadId = (int)data [0];
+
+					OnStartLoad (roadId);
+
 					break;
 				}
 		}
 	}
 
-	private void OnStartLoad()
+	private void OnStartLoad(int roadId)
 	{
-		_playerModel = game.model.playerModel;
-		_obstacleFactoryModel = game.model.obstacleFactoryModel;
-		_roadFactoryModel = game.model.roadFactoryModel;
-
 		LoadPlayerSprites();
-		LoadObstacleSprites();
-		LoadRoads();
+		LoadRoad(roadId);
 	}
 
-	public void LoadPlayerSprites()
+	private void UpdatePlayerModel(Sprite[] playerSprites)
+	{
+		_playerModel.sprites = playerSprites;
+	}
+
+	private void UpdateRoadFactoryModel(RoadView roadTemplate)
+	{
+		_roadFactoryModel.roadTemplate = roadTemplate;
+	}
+
+	private void UpdateObstacleFactoryModel(ObstacleView[] obstacleTemplates)
+	{
+		_obstacleFactoryModel.obstacleTemplates = obstacleTemplates;
+	}
+
+	private void LoadPlayerSprites()
 	{
 		Debug.Log("Add player sprites from resource");
 
-		var obstacleSprites = Resources.LoadAll<Sprite>( _playerModel.spriteResourcesPath );
+		var playerSprites = Resources.LoadAll<Sprite>( _RCModel.playerSpriteResourcePath );
 
-		_playerModel.sprites = new Sprite[obstacleSprites.Length];
-
-		for ( int j = 0; j < obstacleSprites.Length; j++ )
-		{
-			_playerModel.sprites[j] = obstacleSprites[j];
-		}
+		UpdatePlayerModel( playerSprites );
 	}
+		
 
-	private void LoadObstacleSprites()
+	public void LoadRoad(int id)
 	{
+		string roadsPrefabPath = _RCModel.roadsPrefabPath;
+		string[] roadsPrefabDirs = System.IO.Directory.GetDirectories( roadsPrefabPath );
+		string roadPrefabDir = GetDirFromPath(roadsPrefabDirs[id-1]);
+		RoadView[] roadTemplate = Resources.LoadAll<RoadView>(GetDirFromPath (roadsPrefabPath) + "/" + roadPrefabDir);
 
+		ObstacleView[] obstacleTemplates = LoadRoadObstacles (id);
+			
+		UpdateRoadFactoryModel ( roadTemplate[0] );
+		UpdateObstacleFactoryModel ( obstacleTemplates );
+		//_obstacleFactoryModel.obstacleTemplates = obstaclesViews;
 	}
 
-	private void LoadRoads()
+	private ObstacleView[] LoadRoadObstacles(int roadId)
 	{
-		var themesPath = Application.dataPath + "/game/sprite/Resources";
-		Sprite[] themeSprites = null;
-		string[] themeDirs = System.IO.Directory.GetDirectories( themesPath );
+		List<ObstacleView> roadObstacleTemplates = new List<ObstacleView>();
 
-		for(int i = 0; i < themeDirs.Length; i++ )
+		foreach (string obstacleStateName in System.Enum.GetNames(typeof(ObstacleState)))
 		{
-			var themeDir = themeDirs[0].Split(new char[] { '\\' } )[1];
+			ObstacleState obstacleState = (ObstacleState)GetObstacleStateValueByName (obstacleStateName);
 
-			themeSprites = Resources.LoadAll<Sprite>( themeDir + "/theme" );
+			ObstacleView obstaclePrefab = GetObstaclePrefab (roadId, obstacleState);
+			Sprite[] obstaclesSprites = GetObstacleSprites (roadId, obstacleState);
 
-			var themeSprite = themeSprites[0];
+			foreach (Sprite obstacleSprite in obstaclesSprites)
+			{
+				ObstacleView obstacle = Instantiate (obstaclePrefab) as ObstacleView;
+
+				switch (obstacle.GetComponent<ObstacleModel>().state)
+				{
+					case ObstacleState.HARD:
+						obstacle.GetComponent<SpriteRenderer> ().sprite = obstacleSprite;
+					break;
+
+					case ObstacleState.DESTRUCTIBLE:
+						obstacle.GetComponent<D2dDestructible> ().ReplaceWith (obstacleSprite);
+					break;
+				}
+
+				obstacle.GetComponent<ObstacleModel> ().obstacleView = obstacle;
+				obstacle.gameObject.SetActive (false);
+
+				roadObstacleTemplates.Add (obstacle);
+			}
 		}
+
+		return roadObstacleTemplates.ToArray ();
 	}
 
+	private ObstacleView GetObstaclePrefab(int roadId, ObstacleState obstacleState)
+	{
+		string roadsPrefabPath = _RCModel.roadsPrefabPath;
+		string[] roadsPrefabDirs = System.IO.Directory.GetDirectories( roadsPrefabPath );
+		string roadPrefabDir = GetDirFromPath(roadsPrefabDirs[roadId-1]);
+		string[] roadPrefabDirFolders = System.IO.Directory.GetDirectories( roadsPrefabPath + "/" + roadPrefabDir );
+
+		ObstacleView[] obstaclesPrefabs = Resources.LoadAll<ObstacleView> (GetDirFromPath (roadsPrefabPath) + "/" + roadPrefabDir + "/obstacles/" + System.Enum.GetName(typeof(ObstacleState), obstacleState).ToLower());
+
+		return obstaclesPrefabs[0];
+	}
+
+	private Sprite[] GetObstacleSprites(int roadId, ObstacleState obstacleState)
+	{
+		string roadsSpritePath = _RCModel.roadsSpritePath;
+		string[] roadsSpriteDirs = System.IO.Directory.GetDirectories( roadsSpritePath );
+		string roadSpritebDir = GetDirFromPath(roadsSpriteDirs[roadId-1]);
+		string[] roadSpriteDirFolders = System.IO.Directory.GetDirectories( roadsSpritePath + "/" + roadSpritebDir );
+
+		Sprite[] obstaclesSprites = Resources.LoadAll<Sprite> (GetDirFromPath (roadsSpritePath) + "/" + roadSpritebDir + "/obstacles/" + System.Enum.GetName(typeof(ObstacleState), obstacleState).ToLower());
+
+		return obstaclesSprites;
+	}
+
+	private int GetObstacleStateValueByName(string name)
+	{
+		foreach (int value in System.Enum.GetValues (typeof(ObstacleState)))
+		{
+			if (System.Enum.GetName (typeof(ObstacleState), value) == name)
+				return value;
+		}
+
+		return -1;
+	}
+
+	private string GetDirFromPath(string path)
+	{
+		string[] splitedPath = path.Split (new char[] { '/' });
+
+		return splitedPath[splitedPath.Length - 1];
+	}
 }

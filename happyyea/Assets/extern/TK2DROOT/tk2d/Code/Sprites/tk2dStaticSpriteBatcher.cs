@@ -660,7 +660,7 @@ public class tk2dStaticSpriteBatcher : MonoBehaviour, tk2dRuntime.ISpriteCollect
 			mesh.RecalculateBounds();
 		}
 		
-		GetComponent<Renderer>().sharedMaterials = materials.ToArray();
+		//GetComponent<Renderer>().sharedMaterials = materials.ToArray();
 	}
 
 	void BuildPhysicsMesh()
