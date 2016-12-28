@@ -17,7 +17,7 @@ public class DestructibleController : Controller
 					break;
 				}
 
-			case N.GameBreakEntity:
+			case N.DestructibleBreakEntity:
 				{
 					var obstacleDestructible = (D2dDestructible)data [0];
 					var fractureCount = (int)data [1];
@@ -37,17 +37,11 @@ public class DestructibleController : Controller
 
 	public void BreakEntity( D2dDestructible destructible, int fractureCount, Vector2 collisionPoint)
 	{
-
 		// Store explosion point (used in OnEndSplit)
 		if (collisionPoint == Vector2.zero)
 			_destructibleModel.entityBreakPoint = destructible.transform.position;
 		else
 			_destructibleModel.entityBreakPoint = collisionPoint;
-
-		destructible.transform.tag = "Untagged";
-
-		if( destructible.GetComponentInChildren<D2dCollider>() )
-			destructible.GetComponentInChildren<D2dCollider>().m_SpriteChildCollider.tag = "Untagged";
 
 		// Register split event
 		destructible.OnEndSplit.AddListener(OnEndSplit);

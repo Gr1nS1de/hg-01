@@ -60,7 +60,6 @@ public class PlayerController : Controller
 
 	private void PlayerJump()
 	{ 
-		Debug.Log ("Player jump");
 		switch(_playerModel.positionState)
 		{
 			case PlayerPositionState.ON_CIRCLE:
@@ -91,7 +90,6 @@ public class PlayerController : Controller
 
 	private void OnCompleteJump()
 	{
-		Debug.Log ("Complete jump");
 
 		if(DOTween.IsTweening(Camera.main))
 			return;

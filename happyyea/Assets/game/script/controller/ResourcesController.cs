@@ -54,7 +54,6 @@ public class ResourcesController : Controller
 		UpdatePlayerModel( playerSprites );
 	}
 		
-
 	public void LoadRoad(int id)
 	{
 		string roadsPrefabPath = _RCModel.roadsPrefabPath;
@@ -77,8 +76,8 @@ public class ResourcesController : Controller
 		{
 			ObstacleState obstacleState = (ObstacleState)GetObstacleStateValueByName (obstacleStateName);
 
-			ObstacleView obstaclePrefab = GetObstaclePrefab (roadId, obstacleState);
-			Sprite[] obstaclesSprites = GetObstacleSprites (roadId, obstacleState);
+			ObstacleView obstaclePrefab = LoadObstaclePrefab (roadId, obstacleState);
+			Sprite[] obstaclesSprites = LoadObstacleSprites (roadId, obstacleState);
 
 			foreach (Sprite obstacleSprite in obstaclesSprites)
 			{
@@ -95,7 +94,11 @@ public class ResourcesController : Controller
 					break;
 				}
 
-				obstacle.GetComponent<ObstacleModel> ().obstacleView = obstacle;
+				ObstacleModel obstacleModel = obstacle.GetComponent<ObstacleModel> ();
+
+				obstacleModel.obstacleView = obstacle;
+				obstacleModel.spriteSize = obstacleSprite.bounds.size;
+				Debug.Log ("Sprite size = " + obstacleModel.spriteSize);
 				obstacle.gameObject.SetActive (false);
 
 				roadObstacleTemplates.Add (obstacle);
@@ -105,7 +108,7 @@ public class ResourcesController : Controller
 		return roadObstacleTemplates.ToArray ();
 	}
 
-	private ObstacleView GetObstaclePrefab(int roadId, ObstacleState obstacleState)
+	private ObstacleView LoadObstaclePrefab(int roadId, ObstacleState obstacleState)
 	{
 		string roadsPrefabPath = _RCModel.roadsPrefabPath;
 		string[] roadsPrefabDirs = System.IO.Directory.GetDirectories( roadsPrefabPath );
@@ -117,7 +120,7 @@ public class ResourcesController : Controller
 		return obstaclesPrefabs[0];
 	}
 
-	private Sprite[] GetObstacleSprites(int roadId, ObstacleState obstacleState)
+	private Sprite[] LoadObstacleSprites(int roadId, ObstacleState obstacleState)
 	{
 		string roadsSpritePath = _RCModel.roadsSpritePath;
 		string[] roadsSpriteDirs = System.IO.Directory.GetDirectories( roadsSpritePath );
@@ -129,11 +132,11 @@ public class ResourcesController : Controller
 		return obstaclesSprites;
 	}
 
-	private int GetObstacleStateValueByName(string name)
+	private int GetObstacleStateValueByName(string stateName)
 	{
 		foreach (int value in System.Enum.GetValues (typeof(ObstacleState)))
 		{
-			if (System.Enum.GetName (typeof(ObstacleState), value) == name)
+			if (System.Enum.GetName (typeof(ObstacleState), value) == stateName)
 				return value;
 		}
 

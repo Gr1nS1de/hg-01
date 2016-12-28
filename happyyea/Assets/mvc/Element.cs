@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 public abstract class Element<T> : Element
 {
-	public GameApplication 	game 	{ get { return (GameApplication)m_Game; } }
-	public UIApplication 	ui		{ get { return (UIApplication)m_UI; } }
+	public GameApplication 	game 			{ get { return (GameApplication)m_Game; } }
+	public UIApplication 	ui				{ get { return (UIApplication)m_UI; } }
+
 }
 
 public abstract class Element : MonoBehaviour
@@ -12,10 +13,12 @@ public abstract class Element : MonoBehaviour
 	public GameApplication				m_Game			{ get { return _game 	= !_game ? 	SearchGlobal<GameApplication>(_game, "GameApplication") : 	_game; } }
 	public UIApplication				m_UI			{ get { return _ui 		= !_ui ? 	SearchGlobal<UIApplication> (_ui, "UIApplication") : 	_ui;}}
 	public Dictionary<string, object>	m_Storage		{ get { return _storage == null ? _storage = new Dictionary<string, object>() : _storage; } }
+	public GameObject					dynamic_objects	{ get { return _dynamic_objects = _dynamic_objects ? _dynamic_objects : GameObject.FindGameObjectWithTag ("dynamic_objects"); }}
 
 	private GameApplication				_game;
 	private UIApplication 				_ui;
-	private Dictionary<string, object> _storage;
+	private Dictionary<string, object> 	_storage;
+	private GameObject 					_dynamic_objects;
 
 	public void Notify( string alias, params object[] data ) { m_Game.Notify( alias, this, data ); m_UI.Notify ( alias, this, data ); }
 

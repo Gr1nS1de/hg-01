@@ -198,6 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _obstacleTemplates: []
+  _obstaclesDynamicContainer: {fileID: 0}
 --- !u!1 &153836154
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,7 +612,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 278893667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -1341,7 +1342,7 @@ ParticleSystem:
   moveWithTransform: 1
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: -609670655
+  randomSeed: 919589048
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -1507,7 +1508,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       minMaxState: 0
     startSize:
-      scalar: 0.07
+      scalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1523,7 +1524,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: 0.4285714
+          value: 0.29999998
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -3854,7 +3855,7 @@ ParticleSystem:
   moveWithTransform: 1
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: -3798001
+  randomSeed: 822546367
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -5632,7 +5633,7 @@ ParticleSystem:
   moveWithTransform: 0
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: 1910391502
+  randomSeed: 78119510
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -7435,7 +7436,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1417253747}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -7919,9 +7920,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2be40a9fe722b47b7932bf0e0cf439cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _breakForce: 0
-  _playerFractureCount: 0
-  _destructibleObstacleFractureCount: 0
+  _breakForce: 1
+  _playerFractureCount: 10
+  _destructibleObstacleFractureCount: 10
 --- !u!1 &1706053508
 GameObject:
   m_ObjectHideFlags: 0

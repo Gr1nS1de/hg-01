@@ -16,10 +16,23 @@ public class ObstacleFactoryController : Controller
 
 					break;
 				}
+
+			case N.GamePlay:
+				{
+					OnGamePlay ();
+
+					break;
+				}
 		}
 	}
 
 	private void OnStart()
+	{
+		_obstacleFactoryModel.obstaclesDynamicContainer.name = "ObstaclesContainer";
+		_obstacleFactoryModel.obstaclesDynamicContainer.transform.SetParent (dynamic_objects.transform);
+	}
+
+	private void OnGamePlay()
 	{
 		StartCoroutine( ObstacleInstantiator() );
 	}
@@ -28,12 +41,12 @@ public class ObstacleFactoryController : Controller
 	{
 		while ( true )
 		{
-			var allObstacles = FindObjectsOfType<ObstacleEntity>();
+			var allObstacles = FindObjectsOfType<ObstacleView>();
 			bool doInstantiateObstacle = false;
 
 			if ( allObstacles != null && allObstacles.Length > 1 )
 			{
-				var allVisibleObtacles = System.Array.FindAll( allObstacles, o => o.m_IsVisible == true );
+				var allVisibleObtacles = System.Array.FindAll( allObstacles, o => o.isVisible == true );
 
 				if ( allVisibleObtacles != null && allVisibleObtacles.Length < game.model.currentScore + 3 )
 					doInstantiateObstacle = true;
@@ -54,20 +67,35 @@ public class ObstacleFactoryController : Controller
 		DestroyObject( obstacleInstance );
 	}
 
+	//Instantiate random obstacle
 	private void DOInstantiateObstacle()
 	{
-		
-		ObstacleView objTmp = null;
+		ObstacleView instantiatedObstacle = null;
 		var obstacleTemplatesDictionary = game.model.obstacleFactoryModel.obstacleTemplatesDictionary;
 		ObstacleState randomObstacleState = (ObstacleState)UnityEngine.Random.Range( 0, System.Enum.GetNames(typeof(ObstacleState)).Length );
 		int randomInstanceIndex = UnityEngine.Random.Range( 0, obstacleTemplatesDictionary[randomObstacleState].Length );
 
-		var obstacleRandomTemplate = obstacleTemplatesDictionary[randomObstacleState][randomInstanceIndex];
+		ObstacleView obstacleRandomTemplate = obstacleTemplatesDictionary[randomObstacleState][randomInstanceIndex];
 
-		objTmp = Instantiate( obstacleRandomTemplate ) as ObstacleView;
-		objTmp.gameObject.SetActive( true );
+		instantiatedObstacle = Instantiate( obstacleRandomTemplate ) as ObstacleView;
+		//instantiatedObstacle.gameObject.SetActive( true );
 
-		//obstacleEntity.Init( game.view.playerSpriteView.transform.eulerAngles.z - 30, Util.GetRandomNumber( 0f, 100f ) < 50 );
+		ObstacleModel obstacleModel = instantiatedObstacle.GetComponent<ObstacleModel> ();
 
+		ObstacleModel obstacleModelCopy = _obstacleFactoryModel.gameObject.AddComponent<ObstacleModel>();
+		obstacleModelCopy.GetCopyOf<ObstacleModel> (obstacleModel);
+
+		_obstacleFactoryModel.obstacleModelsDictionary.Add (instantiatedObstacle, obstacleModelCopy);
+
+		Destroy (obstacleModel);
+
+		GameObject wrapObject = new GameObject ();
+
+		wrapObject.name = "obstacleWrapper";
+		instantiatedObstacle.transform.SetParent (wrapObject.transform);
+		wrapObject.transform.SetParent (_obstacleFactoryModel.obstaclesDynamicContainer.transform);
+
+		instantiatedObstacle.OnInit (game.view.playerSpriteView.transform.eulerAngles.z - 30, Util.GetRandomNumber( 0f, 100f ) < 50  );
 	}
+		
 }

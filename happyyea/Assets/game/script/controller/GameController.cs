@@ -46,6 +46,18 @@ public class GameController : Controller
 					break;
 				}
 
+
+			case N.GamePlayerImpactObstacle:
+				{
+					var obstacleView = (ObstacleView)data [0];
+					var collisionPoint = (Vector2)data [1];
+
+					//Debug.Break ();
+
+					OnImpactObstacleByPlayer (obstacleView, collisionPoint);
+					break;
+				}
+
 			case N.GameChangeRoad:
 				{
 					break;
@@ -89,6 +101,12 @@ public class GameController : Controller
 	{
 		var obstacleModel = game.model.obstacleFactoryModel.obstacleModelsDictionary[obstacleView];
 
+		if (!obstacleModel)
+		{
+			Debug.LogError ("Cant find model");
+			return;
+		}
+			
 		switch (obstacleModel.state)
 		{
 			case ObstacleState.HARD:
@@ -106,7 +124,7 @@ public class GameController : Controller
 
 					Add1Point ();
 
-					Notify (N.GameBreakEntity, obstacleDestructible, game.model.destructibleModel.destructibleObstacleFractureCount, collisionPoint);
+					Notify (N.DestructibleBreakEntity, obstacleDestructible, game.model.destructibleModel.destructibleObstacleFractureCount, collisionPoint);
 
 					break;
 				}
@@ -135,7 +153,7 @@ public class GameController : Controller
 
 		//_soundManager.PlayFail();
 
-		Notify(N.GameBreakEntity, _playerModel.playerDestructible, game.model.destructibleModel.playerFtactureCount, collisionPoint);
+		Notify(N.DestructibleBreakEntity, _playerModel.playerDestructible, game.model.destructibleModel.playerFtactureCount, collisionPoint);
 
 		FindObjectOfType<CanvasController>().OnGameOver(() =>
 		{

@@ -75,7 +75,6 @@ public class InputController : Controller
 
 		if (Input.GetMouseButtonDown (0))
 		{
-			Debug.Log ("Notify BUTTTON DOWN");
 			Notify (N.InputOnTouchDown);
 		}
 

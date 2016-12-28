@@ -1656,6 +1656,9 @@ namespace Destructible2D
 
                         clone.GetComponent<Rigidbody2D>().isKinematic = false;
 
+						if (clone.GetComponent<ObstacleView> ())
+							Destroy (clone.GetComponent<ObstacleView> ());
+
 						// Retain transform
 						clone.transform.SetParent(transform.parent, false);
 
