@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - dynamic_objects
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -14,9 +15,9 @@ TagManager:
   - UI
   - 
   - 
-  - Obstacle
-  - 
-  - 
+  - Player
+  - HardObstacle
+  - DestructibleObstacle
   - 
   - 
   - 

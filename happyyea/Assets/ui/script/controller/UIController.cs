@@ -20,8 +20,8 @@ public class UIController : Controller
 
 	void UpdateText()
 	{
-		_UIModel.bestScoreText.text = "BEST " + Util.GetBestScore().ToString();
-		_UIModel.lastScoreText.text = "LAST " + Util.GetLastScore().ToString();
+		_UIModel.bestScoreText.text = "BEST " + Utils.GetBestScore().ToString();
+		_UIModel.lastScoreText.text = "LAST " + Utils.GetLastScore().ToString();
 	}
 
 	public void OnStartGame(System.Action complete)
@@ -68,8 +68,10 @@ public class UIController : Controller
 
 	public void OnClickedStart()
 	{
+		Notify(N.GamePlay);
+
 		FindObjectOfType<CameraManager>().DOStart(() => {
-			Notify(N.GamePlay);
+			//Wait for camera zoom in
 		});
 
 		OnStartGame(null);

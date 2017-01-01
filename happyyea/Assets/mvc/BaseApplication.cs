@@ -16,7 +16,7 @@ public abstract class BaseApplication : Element
 	private void Awake()
 	{
 		InitTweening ();
-		Notify( N.RCStartLoad, 1 );
+		Notify( N.RCStartLoad, Road.GINGER_MAN );
 	}
 
 	private void Start()
