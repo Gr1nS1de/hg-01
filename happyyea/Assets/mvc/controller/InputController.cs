@@ -9,7 +9,6 @@ public class InputController : Controller
 	public delegate void OnTouchUp();
 	public static event OnTouchUp OnTouchedUp;
 
-
 	private void Update()
 	{
 		/*
@@ -73,11 +72,6 @@ public class InputController : Controller
 
 		//#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_TVOS 
 
-		if (Input.GetMouseButtonDown (0))
-		{
-			Notify (N.InputOnTouchDown);
-		}
-
 		int nbTouches = Input.touchCount;
 		if (nbTouches > 0) 
 		{
@@ -85,7 +79,6 @@ public class InputController : Controller
 
 			TouchPhase phase = touch.phase;
 
-			Debug.Log("Touches > 0");
 			if (phase == TouchPhase.Began) 
 			{
 				Notify(N.InputOnTouchDown);
@@ -110,6 +103,12 @@ public class InputController : Controller
 					OnTouchedUp();
 			}
 		}
+		else 
+		if (Input.GetMouseButtonDown (0))
+		{
+			Notify (N.InputOnTouchDown);
+		}
+
 
 
 

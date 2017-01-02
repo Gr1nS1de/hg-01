@@ -7,7 +7,17 @@ public class CameraController : Controller
 	{
 		switch ( alias )
 		{
+			case N.GameStart:
+				{
+					OnStart ();
 
+					break;
+				}
 		}
 	 }
+
+	private void OnStart()
+	{
+		game.view.cameraView.OnStart ();
+	}
 }

@@ -237,9 +237,9 @@ MonoBehaviour:
   RecordAlphaCount: 1
   AutoSharpen: 1
   AutoSplit: 1
-  MinSplitPixels: 1
+  MinSplitPixels: 5
   LocalSplitExpand: 20
-  FeatherSplit: 0
+  FeatherSplit: 1
   Sharpness: 1
   color: {r: 1, g: 1, b: 1, a: 1}
   damage: 0

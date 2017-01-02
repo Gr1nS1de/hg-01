@@ -10,5 +10,6 @@ public enum TouchDirection
 
 public class InputModel : Model
 {
+
 }
 

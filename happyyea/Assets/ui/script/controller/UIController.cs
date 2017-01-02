@@ -70,7 +70,7 @@ public class UIController : Controller
 	{
 		Notify(N.GamePlay);
 
-		FindObjectOfType<CameraManager>().DOStart(() => {
+		game.view.cameraView.DOStart(() => {
 			//Wait for camera zoom in
 		});
 

@@ -13,10 +13,7 @@ public class ObstacleView : View<Game>
 
 	public void OnInit(float rotationZ, bool isDown)
 	{
-		SetPosition(new Vector3(0,0,rotationZ), isDown, null);
-		gameObject.SetActive(true);
 		StartPlacingObstacle(rotationZ, isDown);
-
 	}
 
 	private void StartPlacingObstacle(float rotationZ, bool isDown)
@@ -27,12 +24,14 @@ public class ObstacleView : View<Game>
 		if(isDown)
 			sign = -1;
 
-		var currentObstaclePosition = transform.localPosition;
+		Vector3 correctLocalPosition = SetCorrectLocalPosition(new Vector3(0,0,rotationZ), isDown, null);
+
+		gameObject.SetActive(true);
 
 		isVisible = true;
 
-		transform.localPosition = new Vector3(currentObstaclePosition.x + sign * 0.2f, currentObstaclePosition.y, currentObstaclePosition.z);
-		transform.DOLocalMoveX(currentObstaclePosition.x, 0.2f).OnComplete(() => {
+		transform.localPosition = new Vector3(correctLocalPosition.x + sign * 0.2f, correctLocalPosition.y, correctLocalPosition.z);
+		transform.DOLocalMoveX(correctLocalPosition.x, 0.2f).OnComplete(() => {
 			
 			StopAllCoroutines();
 
@@ -48,14 +47,14 @@ public class ObstacleView : View<Game>
 
 			if (obstacleModel.spriteForVisible.isVisible)
 			{
-				if (!_isVisible)
-					_isVisible = true;
+				if (!isVisible)
+					isVisible = true;
 			}
 			else
 			{
-				if (_isVisible)
+				if (isVisible)
 				{
-					_isVisible = false;
+					isVisible = false;
 
 					yield return new WaitForSeconds(2f);
 
@@ -69,42 +68,41 @@ public class ObstacleView : View<Game>
 		}
 	}
 
-	public void SetPosition(Vector3 rotation, bool isDown, System.Action callback)
+	public Vector3 SetCorrectLocalPosition(Vector3 rotation, bool isDown, System.Action callback)
 	{
-		float spriteHeightOffset = obstacleSpriteSize.y * transform.localScale.y*2f;
+		float spriteHeightOffset = obstacleSpriteSize.y * transform.localScale.y;//*2f;
 		Vector3 pPosition = new Vector3(game.model.currentRoadModel.radius, 0f, game.view.playerView.transform.position.z );
 
-		Debug.Log ("Sprite Y offset = " + spriteHeightOffset + " " + obstacleSpriteSize.y);
-
-		Vector3 correctPosition;
+		Vector3 searchPosition;
 
 		if(isDown)
 		{
-			correctPosition = new Vector3(pPosition.x - spriteHeightOffset, pPosition.y, pPosition.z);
+			searchPosition = new Vector3(pPosition.x - spriteHeightOffset, pPosition.y, pPosition.z);
 
-			transform.localPosition = correctPosition;
+			transform.localPosition = searchPosition;
 
-			correctPosition = transform.position;
+			searchPosition = transform.position;
 
-			transform.position = correctPosition;
+			transform.position = searchPosition;
 			transform.localEulerAngles = new Vector3(0,0,-90);
 		}
 		else
 		{
-			correctPosition = new Vector3(pPosition.x + spriteHeightOffset, pPosition.y, pPosition.z);
+			searchPosition = new Vector3(pPosition.x + spriteHeightOffset, pPosition.y, pPosition.z);
 
-			transform.localPosition = correctPosition;
+			transform.localPosition = searchPosition;
 
-			correctPosition = transform.position;
+			searchPosition = transform.position;
 
-			transform.position = correctPosition;
+			transform.position = searchPosition;
 			transform.localEulerAngles = new Vector3(0,0,+90);
 		}
 
-		obstacleModel.spriteForVisible.transform.position = correctPosition;
+		obstacleModel.spriteForVisible.transform.position = searchPosition;
 
 		transform.parent.eulerAngles = rotation;
 
+		return transform.localPosition;
 	}
 
 }
