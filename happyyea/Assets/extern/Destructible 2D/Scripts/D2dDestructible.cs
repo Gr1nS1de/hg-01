@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -1673,11 +1674,14 @@ namespace Destructible2D
                                 clone.transform.GetChild( j ).gameObject.SetActive( false );
                                 clone.transform.GetChild( j ).gameObject.isStatic = true;
                             }
-
-                        //Disable all unity colliders on clones
-                        if ( clone.GetComponent<Collider2D>() )
-                            foreach ( Collider2D collider in clone.GetComponents<Collider2D>() )
-                                collider.enabled = false;
+						
+                        //Reset all unity colliders on clones
+						if (clone.GetComponent<Collider2D> ())
+							foreach (Collider2D collider in clone.GetComponents<Collider2D>())
+							{
+								StartCoroutine (ResetCollider(clone.transform, collider));
+							}
+						
 					}
 
 					group.GenerateData();
@@ -1707,6 +1711,17 @@ namespace Destructible2D
 				if (OnEndSplit != null) OnEndSplit.Invoke(clones);
 			}
 			IsSplitting = false; clones.Clear();
+		}
+
+		private IEnumerator ResetCollider(Transform clone, Collider2D collider)
+		{
+			System.Type colliderType = collider.GetType ();
+
+			Destroy (collider);
+
+			yield return null;
+
+			clone.gameObject.AddComponent(colliderType);
 		}
 
 		public void SubsetAlphaWith(byte[] subData, D2dRect subRect, int newAlphaCount = -1)

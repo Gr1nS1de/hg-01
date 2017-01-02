@@ -99,7 +99,7 @@ public class GameController : Controller
 
 	public void OnImpactObstacleByPlayer(ObstacleView obstacleView, Vector2 collisionPoint)
 	{
-		var obstacleModel = game.model.obstacleFactoryModel.obstacleModelsDictionary[obstacleView];
+		var obstacleModel = game.model.obstacleFactoryModel.currentModelsDictionary[obstacleView];
 
 		if (!obstacleModel)
 		{

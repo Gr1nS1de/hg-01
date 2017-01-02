@@ -37,9 +37,7 @@ public class PlayerController : Controller
 	}
 
 	private void OnStart()
-	{
-		Debug.Log ("Start player controller");
-	}
+	{}
 
 	private void Update()
 	{

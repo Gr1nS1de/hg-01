@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using Destructible2D;
 
 public class DestructibleController : Controller
@@ -35,7 +36,7 @@ public class DestructibleController : Controller
 	{
 	}
 
-	public void BreakEntity( D2dDestructible destructible, int fractureCount, Vector2 collisionPoint)
+	private void BreakEntity( D2dDestructible destructible, int fractureCount, Vector2 collisionPoint)
 	{
 		// Store explosion point (used in OnEndSplit)
 		if (collisionPoint == Vector2.zero)

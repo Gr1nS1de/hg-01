@@ -3,17 +3,44 @@ using System.Collections.Generic;
 
 public class ObstacleFactoryModel : Model
 {
-	public ObstacleView[]								obstacleTemplates				{ get { return _obstacleTemplates; } set { _obstacleTemplates = value; }}
-	public Dictionary<ObstacleView, ObstacleModel>		obstacleModelsDictionary		{ get { return _obstacleModelsDictionary;}}		
-	public ObstacleView[]								hardObstacleTemplates			{ get { return System.Array.FindAll(obstacleTemplates, o => o.GetComponent<ObstacleModel>().state == ObstacleState.HARD);}}
-	public ObstacleView[]								destructibleObstacleTemplates	{ get { return System.Array.FindAll(obstacleTemplates, o => o.GetComponent<ObstacleModel>().state == ObstacleState.DESTRUCTIBLE);}}
-	public Dictionary<ObstacleState, ObstacleView[]>  	obstacleTemplatesDictionary 	{ get { if(!_obstacleTemplatesDictionary.ContainsKey(ObstacleState.HARD))_obstacleTemplatesDictionary.Add (ObstacleState.HARD, hardObstacleTemplates); if(!_obstacleTemplatesDictionary.ContainsKey(ObstacleState.DESTRUCTIBLE))_obstacleTemplatesDictionary.Add (ObstacleState.DESTRUCTIBLE, destructibleObstacleTemplates);  return _obstacleTemplatesDictionary ; } }
-	public GameObject									obstaclesDynamicContainer		{ get { return _obstaclesDynamicContainer = _obstaclesDynamicContainer ? _obstaclesDynamicContainer : new GameObject(); } }
+	public ObstacleView[]									obstacleTemplates				{ get { return _obstacleTemplates; } set { _obstacleTemplates = value; }}
+	public Dictionary<ObstacleView, ObstacleModel>			currentModelsDictionary			{ get { return _currentModelsDictionary;}}		
+	public ObstacleView[]									hardObstacleTemplates			{ get { return System.Array.FindAll(obstacleTemplates, o => o.GetComponent<ObstacleModel>().state == ObstacleState.HARD);}}
+	public ObstacleView[]									destructibleObstacleTemplates	{ get { return System.Array.FindAll(obstacleTemplates, o => o.GetComponent<ObstacleModel>().state == ObstacleState.DESTRUCTIBLE);}}
+	public Dictionary<ObstacleState, ObstacleView[]>  		templatesByStateDictionary 		{ get { if(!InitTemplatesDictionaryFlag)InitTemplatesDictionary ();  return _templatesByStateDictionary ;} }
+	public GameObject										obstaclesDynamicContainer		{ get { return _obstaclesDynamicContainer = _obstaclesDynamicContainer ? _obstaclesDynamicContainer : new GameObject(); } }
+	public Dictionary<ObstacleState, List<ObstacleView>>	recyclableObstaclesDictionary 	{ get { if (!InitRecyclableDictionaryFlag)InitRecyclableDictionary (); return _recyclableObstaclesDictionary; } }
 
 	[SerializeField]
-	private ObstacleView[]								_obstacleTemplates;
-	private Dictionary<ObstacleView, ObstacleModel> 	_obstacleModelsDictionary 		= new Dictionary<ObstacleView, ObstacleModel>();
-	private Dictionary<ObstacleState, ObstacleView[]>	_obstacleTemplatesDictionary	= new Dictionary<ObstacleState, ObstacleView[]>();
-	public GameObject									_obstaclesDynamicContainer;
+	private ObstacleView[]									_obstacleTemplates;
+	private Dictionary<ObstacleView, ObstacleModel> 		_currentModelsDictionary 		= new Dictionary<ObstacleView, ObstacleModel>();
+	private Dictionary<ObstacleState, ObstacleView[]>		_templatesByStateDictionary		= new Dictionary<ObstacleState, ObstacleView[]>();
+	private GameObject										_obstaclesDynamicContainer;
+	private Dictionary<ObstacleState, List<ObstacleView>>	_recyclableObstaclesDictionary	= new Dictionary<ObstacleState, List<ObstacleView>>();
 
+	private bool InitTemplatesDictionaryFlag = false;
+	private bool InitRecyclableDictionaryFlag = false;
+
+	private void InitTemplatesDictionary()
+	{
+		
+		if(!_templatesByStateDictionary.ContainsKey(ObstacleState.HARD))
+			_templatesByStateDictionary.Add (ObstacleState.HARD, hardObstacleTemplates); 
+
+		if(!_templatesByStateDictionary.ContainsKey(ObstacleState.DESTRUCTIBLE))
+			_templatesByStateDictionary.Add (ObstacleState.DESTRUCTIBLE, destructibleObstacleTemplates);  
+
+		InitTemplatesDictionaryFlag = true;
+	}
+
+	private void InitRecyclableDictionary()
+	{
+		foreach(ObstacleState obstacleState in System.Enum.GetValues(typeof(ObstacleState)))
+		{
+			if (!_recyclableObstaclesDictionary.ContainsKey (obstacleState))
+				_recyclableObstaclesDictionary.Add (obstacleState, new List<ObstacleView>());
+		}
+
+		InitRecyclableDictionaryFlag = true;
+	}
 }	

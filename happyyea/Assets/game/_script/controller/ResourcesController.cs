@@ -47,8 +47,6 @@ public class ResourcesController : Controller
 
 	private void LoadPlayerSprites()
 	{
-		Debug.Log("Add player sprites from resource");
-
 		var playerSprites = Resources.LoadAll<Sprite>( _RCModel.playerSpriteResourcePath );
 
 		UpdatePlayerModel( playerSprites );
@@ -96,7 +94,7 @@ public class ResourcesController : Controller
 
 				obstacleModel.obstacleView = obstacle;
 				obstacleModel.spriteSize = obstacleSprite.bounds.size;
-				Debug.Log ("Sprite size = " + obstacleModel.spriteSize);
+
 				obstacle.gameObject.SetActive (false);
 
 				roadObstacleTemplates.Add (obstacle);
@@ -129,8 +127,6 @@ public class ResourcesController : Controller
 		string roadDir;
 
 		roadDir = (int)roadAlias + "_" + System.Enum.GetName (typeof(Road), roadAlias).ToLower();
-
-		Debug.Log ("Return roadDir = " + roadDir);
 
 		return roadDir;
 

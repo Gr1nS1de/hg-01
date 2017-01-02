@@ -55,52 +55,78 @@ public class ObstacleFactoryController : Controller
 				doInstantiateObstacle = true;
 
 			if ( doInstantiateObstacle )
-				DOInstantiateObstacle();
+				InstantiateObstacle();
 
 			yield return new WaitForSeconds( Utils.GetRandomNumber( 0.20f, 0.5f ) );
 		}
 	}
 
-	public void DODeleteObstacleInstance( GameObject obstacleInstance )
-	{
-
-		DestroyObject( obstacleInstance );
-	}
-
 	//Instantiate random obstacle
-	private void DOInstantiateObstacle()
+	private void InstantiateObstacle()
 	{
-		ObstacleView instantiatedObstacle = null;
-		var obstacleTemplatesDictionary = game.model.obstacleFactoryModel.obstacleTemplatesDictionary;
+		ObstacleView instantiatedObstacle;
 		ObstacleState randomObstacleState = (ObstacleState)UnityEngine.Random.Range( 0, System.Enum.GetNames(typeof(ObstacleState)).Length );
-		int randomInstanceIndex = UnityEngine.Random.Range( 0, obstacleTemplatesDictionary[randomObstacleState].Length );
 
-		ObstacleView obstacleRandomTemplate = obstacleTemplatesDictionary[randomObstacleState][randomInstanceIndex];
+		instantiatedObstacle = TryGetObstacleFromRecycleDictionary (randomObstacleState);
 
-		instantiatedObstacle = Instantiate( obstacleRandomTemplate ) as ObstacleView;
+		if (!instantiatedObstacle)
+			instantiatedObstacle = CreateNewObstacle (randomObstacleState);
+
 		//instantiatedObstacle.gameObject.SetActive( true );
 
-		ObstacleModel obstacleModel = instantiatedObstacle.GetComponent<ObstacleModel> ();
+		instantiatedObstacle.OnInit (game.view.playerSpriteView.transform.eulerAngles.z - 30, Utils.GetRandomNumber( 0f, 100f ) < 50  );
+	}
+
+	private ObstacleView TryGetObstacleFromRecycleDictionary(ObstacleState obstacleState)
+	{
+		ObstacleView recyclableObstacle = null;
+		var recyclableDictionary = _obstacleFactoryModel.recyclableObstaclesDictionary;
+
+		if (recyclableDictionary [obstacleState].Count >= 1)
+		{
+			recyclableObstacle = recyclableDictionary [obstacleState][0];
+
+			recyclableDictionary[obstacleState].Remove(recyclableObstacle);
+		}
+
+		return recyclableObstacle;
+	}
+
+	private ObstacleView CreateNewObstacle(ObstacleState obstacleState)
+	{
+		var obstacleTemplatesDictionary = _obstacleFactoryModel.templatesByStateDictionary;
+		int randomInstanceIndex = UnityEngine.Random.Range( 0, obstacleTemplatesDictionary[obstacleState].Length );
+		ObstacleView obstacleRandomTemplate = obstacleTemplatesDictionary[obstacleState][randomInstanceIndex];
+
+		ObstacleView instanceObstacle = Instantiate( obstacleRandomTemplate ) as ObstacleView;
+
+		#region storing obstacle model copy to dictionary
+		ObstacleModel obstacleModel = instanceObstacle.GetComponent<ObstacleModel> ();
 
 		ObstacleModel obstacleModelCopy = _obstacleFactoryModel.gameObject.AddComponent<ObstacleModel>();
 		obstacleModelCopy.GetCopyOf<ObstacleModel> (obstacleModel);
 
-		_obstacleFactoryModel.obstacleModelsDictionary.Add (instantiatedObstacle, obstacleModelCopy);
+		_obstacleFactoryModel.currentModelsDictionary.Add (instanceObstacle, obstacleModelCopy);
 
 		Destroy (obstacleModel);
+		#endregion
 
+		#region create wrap-base object for obstacle
 		GameObject wrapObject = CreateWrapperForObstacle ();
 
-		instantiatedObstacle.transform.SetParent (wrapObject.transform);
+		wrapObject.transform.SetParent (_obstacleFactoryModel.obstaclesDynamicContainer.transform);
+		#endregion
 
+		instanceObstacle.transform.SetParent (wrapObject.transform);
+
+		#region create sprite renderer object for checking visibility of obstacle by camera.
 		GameObject spriteForVisible = CreateSpriteForVisibility ();
 
 		spriteForVisible.transform.SetParent (wrapObject.transform);
 		obstacleModelCopy.spriteForVisible = spriteForVisible.GetComponent<SpriteRenderer>();
+		#endregion
 
-		wrapObject.transform.SetParent (_obstacleFactoryModel.obstaclesDynamicContainer.transform);
-
-		instantiatedObstacle.OnInit (game.view.playerSpriteView.transform.eulerAngles.z - 30, Utils.GetRandomNumber( 0f, 100f ) < 50  );
+		return instanceObstacle;
 	}
 
 	private GameObject CreateWrapperForObstacle()

@@ -20,16 +20,8 @@ public class ObstacleController : Controller
 				{
 					ObstacleView obstacle = (ObstacleView)data [0];
 
-					//obstacle.gameObject.SetActive (false);
+					CheckRecycleObstacle (obstacle);
 
-					//Destroy model copy component from factory
-					Destroy( _obstacleFactoryModel.obstacleModelsDictionary[obstacle] );
-
-					//Delete view from dictionary
-					_obstacleFactoryModel.obstacleModelsDictionary.Remove (obstacle);
-
-					//Destroy obstacle wrapper
-					Destroy(obstacle.transform.parent.gameObject);
 					break;
 				}
 		}
@@ -40,4 +32,45 @@ public class ObstacleController : Controller
 
 	}
 
+	private void CheckRecycleObstacle(ObstacleView obstacleView)
+	{
+		ObstacleModel obstacleModel = _obstacleFactoryModel.currentModelsDictionary [obstacleView];
+
+		switch (obstacleModel.recyclableState)
+		{
+			case ObstacleRecyclableState.RECYCLABLE:
+				{
+					StoreObstacleForRecycle (obstacleView);
+					break;
+				}
+
+			case ObstacleRecyclableState.NON_RECYCLABLE:
+				{
+					DeleteObstacle (obstacleView);
+					break;
+				}
+		}
+	}
+
+	private void StoreObstacleForRecycle(ObstacleView obstacleView)
+	{
+		ObstacleModel obstacleModel = _obstacleFactoryModel.currentModelsDictionary [obstacleView];
+		var recyclableDictionary = _obstacleFactoryModel.recyclableObstaclesDictionary;
+
+		recyclableDictionary[obstacleModel.state].Add (obstacleView);
+
+		obstacleView.gameObject.SetActive (false);
+	}
+
+	private void DeleteObstacle(ObstacleView obstacleView)
+	{
+		//Destroy model copy component from factory
+		Destroy( _obstacleFactoryModel.currentModelsDictionary[obstacleView] );
+
+		//Delete view from dictionary
+		_obstacleFactoryModel.currentModelsDictionary.Remove (obstacleView);
+
+		//Destroy obstacle wrapper
+		Destroy(obstacleView.transform.parent.gameObject);
+	}
 }

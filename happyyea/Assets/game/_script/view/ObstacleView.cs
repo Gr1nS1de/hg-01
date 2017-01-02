@@ -5,7 +5,7 @@ using DG.Tweening;
 public class ObstacleView : View<Game>
 {
 	public bool 			isVisible				{ get { return _isVisible; } 		private set { _isVisible = value; } }
-	private ObstacleModel	obstacleModel 			{ get { return game.model.obstacleFactoryModel.obstacleModelsDictionary[this]; } }
+	private ObstacleModel	obstacleModel 			{ get { return game.model.obstacleFactoryModel.currentModelsDictionary[this]; } }
 	private Vector3			obstacleSpriteSize		{ get { return obstacleModel.spriteSize; } }
 
 	[SerializeField]
