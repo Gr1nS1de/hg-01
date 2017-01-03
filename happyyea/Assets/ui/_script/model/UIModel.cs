@@ -8,6 +8,7 @@ public class UIModel : Model
 	public CanvasGroup 	canvasGroupInGame		{ get { return _canvasGroupInGame; } }
 	public Text 		bestScoreText			{ get { return _bestScoreText; } }
 	public Text 		lastScoreText			{ get { return _lastScoreText; } }
+	public Text			scoreText				{ get { return _scoreText;}}
 
 	[SerializeField]
 	private CanvasGroup	_canvasGroupStart;
@@ -17,5 +18,7 @@ public class UIModel : Model
 	private Text		_bestScoreText;
 	[SerializeField]
 	private Text		_lastScoreText;
+	[SerializeField]
+	private Text		_scoreText;
 }
 

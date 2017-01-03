@@ -48,7 +48,7 @@ public class DestructibleController : Controller
 		destructible.OnEndSplit.AddListener(OnEndSplit);
 
 		// Split via fracture
-		D2dQuadFracturer.Fracture(destructible, fractureCount, 0.5f);
+		D2dQuadFracturer.Fracture(destructible, fractureCount, 0.1f);
 
 		// Unregister split event
 		destructible.OnEndSplit.RemoveListener(OnEndSplit);

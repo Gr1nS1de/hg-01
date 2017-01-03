@@ -14,7 +14,7 @@ public class GameController : Controller
 	public ObstacleFactoryController		obstacleFactoryController		{ get { return _obstacleFactoryController = SearchLocal<ObstacleFactoryController>(				_obstacleFactoryController,			"ObstacleFactoryController" ); } }
 	public DestructibleController			destructibleController			{ get { return _destructibleController = SearchLocal<DestructibleController>(					_destructibleController,			"DestructibleController" ); } }
 	public PlayerController					playerController				{ get { return _playerController = SearchLocal<PlayerController>(								_playerController,					"PlayerController" ); } }
-	public SoundController					soundController					{ get { return _soundController = SearchLocal<SoundController>(									_soundController,					"SoundController" ); } }
+	public GameSoundController				gameSoundController				{ get { return _gameSoundController = SearchLocal<GameSoundController>(							_gameSoundController,				"GameSoundController" ); } }
 	public ResourcesController				resourcesController				{ get { return _resourcesController = SearchLocal<ResourcesController>(							_resourcesController,				"ResourcesController" ); } }
 
 	private CameraController				_cameraController;
@@ -24,7 +24,7 @@ public class GameController : Controller
 	private ObstacleFactoryController 		_obstacleFactoryController;
 	private DestructibleController			_destructibleController;
 	private PlayerController				_playerController;
-	private SoundController					_soundController;
+	private GameSoundController				_gameSoundController;
 	private ResourcesController				_resourcesController;
 	#endregion
 

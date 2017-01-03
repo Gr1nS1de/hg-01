@@ -111,7 +111,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1000012007537124}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8a13cc401aebf450b9326f1fd718025e, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
@@ -255,12 +255,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33fbcb04c243139438f8b0b3f28d0e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 3
+  Life: 5
   Fade: 0
-  FadeDuration: 1
-  Shrink: 0
-  ShrinkDuration: 1
-  RandomizeOnEnable: 0
+  FadeDuration: 5
+  Shrink: 1
+  ShrinkDuration: 10
+  RandomizeOnEnable: 1
   LifeMin: 3
   LifeMax: 5
   startColor: {r: 0, g: 0, b: 0, a: 0}

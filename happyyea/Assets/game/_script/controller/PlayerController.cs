@@ -64,7 +64,7 @@ public class PlayerController : Controller
 				{
 					var v = new Vector3(-_playerModel.jumpWidth, 0, 0);
 
-					game.view.playerSpriteView.transform.DOLocalMove(v, _playerModel.jumpSpeed)
+					game.view.playerSpriteView.transform.DOLocalMove(v, _playerModel.jumpDuration)
 						.OnComplete(OnCompleteJump);
 
 					_playerModel.positionState = PlayerPositionState.OUT_CIRCLE;
@@ -76,7 +76,7 @@ public class PlayerController : Controller
 				{
 					var v = new Vector3(+_playerModel.jumpWidth, 0, 0);
 
-					game.view.playerSpriteView.transform.DOLocalMove(v, _playerModel.jumpSpeed)
+					game.view.playerSpriteView.transform.DOLocalMove(v, _playerModel.jumpDuration)
 						.OnComplete(OnCompleteJump);
 
 					_playerModel.positionState = PlayerPositionState.ON_CIRCLE;

@@ -16,7 +16,6 @@ public class GameModel : Model
 	public int							currentScore			{ get { return _currentScore; } 	set { _currentScore 	= value; }}
 	public RoadModel					currentRoadModel		{ get { return _currentRoadModel			= SearchLocal<RoadModel>(					_currentRoadModel,					"RoadModel" ); } }
 
-
 	[SerializeField]
 	private GameState					_gameState 				= GameState.READY;
 	[SerializeField]
@@ -32,7 +31,7 @@ public class GameModel : Model
 	public ObstacleFactoryModel			obstacleFactoryModel	{ get { return _obstacleFactoryModel 		= SearchLocal<ObstacleFactoryModel>(		_obstacleFactoryModel,		"ObstacleFactoryModel" ); } }
 	public DestructibleModel			destructibleModel		{ get { return _destructibleModel 			= SearchLocal<DestructibleModel>( 			_destructibleModel, 		"DestructibleModel" ); } }
 	public PlayerModel					playerModel				{ get { return _playerModel 				= SearchLocal<PlayerModel>(					_playerModel,				"PlayerModel" ); } }
-	public SoundModel					soundModel				{ get { return _soundModel 					= SearchLocal<SoundModel>(					_soundModel,				"SoundModel" ); } }
+	public GameSoundModel					soundModel				{ get { return _soundModel 					= SearchLocal<GameSoundModel>(					_soundModel,				"SoundModel" ); } }
 	public RCModel						RCModel					{ get { return _RCModel 					= SearchLocal<RCModel>(						_RCModel,					"RCModel" ); } }
 
 	private CameraModel					_cameraModel;
@@ -40,7 +39,7 @@ public class GameModel : Model
 	//private ObstacleModel				_obstacleModel;
 	private DestructibleModel   		_destructibleModel;
 	private PlayerModel					_playerModel;
-	private SoundModel					_soundModel;
+	private GameSoundModel					_soundModel;
 	private RCModel						_RCModel;
 	private ObstacleFactoryModel		_obstacleFactoryModel;
 	#endregion

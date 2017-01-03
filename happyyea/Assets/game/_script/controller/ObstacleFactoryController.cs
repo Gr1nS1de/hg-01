@@ -64,6 +64,9 @@ public class ObstacleFactoryController : Controller
 	//Instantiate random obstacle
 	private void InstantiateObstacle()
 	{
+		if (game.model.gameState != GameState.PLAYING)
+			return;
+		
 		ObstacleView instantiatedObstacle;
 		ObstacleState randomObstacleState = (ObstacleState)UnityEngine.Random.Range( 0, System.Enum.GetNames(typeof(ObstacleState)).Length );
 

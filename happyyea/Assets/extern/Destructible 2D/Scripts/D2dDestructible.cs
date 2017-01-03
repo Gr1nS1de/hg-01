@@ -1660,6 +1660,9 @@ namespace Destructible2D
 						if (clone.GetComponent<ObstacleView> ())
 							Destroy (clone.GetComponent<ObstacleView> ());
 
+						if (clone.GetComponent<D2dDestroyer> ())
+							clone.GetComponent<D2dDestroyer> ().enabled = true;
+
 						// Retain transform
 						clone.transform.SetParent(transform.parent, false);
 

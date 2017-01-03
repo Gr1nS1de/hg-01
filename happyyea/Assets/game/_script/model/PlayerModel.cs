@@ -22,9 +22,9 @@ public class PlayerModel : Model
 	public float						deathDuration			{ get { return _deathDuration; } }
 	public PlayerPositionState			positionState			{ get { return _positionState; } 		set { _positionState = value; } }
 	public float 						jumpWidth				{ get { return _jumpWidth 				= game.model.currentRoadModel.width / 2f - currentSprite.bounds.size.x * 0.5f * game.view.playerSpriteView.transform.localScale.x; } }
-	public float						jumpSpeed				{ get { return _jumpSpeed;} 			set { _jumpSpeed = value; }}
+	public float						jumpDuration			{ get { return _jumpDuration;} 			set { _jumpDuration = value; }}
 	public float						speed					{ get { return _speed; } 				set { _speed = value; } }
-	public float						breakForce				{ get { return _breakForce;}}
+	public float						breakForce				{ get { return _breakForce; } }
 
 	[SerializeField]
 	private Gradient					_lightGradient;
@@ -40,7 +40,7 @@ public class PlayerModel : Model
 	private PlayerPositionState 		_positionState;
 	private float						_jumpWidth;
 	[SerializeField]
-	private float						_jumpSpeed;
+	private float						_jumpDuration;
 	[SerializeField]
 	private float						_speed;
 	[SerializeField]

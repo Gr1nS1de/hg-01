@@ -5,7 +5,7 @@ using DG.Tweening;
 public class CameraView : View<Game>
 {
 	public CameraModel 		cameraModel		{ get { return game.model.cameraModel; } }
-	public Camera 			camera			{ get { return GetComponent<Camera> (); } }
+	public Camera 			cam				{ get { return GetComponent<Camera> (); } }
 	public Transform		player			{ get { return game.view.playerSpriteContainerView.transform; } }
 	public float			playZoomSize	{ get { return cameraModel.playZoomSize; } }
 
@@ -16,12 +16,12 @@ public class CameraView : View<Game>
 
 	void Update()
 	{
-		//cam.backgroundColor = gameManager.m_ThemeDynamicColor;
+		cam.backgroundColor = GM.instance.currentBackgroundColor;
 	}
 
 	public void DOStart(System.Action callback)
 	{
-		camera.DOOrthoSize(playZoomSize, 0.7f)
+		cam.DOOrthoSize(playZoomSize, 0.7f)
 			.SetEase(Ease.OutBack)
 			.OnComplete(() => {
 				DOVirtual.DelayedCall(0.2f, () => {
@@ -46,13 +46,13 @@ public class CameraView : View<Game>
 
 	public void DOShake()
 	{
-		if(DOTween.IsTweening(camera))
+		if(DOTween.IsTweening(cam))
 			return;
 
-		camera.DOOrthoSize(playZoomSize * 1.03f, 0.02f).OnComplete(() => {
-			camera.DOOrthoSize(playZoomSize * 0.97f, 0.04f).OnComplete(() => {
-				camera.DOOrthoSize(playZoomSize, 0.02f).OnComplete(() => {
-					camera.orthographicSize = playZoomSize;
+		cam.DOOrthoSize(playZoomSize * 1.03f, 0.02f).OnComplete(() => {
+			cam.DOOrthoSize(playZoomSize * 0.97f, 0.04f).OnComplete(() => {
+				cam.DOOrthoSize(playZoomSize, 0.02f).OnComplete(() => {
+					cam.orthographicSize = playZoomSize;
 				});
 				//				cam.DOOrthoSize(orthoSize * 1.03f, 0.04f).OnComplete(() => {
 				//					cam.DOOrthoSize(orthoSize, 0.02f).OnComplete(() => {

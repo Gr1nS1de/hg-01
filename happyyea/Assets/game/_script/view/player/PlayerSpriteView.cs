@@ -3,6 +3,11 @@ using System.Collections;
 
 public class PlayerSpriteView : View<Game>
 {
+	private void Update()
+	{
+		//transform.Rotate (new Vector3(0f, 0f, 10f));
+	}
+
 	public void OnCollisionEnter2D(Collision2D other)
 	{
 		//Debug.Log (other.transform.name + " " + game.model.obstacleFactoryModel.obstacleModelsDictionary[other.transform.GetComponentInParent<ObstacleView>()]);

@@ -4,8 +4,9 @@ using System.Collections;
 public class RCModel : MonoBehaviour 
 {
 	public string			playerSpriteResourcePath	{ get { return _playerSpriteResourcePath;}}
-	public string			roadsPrefabPath				{ get { return _roadsPrefabPath;}}
-	public string			roadsSpritePath				{ get { return _roadsSpritePath;}}
+	public string			roadsPrefabPath				{ get { return _roadsPrefabPath; } }
+	public string			roadsSpritePath				{ get { return _roadsSpritePath; } }
+	public string			roadsSoundPath				{ get { return _roadsSoundPath; } }
 
 	[SerializeField]
 	private string			_playerSpriteResourcePath;
@@ -13,5 +14,7 @@ public class RCModel : MonoBehaviour
 	private string			_roadsPrefabPath;
 	[SerializeField]
 	private string			_roadsSpritePath;
+	[SerializeField]
+	private string			_roadsSoundPath;
 
 }
