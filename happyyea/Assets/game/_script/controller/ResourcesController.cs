@@ -8,7 +8,6 @@ public class ResourcesController : Controller
 	private PlayerModel 			_playerModel			{ get { return game.model.playerModel; } }
 	private ObstacleFactoryModel 	_obstacleFactoryModel 	{ get { return game.model.obstacleFactoryModel; } }
 	private RoadFactoryModel 		_roadFactoryModel 		{ get { return game.model.roadFactoryModel; } }
-	private GameSoundModel				_soundModel				{ get { return game.model.soundModel; } }
 
 	public override void OnNotification (string alias, Object target, params object[] data)
 	{
@@ -46,27 +45,6 @@ public class ResourcesController : Controller
 		_obstacleFactoryModel.obstacleTemplates = obstacleTemplates;
 	}
 
-	private void UpdateSoundModel(Dictionary<ObstacleState, AudioClip[]> clipsByObstacleStateDictionary)
-	{
-		foreach (ObstacleState obstacleState in clipsByObstacleStateDictionary.Keys)
-		{
-			switch (obstacleState)
-			{
-				case ObstacleState.HARD:
-					{
-						//_soundModel.hardObstaclesBreak = clipsByObstacleStateDictionary [obstacleState];
-						break;
-					}
-
-				case ObstacleState.DESTRUCTIBLE:
-					{
-						//_soundModel.destructibleObstacleBreak = clipsByObstacleStateDictionary [obstacleState];
-						break;
-					}
-			}
-		}
-	}
-
 	private void LoadPlayerSprites()
 	{
 		var playerSprites = Resources.LoadAll<Sprite>( _RCModel.playerSpriteResourcePath );
@@ -80,12 +58,9 @@ public class ResourcesController : Controller
 		RoadView[] roadTemplate = Resources.LoadAll<RoadView>(GetDirFromPath (roadsPrefabPath) + "/" + GetFolderByRoadAlias(roadAlias));
 
 		ObstacleView[] obstacleTemplates = LoadRoadObstacles (roadAlias);
-
-		Dictionary<ObstacleState, AudioClip[]> clipsByObstacleStateDictionary = LoadRoadSounds (roadAlias);
 			
 		UpdateRoadFactoryModel ( roadTemplate[0] );
 		UpdateObstacleFactoryModel ( obstacleTemplates );
-		UpdateSoundModel (clipsByObstacleStateDictionary);
 		//_obstacleFactoryModel.obstacleTemplates = obstaclesViews;
 	}
 
@@ -129,18 +104,6 @@ public class ResourcesController : Controller
 		return roadObstacleTemplates.ToArray ();
 	}
 
-	private Dictionary<ObstacleState, AudioClip[]> LoadRoadSounds(Road roadAlias)
-	{
-		Dictionary<ObstacleState, AudioClip[]> clipsByObstacleStateDictionary = new Dictionary<ObstacleState, AudioClip[]>();
-
-		foreach (ObstacleState obstacleState in System.Enum.GetValues(typeof(ObstacleState)))
-		{
-			clipsByObstacleStateDictionary.Add(obstacleState, LoadObstacleSounds (roadAlias, obstacleState));
-		}
-
-		return clipsByObstacleStateDictionary;
-	}
-
 	private ObstacleView LoadObstaclePrefab(Road roadAlias, ObstacleState obstacleState)
 	{
 		string roadsPrefabPath = _RCModel.roadsPrefabPath;
@@ -157,15 +120,6 @@ public class ResourcesController : Controller
 		Sprite[] obstaclesSprites = Resources.LoadAll<Sprite> (GetDirFromPath (roadsSpritePath) + "/" + GetFolderByRoadAlias(roadAlias) + "/obstacles/" + System.Enum.GetName(typeof(ObstacleState), obstacleState).ToLower());
 
 		return obstaclesSprites;
-	}
-
-	private AudioClip[] LoadObstacleSounds(Road roadAlias, ObstacleState obstacleState)
-	{
-		string roadsSoundPath = _RCModel.roadsSoundPath;
-
-		AudioClip[] obstaclesSounds = Resources.LoadAll<AudioClip> (GetDirFromPath (roadsSoundPath) + "/" + GetFolderByRoadAlias(roadAlias) + "/obstacles/" + System.Enum.GetName(typeof(ObstacleState), obstacleState).ToLower());
-
-		return obstaclesSounds;
 	}
 
 	private string GetFolderByRoadAlias(Road roadAlias)

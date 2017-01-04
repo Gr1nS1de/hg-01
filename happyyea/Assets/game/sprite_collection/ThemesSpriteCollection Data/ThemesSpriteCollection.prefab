@@ -55,7 +55,7 @@ MonoBehaviour:
   materialIdsValid: 1
   needMaterialInstance: 0
   spriteDefinitions:
-  - name: frill
+  - name: ginger_man_frill
     boundsData:
     - {x: 0, y: 0, z: 0}
     - {x: 0.82, y: 0.42, z: 0}
@@ -71,14 +71,14 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.0019541015, y: 0.8339853}
-    - {x: 0.0019541015, y: 0.91406155}
-    - {x: 0.042967774, y: 0.8339853}
-    - {x: 0.042967774, y: 0.91406155}
+    - {x: 0.82812697, y: 0.57519627}
+    - {x: 0.9882793, y: 0.57519627}
+    - {x: 0.82812697, y: 0.61621}
+    - {x: 0.9882793, y: 0.61621}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 0, y: 1}
     - {x: 1, y: 0}
+    - {x: 0, y: 1}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
@@ -89,7 +89,7 @@ MonoBehaviour:
     regionY: 0
     regionW: 0
     regionH: 0
-    flipped: 1
+    flipped: 0
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 0
@@ -118,66 +118,19 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.0019541015, y: 0.5058603}
-    - {x: 0.2636709, y: 0.5058603}
-    - {x: 0.0019541015, y: 0.8300772}
-    - {x: 0.2636709, y: 0.8300772}
+    - {x: 0.003908203, y: 0.4941416}
+    - {x: 0.003908203, y: 0.7558584}
+    - {x: 0.6523418, y: 0.4941416}
+    - {x: 0.6523418, y: 0.7558584}
     normalizedUvs:
     - {x: 0, y: 0}
-    - {x: 1, y: 0}
     - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 1}
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
     materialId: 0
     sourceTextureGUID: d4b3305b11557a34480df22cc2e3dec8
-    extractRegion: 0
-    regionX: 0
-    regionY: 0
-    regionW: 0
-    regionH: 0
-    flipped: 0
-    complexGeometry: 0
-    physicsEngine: 0
-    colliderType: 0
-    customColliders: []
-    colliderVertices: []
-    colliderIndicesFwd: 
-    colliderIndicesBack: 
-    colliderConvex: 0
-    colliderSmoothSphereCollisions: 0
-    polygonCollider2D: []
-    edgeCollider2D: []
-    attachPoints: []
-  - name: bow_tie
-    boundsData:
-    - {x: 0, y: -0.004999995, z: 0}
-    - {x: 0.74, y: 0.41, z: 0}
-    untrimmedBoundsData:
-    - {x: 0, y: -0.004999995, z: 0}
-    - {x: 0.74, y: 0.41, z: 0}
-    texelSize: {x: 0.01, y: 0.01}
-    positions:
-    - {x: -0.37, y: -0.21, z: 0}
-    - {x: 0.37, y: -0.21, z: 0}
-    - {x: -0.37, y: 0.2, z: 0}
-    - {x: 0.37, y: 0.2, z: 0}
-    normals: []
-    tangents: []
-    uvs:
-    - {x: 0.0019541015, y: 0.9179697}
-    - {x: 0.0019541015, y: 0.9902334}
-    - {x: 0.04199121, y: 0.9179697}
-    - {x: 0.04199121, y: 0.9902334}
-    normalizedUvs:
-    - {x: 0, y: 0}
-    - {x: 0, y: 1}
-    - {x: 1, y: 0}
-    - {x: 1, y: 1}
-    indices: 000000000300000001000000020000000300000000000000
-    material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
-    materialId: 0
-    sourceTextureGUID: a8e5124fcef46f6489c27524707ff057
     extractRegion: 0
     regionX: 0
     regionY: 0
@@ -196,26 +149,73 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
+  - name: ginger_man_bow_tie
+    boundsData:
+    - {x: 0, y: -0.004999995, z: 0}
+    - {x: 0.74, y: 0.41, z: 0}
+    untrimmedBoundsData:
+    - {x: 0, y: -0.004999995, z: 0}
+    - {x: 0.74, y: 0.41, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -0.37, y: -0.21, z: 0}
+    - {x: 0.37, y: -0.21, z: 0}
+    - {x: -0.37, y: 0.2, z: 0}
+    - {x: 0.37, y: 0.2, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.82812697, y: 0.62011814}
+    - {x: 0.9726543, y: 0.62011814}
+    - {x: 0.82812697, y: 0.6601553}
+    - {x: 0.9726543, y: 0.6601553}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
+    materialId: 0
+    sourceTextureGUID: a8e5124fcef46f6489c27524707ff057
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
   - name: theme_circle
     boundsData:
-    - {x: 0, y: 0, z: 0}
-    - {x: 5.12, y: 5.12, z: 0}
+    - {x: 0, y: 0.01999998, z: 0}
+    - {x: 5, y: 5, z: 0}
     untrimmedBoundsData:
     - {x: 0, y: 0, z: 0}
     - {x: 5.12, y: 5.12, z: 0}
     texelSize: {x: 0.01, y: 0.01}
     positions:
-    - {x: -2.56, y: -2.56, z: 0}
-    - {x: 2.56, y: -2.56, z: 0}
-    - {x: -2.56, y: 2.56, z: 0}
-    - {x: 2.56, y: 2.56, z: 0}
+    - {x: -2.5, y: -2.48, z: 0}
+    - {x: 2.5, y: -2.48, z: 0}
+    - {x: -2.5, y: 2.52, z: 0}
+    - {x: 2.5, y: 2.52, z: 0}
     normals: []
     tangents: []
     uvs:
-    - {x: 0.0019541015, y: 0.0019541015}
-    - {x: 0.5019522, y: 0.0019541015}
-    - {x: 0.0019541015, y: 0.5019522}
-    - {x: 0.5019522, y: 0.5019522}
+    - {x: 0.003908203, y: 0.0019541015}
+    - {x: 0.9804668, y: 0.0019541015}
+    - {x: 0.003908203, y: 0.4902334}
+    - {x: 0.9804668, y: 0.4902334}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -231,6 +231,241 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: snow_man_scarf
+    boundsData:
+    - {x: 0, y: -0.004999995, z: 0}
+    - {x: 1.5, y: 0.78999996, z: 0}
+    untrimmedBoundsData:
+    - {x: 0, y: -0.004999995, z: 0}
+    - {x: 1.5, y: 0.78999996, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -0.75, y: -0.39999998, z: 0}
+    - {x: 0.75, y: -0.39999998, z: 0}
+    - {x: -0.75, y: 0.39, z: 0}
+    - {x: 0.75, y: 0.39, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6601582, y: 0.4941416}
+    - {x: 0.95312303, y: 0.4941416}
+    - {x: 0.6601582, y: 0.5712881}
+    - {x: 0.95312303, y: 0.5712881}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
+    materialId: 0
+    sourceTextureGUID: 16cfdaa727abb4b9684a6bba8534b2ac
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: snow_man_hat
+    boundsData:
+    - {x: 0, y: -0.004999995, z: 0}
+    - {x: 0.82, y: 0.57, z: 0}
+    untrimmedBoundsData:
+    - {x: 0, y: -0.004999995, z: 0}
+    - {x: 0.82, y: 0.57, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -0.41, y: -0.29, z: 0}
+    - {x: 0.41, y: -0.29, z: 0}
+    - {x: -0.41, y: 0.28, z: 0}
+    - {x: 0.41, y: 0.28, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6601582, y: 0.57519627}
+    - {x: 0.82031053, y: 0.57519627}
+    - {x: 0.6601582, y: 0.6308584}
+    - {x: 0.82031053, y: 0.6308584}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
+    materialId: 0
+    sourceTextureGUID: 7fdb32bd94b9e4e8893cec3bb05fdb9a
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: snow_man_pearl_button
+    boundsData:
+    - {x: 0.0050000027, y: -0.004999995, z: 0}
+    - {x: 0.15, y: 0.15, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.0050000027, y: -0.004999995, z: 0}
+    - {x: 0.17, y: 0.17, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -0.07, y: -0.08, z: 0}
+    - {x: 0.080000006, y: -0.08, z: 0}
+    - {x: -0.07, y: 0.07000001, z: 0}
+    - {x: 0.080000006, y: 0.07000001, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.7832051, y: 0.6367197}
+    - {x: 0.81249803, y: 0.6367197}
+    - {x: 0.7832051, y: 0.65136623}
+    - {x: 0.81249803, y: 0.65136623}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
+    materialId: 0
+    sourceTextureGUID: 0a31e0d03cc9a42e78a0ba8dfd164f34
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: snow_man_nose
+    boundsData:
+    - {x: 0.004999995, y: 0, z: 0}
+    - {x: 0.14999999, y: 0.12, z: 0}
+    untrimmedBoundsData:
+    - {x: 0.004999995, y: 0, z: 0}
+    - {x: 0.14999999, y: 0.12, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -0.07, y: -0.06, z: 0}
+    - {x: 0.07999999, y: -0.06, z: 0}
+    - {x: -0.07, y: 0.06, z: 0}
+    - {x: 0.07999999, y: 0.06, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.96093947, y: 0.4941416}
+    - {x: 0.9902324, y: 0.4941416}
+    - {x: 0.96093947, y: 0.5058584}
+    - {x: 0.9902324, y: 0.5058584}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
+    materialId: 0
+    sourceTextureGUID: 3c441c49ce86d41ceb02f4e9da34365f
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 0
+    complexGeometry: 0
+    physicsEngine: 0
+    colliderType: 0
+    customColliders: []
+    colliderVertices: []
+    colliderIndicesFwd: 
+    colliderIndicesBack: 
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    polygonCollider2D: []
+    edgeCollider2D: []
+    attachPoints: []
+  - name: snow_man_hand
+    boundsData:
+    - {x: 0, y: -0.004999995, z: 0}
+    - {x: 0.44, y: 0.57, z: 0}
+    untrimmedBoundsData:
+    - {x: 0, y: -0.004999995, z: 0}
+    - {x: 0.44, y: 0.57, z: 0}
+    texelSize: {x: 0.01, y: 0.01}
+    positions:
+    - {x: -0.22, y: -0.29, z: 0}
+    - {x: 0.22, y: -0.29, z: 0}
+    - {x: -0.22, y: 0.28, z: 0}
+    - {x: 0.22, y: 0.28, z: 0}
+    normals: []
+    tangents: []
+    uvs:
+    - {x: 0.6601582, y: 0.6347666}
+    - {x: 0.6601582, y: 0.6777334}
+    - {x: 0.7714824, y: 0.6347666}
+    - {x: 0.7714824, y: 0.6777334}
+    normalizedUvs:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 1}
+    indices: 000000000300000001000000020000000300000000000000
+    material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
+    materialId: 0
+    sourceTextureGUID: c9812564663f84d8690bce3707e3e12e
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    flipped: 1
     complexGeometry: 0
     physicsEngine: 0
     colliderType: 0
@@ -260,7 +495,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 50
-  buildKey: 427642694
+  buildKey: 1720712103
   dataGuid: a129c7fc7d93d44d8a1ab9d24f446e9f
   managedSpriteCollection: 0
   hasPlatformData: 0

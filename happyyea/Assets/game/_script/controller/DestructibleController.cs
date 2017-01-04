@@ -33,8 +33,7 @@ public class DestructibleController : Controller
 	}
 
 	private void OnStart()
-	{
-	}
+	{}
 
 	private void BreakEntity( D2dDestructible destructible, int fractureCount, Vector2 collisionPoint)
 	{

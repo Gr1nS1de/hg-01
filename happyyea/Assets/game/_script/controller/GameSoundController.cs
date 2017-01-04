@@ -16,22 +16,16 @@ public class GameSoundController : Controller
 
 			case N.DestructibleBreakEntity:
 				{
-					var obstacleDestructible = (D2dDestructible)data [0];
+					//var obstacleDestructible = (D2dDestructible)data [0];
 					//var fractureCount = (int)data [1];
 					//var collisionPoint = (Vector2)data [2];
 
-					MasterAudio.PlaySoundAndForget ("01_break");
+
+					MasterAudio.PlaySoundAndForget (game.model.currentRoadModel.alias.ToString().ToLower() +"_obstacle_break");
 
 					break;
 				}
 		}
 
 	}
-
-	private void PlayDestructibleSound()
-	{
-		
-	}
-
-
 }

@@ -7,15 +7,37 @@ public class UIController : Controller
 {
 	private UIModel _UIModel	{ get { return ui.model; } }
 
-	void Awake()
+	public override void OnNotification (string alias, Object target, params object[] data)
 	{
-		UpdateText();
+		switch (alias)
+		{
+			case N.GameStart:
+				{
+					OnStart ();
+					break;
+				}
+
+			case N.GameAddScore:
+				{
+					int score = (int) data[0];
+
+					OnAddScore (score);
+
+					break;
+				}
+		}
 	}
 
-	void Start()
+	void OnStart()
 	{
+		UpdateText();
 		_UIModel.canvasGroupInGame.alpha = 0;
 		_UIModel.canvasGroupStart.alpha = 0.8f;
+	}
+
+	private void OnAddScore(int score)
+	{
+		_UIModel.scoreText.text = game.model.currentScore.ToString();
 	}
 
 	void UpdateText()
@@ -68,10 +90,10 @@ public class UIController : Controller
 
 	public void OnClickedStart()
 	{
-		Notify(N.GamePlay);
 
 		game.view.cameraView.DOStart(() => {
 			//Wait for camera zoom in
+			Notify(N.GamePlay);
 		});
 
 		OnStartGame(null);

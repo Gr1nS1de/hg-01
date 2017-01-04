@@ -174,7 +174,7 @@ namespace DarkTonic.MasterAudio {
 
             if (sameNameCount > 1) {
                 DestroyImmediate(gameObject);
-                Debug.Log("More than one Playlist Controller prefab exists in this Scene with the same name. Destroying the one called '" + ControllerName + "'. You may wish to set up a Bootstrapper Scene so this does not occur.");
+                //Debug.Log("More than one Playlist Controller prefab exists in this Scene with the same name. Destroying the one called '" + ControllerName + "'. You may wish to set up a Bootstrapper Scene so this does not occur.");
                 return;
             }
             // end check

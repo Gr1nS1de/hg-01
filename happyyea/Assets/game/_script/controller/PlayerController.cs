@@ -28,8 +28,7 @@ public class PlayerController : Controller
 
 			case N.InputOnTouchDown:
 				{
-					if(game.model.gameState == GameState.PLAYING)
-						PlayerJump ();
+					PlayerJump ();
 
 					break;
 				}
@@ -38,12 +37,6 @@ public class PlayerController : Controller
 
 	private void OnStart()
 	{}
-
-	private void Update()
-	{
-		//float t = Mathf.PingPong( Time.time / m_CircleSFLightGradientCycleDuration, 1f );
-		//m_CircleSFLight.color = m_LightGradient.Evaluate( t );
-	}
 
 	private void InitPlayer()
 	{

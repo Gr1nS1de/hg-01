@@ -86,9 +86,11 @@ public class GameController : Controller
 
 	}
 
-	public void Add1Point()
+	public void Add1Score()
 	{
 		game.model.currentScore++;
+
+		Notify (N.GameAddScore, 1);
 
 		//m_PointText.text = _pointScore.ToString();
 
@@ -122,7 +124,9 @@ public class GameController : Controller
 				{
 					var obstacleDestructible = obstacleView.GetComponent<D2dDestructible> ();
 
-					Add1Point ();
+					Destroy (obstacleView);
+
+					Add1Score ();
 
 					Notify (N.DestructibleBreakEntity, obstacleDestructible, game.model.destructibleModel.destructibleObstacleFractureCount, collisionPoint);
 
@@ -133,7 +137,7 @@ public class GameController : Controller
 		}
 	}
 
-	public void GameOver( Vector2 collisionPoint )
+	private void GameOver( Vector2 collisionPoint )
 	{
 		if (game.model.gameState == GameState.GAMEOVER)
 			return;

@@ -107,6 +107,18 @@ MonoBehaviour:
   _radius: 3
   _width: 0.6
   _segments: 200
+  _scoreToFinish: 1000
+  _itemsScoreData:
+  - scoreCount: 0
+    sprite: {fileID: 0}
+  - scoreCount: 0
+    sprite: {fileID: 0}
+  - scoreCount: 0
+    sprite: {fileID: 0}
+  - scoreCount: 0
+    sprite: {fileID: 0}
+  - scoreCount: 0
+    sprite: {fileID: 21300000, guid: a8e5124fcef46f6489c27524707ff057, type: 3}
 --- !u!114 &114000013868521004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -351,9 +363,9 @@ MonoBehaviour:
       type: 2}
     rotation: {x: -0, y: -0, z: -0, w: 1}
     position: {x: 0.72, y: -1.19, z: 0}
-    localScale: {x: 1, y: 1, z: 1}
+    localScale: {x: -1, y: 1, z: 1}
     color: {r: 1, g: 1, b: 1, a: 1}
-    baseScale: {x: 1, y: 1, z: 1}
+    baseScale: {x: -1, y: 1, z: 1}
     renderLayer: 0
     internalData0: {x: 0, y: 0}
     internalData1: {x: 0, y: 0}
