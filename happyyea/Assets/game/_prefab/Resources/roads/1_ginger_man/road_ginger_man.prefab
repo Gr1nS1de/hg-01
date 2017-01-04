@@ -207,9 +207,9 @@ MonoBehaviour:
       e32: 0
       e33: 1
   - type: 1
-    name: bow_tie
+    name: bow_tie_frame
     parentId: -1
-    spriteId: 2
+    spriteId: 9
     xRefId: -1
     spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
       type: 2}
@@ -244,9 +244,194 @@ MonoBehaviour:
       e32: 0
       e33: 1
   - type: 1
+    name: bow_tie
+    parentId: -1
+    spriteId: 2
+    xRefId: -1
+    spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
+      type: 2}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    position: {x: 0, y: 0.4, z: 4}
+    localScale: {x: 1, y: 1, z: 1}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    baseScale: {x: 1, y: 1, z: 1}
+    renderLayer: 0
+    internalData0: {x: 0, y: 0}
+    internalData1: {x: 0, y: 0}
+    internalData2: {x: 0, y: 0}
+    colliderData: {x: 0, y: 1}
+    formattedText: 
+    flags: 0
+    anchor: 0
+    relativeMatrix:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0.4
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 4
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - type: 1
     name: frill_right_arm
-    parentId: 8
+    parentId: 13
     spriteId: 0
+    xRefId: -1
+    spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
+      type: 2}
+    rotation: {x: 0, y: 0, z: -0.35020733, w: 0.9366723}
+    position: {x: 0.785, y: 0.2, z: 0}
+    localScale: {x: 0.63, y: 0.63, z: 0.63}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    baseScale: {x: 1, y: 1, z: 1}
+    renderLayer: 0
+    internalData0: {x: 0, y: 0}
+    internalData1: {x: 0, y: 0}
+    internalData2: {x: 0, y: 0}
+    colliderData: {x: 0, y: 1}
+    formattedText: 
+    flags: 0
+    anchor: 0
+    relativeMatrix:
+      e00: 0.4754671
+      e01: 0.41331714
+      e02: 0
+      e03: 0.785
+      e10: -0.41331714
+      e11: 0.4754671
+      e12: 0
+      e13: 0.2
+      e20: 0
+      e21: 0
+      e22: 0.63
+      e23: 4
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - type: 1
+    name: frill_left_arm
+    parentId: 13
+    spriteId: 0
+    xRefId: -1
+    spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
+      type: 2}
+    rotation: {x: -0, y: -0, z: -0.7322004, w: 0.68108934}
+    position: {x: -0.776, y: 0.217, z: 0}
+    localScale: {x: 0.63, y: 0.63, z: 0.63}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    baseScale: {x: 1, y: 1, z: 1}
+    renderLayer: 0
+    internalData0: {x: 0, y: 0}
+    internalData1: {x: 0, y: 0}
+    internalData2: {x: 0, y: 0}
+    colliderData: {x: 0, y: 1}
+    formattedText: 
+    flags: 0
+    anchor: 0
+    relativeMatrix:
+      e00: -0.045507893
+      e01: 0.6283543
+      e02: 0
+      e03: -0.776
+      e10: -0.6283543
+      e11: -0.045507893
+      e12: 0
+      e13: 0.217
+      e20: 0
+      e21: 0
+      e22: 0.63
+      e23: 4
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - type: 1
+    name: frill_right_leg
+    parentId: 14
+    spriteId: 0
+    xRefId: -1
+    spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
+      type: 2}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    position: {x: -0.71, y: -1.19, z: 0}
+    localScale: {x: 1, y: 1, z: 1}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    baseScale: {x: 1, y: 1, z: 1}
+    renderLayer: 0
+    internalData0: {x: 0, y: 0}
+    internalData1: {x: 0, y: 0}
+    internalData2: {x: 0, y: 0}
+    colliderData: {x: 0, y: 1}
+    formattedText: 
+    flags: 0
+    anchor: 0
+    relativeMatrix:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: -0.71
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: -1.19
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 4
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - type: 1
+    name: frill_left_leg
+    parentId: 14
+    spriteId: 0
+    xRefId: -1
+    spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
+      type: 2}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    position: {x: 0.72, y: -1.19, z: 0}
+    localScale: {x: -1, y: 1, z: 1}
+    color: {r: 1, g: 1, b: 1, a: 0}
+    baseScale: {x: -1, y: 1, z: 1}
+    renderLayer: 0
+    internalData0: {x: 0, y: 0}
+    internalData1: {x: 0, y: 0}
+    internalData2: {x: 0, y: 0}
+    colliderData: {x: 0, y: 1}
+    formattedText: 
+    flags: 0
+    anchor: 0
+    relativeMatrix:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0.72
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: -1.19
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 4
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - type: 1
+    name: frill_right_arm
+    parentId: 16
+    spriteId: 10
     xRefId: -1
     spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
       type: 2}
@@ -282,8 +467,8 @@ MonoBehaviour:
       e33: 1
   - type: 1
     name: frill_left_arm
-    parentId: 8
-    spriteId: 0
+    parentId: 16
+    spriteId: 10
     xRefId: -1
     spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
       type: 2}
@@ -319,8 +504,8 @@ MonoBehaviour:
       e33: 1
   - type: 1
     name: frill_right_leg
-    parentId: 9
-    spriteId: 0
+    parentId: 17
+    spriteId: 10
     xRefId: -1
     spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
       type: 2}
@@ -356,8 +541,8 @@ MonoBehaviour:
       e33: 1
   - type: 1
     name: frill_left_leg
-    parentId: 9
-    spriteId: 0
+    parentId: 17
+    spriteId: 10
     xRefId: -1
     spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
       type: 2}
@@ -429,7 +614,7 @@ MonoBehaviour:
       e33: 1
   - type: 0
     name: arms
-    parentId: 7
+    parentId: 12
     spriteId: -1
     xRefId: -1
     spriteCollection: {fileID: 0}
@@ -465,7 +650,115 @@ MonoBehaviour:
       e33: 1
   - type: 0
     name: legs
-    parentId: 7
+    parentId: 12
+    spriteId: -1
+    xRefId: -1
+    spriteCollection: {fileID: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    position: {x: 0, y: 0, z: 0}
+    localScale: {x: 1, y: 1, z: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    baseScale: {x: 1, y: 1, z: 1}
+    renderLayer: 0
+    internalData0: {x: 0, y: 0}
+    internalData1: {x: 0, y: 0}
+    internalData2: {x: 0, y: 0}
+    colliderData: {x: 0, y: 1}
+    formattedText: 
+    flags: 0
+    anchor: 0
+    relativeMatrix:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 4
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - type: 0
+    name: frills_frame
+    parentId: -1
+    spriteId: -1
+    xRefId: -1
+    spriteCollection: {fileID: 0}
+    rotation: {x: -0, y: -0, z: -0, w: 1}
+    position: {x: 0, y: 0, z: 4}
+    localScale: {x: 1, y: 1, z: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    baseScale: {x: 1, y: 1, z: 1}
+    renderLayer: 0
+    internalData0: {x: 0, y: 0}
+    internalData1: {x: 0, y: 0}
+    internalData2: {x: 0, y: 0}
+    colliderData: {x: 0, y: 1}
+    formattedText: 
+    flags: 0
+    anchor: 0
+    relativeMatrix:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 4
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - type: 0
+    name: arms
+    parentId: 15
+    spriteId: -1
+    xRefId: -1
+    spriteCollection: {fileID: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+    position: {x: 0, y: 0, z: 0}
+    localScale: {x: 1, y: 1, z: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
+    baseScale: {x: 1, y: 1, z: 1}
+    renderLayer: 0
+    internalData0: {x: 0, y: 0}
+    internalData1: {x: 0, y: 0}
+    internalData2: {x: 0, y: 0}
+    colliderData: {x: 0, y: 1}
+    formattedText: 
+    flags: 0
+    anchor: 0
+    relativeMatrix:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 4
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+  - type: 0
+    name: legs
+    parentId: 15
     spriteId: -1
     xRefId: -1
     spriteCollection: {fileID: 0}
@@ -502,7 +795,7 @@ MonoBehaviour:
   allTextMeshData: []
   spriteCollection: {fileID: 114000010761740678, guid: a129c7fc7d93d44d8a1ab9d24f446e9f,
     type: 2}
-  flags: 1
+  flags: 0
   _scale: {x: 1, y: 1, z: 1}
 --- !u!120 &120000012828763314
 LineRenderer:

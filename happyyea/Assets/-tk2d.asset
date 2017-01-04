@@ -68,6 +68,8 @@ MonoBehaviour:
     - snow_man_pearl_button
     - snow_man_nose
     - snow_man_hand
+    - ginger_man_bow_tie_frame
+    - ginger_man_frill_frame
     spriteTextureGUIDs:
     - c5c4400628dde3e47bf732928262699b
     - d4b3305b11557a34480df22cc2e3dec8
@@ -78,16 +80,20 @@ MonoBehaviour:
     - 0a31e0d03cc9a42e78a0ba8dfd164f34
     - 3c441c49ce86d41ceb02f4e9da34365f
     - c9812564663f84d8690bce3707e3e12e
+    - aa68c0e5b15ac4a239c2d405579f2833
+    - 3801743e9320a40fe9df6c94ad48138c
     spriteTextureTimeStamps:
     - 1482354161
     - 1482354161
     - 1482354161
-    - 1483498075
-    - 1483499995
-    - 1483500052
-    - 1483501145
-    - 1483502739
-    - 1483502666
+    - 1483517912
+    - 1483517912
+    - 1483517912
+    - 1483517912
+    - 1483517912
+    - 1483517912
+    - 1483537119
+    - 1483537564
     managedSpriteCollection: 0
     loadable: 0
     assetName: 
