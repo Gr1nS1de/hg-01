@@ -3,15 +3,18 @@ using System.Collections.Generic;
 
 public enum Road
 {
-	GINGER_MAN = 1
+	GINGERBREAD_MAN = 1,
+	SNOWMAN			= 2
 }
 
 public class RoadFactoryModel : Model
 {
-	public RoadView						roadTemplate				{ get { return _roadTemplate; } set { _roadTemplate = value;} }
-	//public Dictionary<int, RoadModel>	roadModelsDictionary		{ get { return _roadModelsDictionary;}}		
+	public RoadView[]		roadTemplates				{ get { return _roadTemplates; } set { _roadTemplates = value;} }
+	public float			roadsGapLength				{ get { return _roadsGapLength; } }
 
 	[SerializeField]
-	private RoadView					_roadTemplate;
-	//private Dictionary<int, RoadModel> 	_roadModelsDictionary 		= new Dictionary<int, RoadModel>();
+	private RoadView[]		_roadTemplates = new RoadView[System.Enum.GetNames(typeof(Road)).Length];
+	[SerializeField]
+	private float			_roadsGapLength;
+
 }

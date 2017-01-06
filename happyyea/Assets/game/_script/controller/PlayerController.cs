@@ -4,9 +4,9 @@ using DG.Tweening;
 
 public class PlayerController : Controller
 {
-	private PlayerModel 	_playerModel 	{ get { return game.model.playerModel;}}
-	private PlayerView		_playerView		{ get { return game.view.playerView;}}
-
+	private PlayerModel 	playerModel 		{ get { return game.model.playerModel; } }
+	private PlayerView		playerView			{ get { return game.view.playerView; } } 
+	private PlayerTraceView	playerTraceView		{ get { return game.view.playerTraceView; } }
 
 	public override void OnNotification( string alias, Object target, params object[] data )
 	{
@@ -19,10 +19,22 @@ public class PlayerController : Controller
 					break;
 				}
 
-			case N.GameRoadInstantiated:
+			case N.GameRoadsPlaced:
 				{
 					InitPlayer ();
 					
+					break;
+				}
+
+			case N.GameChangeRoad:
+				{
+					DOTween.Pause (Tween.PLAYER_CORE_ROTATION);
+					break;
+				}
+
+			case N.GameRoadChanged:
+				{
+					DOTween.Play (Tween.PLAYER_CORE_ROTATION);
 					break;
 				}
 
@@ -47,39 +59,39 @@ public class PlayerController : Controller
 
 	private void InitPlayer()
 	{
-		_playerModel.currentSprite = _playerModel.sprites [0];
+		playerModel.currentSprite = playerModel.sprites [0];
 		game.view.playerSpriteContainerView.transform.position = new Vector2(game.model.currentRoadModel.radius, 0f);
-		game.view.playerSpriteView.transform.localPosition = new Vector3(-_playerModel.jumpWidth, 0, 0);
+		game.view.playerSpriteView.transform.localPosition = new Vector3(-playerModel.jumpWidth, 0, 0);
 
-		_playerModel.positionState = PlayerPositionState.ON_CIRCLE;
+		playerModel.positionState = PlayerPositionState.ON_CIRCLE;
 		
-		_playerView.transform.DORotate(new Vector3(0,0,-360f), _playerModel.speed, RotateMode.FastBeyond360).SetId(Tween.PLAYER_CORE_ROTATION).SetEase(Ease.Linear).SetLoops(-1,LoopType.Incremental);
+		playerView.transform.DORotate(new Vector3(0,0,-360f), playerModel.speed, RotateMode.FastBeyond360).SetId(Tween.PLAYER_CORE_ROTATION).SetEase(Ease.Linear).SetLoops(-1,LoopType.Incremental);
 	}
 
 	private void PlayerJump()
 	{ 
-		switch(_playerModel.positionState)
+		switch(playerModel.positionState)
 		{
 			case PlayerPositionState.ON_CIRCLE:
 				{
-					var v = new Vector3(-_playerModel.jumpWidth, 0, 0);
+					var v = new Vector3(-playerModel.jumpWidth, 0, 0);
 
-					game.view.playerSpriteView.transform.DOLocalMove(v, _playerModel.jumpDuration)
+					game.view.playerSpriteView.transform.DOLocalMove(v, playerModel.jumpDuration)
 						.OnComplete(OnCompleteJump);
 
-					_playerModel.positionState = PlayerPositionState.OUT_CIRCLE;
+					playerModel.positionState = PlayerPositionState.OUT_CIRCLE;
 
 					break;
 				}
 
 			case PlayerPositionState.OUT_CIRCLE:
 				{
-					var v = new Vector3(+_playerModel.jumpWidth, 0, 0);
+					var v = new Vector3(+playerModel.jumpWidth, 0, 0);
 
-					game.view.playerSpriteView.transform.DOLocalMove(v, _playerModel.jumpDuration)
+					game.view.playerSpriteView.transform.DOLocalMove(v, playerModel.jumpDuration)
 						.OnComplete(OnCompleteJump);
 
-					_playerModel.positionState = PlayerPositionState.ON_CIRCLE;
+					playerModel.positionState = PlayerPositionState.ON_CIRCLE;
 
 					break;
 				}

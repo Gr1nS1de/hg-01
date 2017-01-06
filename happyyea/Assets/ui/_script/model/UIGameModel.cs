@@ -8,6 +8,7 @@ public class UIGameModel : Model
 	public Text			scoreText				{ get { return _scoreText; } }
 	public Slider		scoreSlider				{ get { return _scoreSlider; } }
 	public GameObject	itemSpotPrefab			{ get { return _itemSpotPrefab; } }
+	public GameObject	itemSpotsContainer		{ get { return _itemSpotsContainer; } }
 
 	[SerializeField]
 	private Text		_scoreText;
@@ -17,4 +18,6 @@ public class UIGameModel : Model
 	private Slider		_scoreSlider;
 	[SerializeField]
 	private GameObject	_itemSpotPrefab;
+	[SerializeField]
+	private GameObject	_itemSpotsContainer;
 }

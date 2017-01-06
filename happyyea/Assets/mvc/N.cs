@@ -22,7 +22,12 @@ public class N : MonoBehaviour
 
 	public const string GameAddScore				= "game.add.score";
 	public const string GameChangeRoad				= "game.road.change";
-	public const string GameRoadInstantiated		= "game.road.instantiated";
+	public const string GameRoadChanged 			= "game.road.changed";
+	public const string GameRoadsPlaced				= "game.roads.placed";
+	#endregion
+
+	#region UI notifications
+	public const string UIClickedStart 				= "ui.clicked.start";
 	#endregion
 
 	#region Destructible notifications
@@ -36,5 +41,6 @@ public class N : MonoBehaviour
 
 	#region ResourcesController notifications
 	public const string RCStartLoad					= "rc.start.load";
+	public const string RCResetRoadModelTemplate	= "rc.reset.road.model.template";
 	#endregion
 }

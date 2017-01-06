@@ -13,6 +13,15 @@ public class CameraController : Controller
 
 					break;
 				}
+
+			case N.UIClickedStart:
+				{
+					game.view.cameraView.DOStart(() => {
+						//Wait for camera zoom in
+						Notify(N.GamePlay);
+					});
+					break;
+				}
 		}
 	 }
 

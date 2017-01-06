@@ -17,17 +17,35 @@ public class ResourcesController : Controller
 				{
 					var roadAlias = (Road)data [0];
 
-					OnStartLoad (roadAlias);
+					if (!RCModel.resourcesLoadedFlag)
+						OnStartLoad ();
+					else
+						OnResetLoad ();
 
+					break;
+				}
+
+			case N.RCResetRoadModelTemplate:
+			case N.GameOver:
+				{
+					ResetCurrentRoadModelToTemplate ();
 					break;
 				}
 		}
 	}
 
-	private void OnStartLoad(Road roadAlias)
+	private void OnStartLoad()
 	{
 		LoadPlayerSprites();
-		LoadRoad (roadAlias);
+		LoadRoads ();
+
+		RCModel.resourcesLoadedFlag = true;
+	}
+
+	private void OnResetLoad()
+	{
+		UpdatePlayerModel (GM.instance.PlayerSprites);
+		ResetRoads ();
 	}
 
 	private void UpdatePlayerModel(Sprite[] playerSprites)
@@ -35,32 +53,71 @@ public class ResourcesController : Controller
 		_playerModel.sprites = playerSprites;
 	}
 
-	private void UpdateRoadFactoryModel(RoadView roadTemplate)
+	private void UpdateRoadFactoryModel(RoadView[] roadTemplates)
 	{
-		_roadFactoryModel.roadTemplate = roadTemplate;
+		_roadFactoryModel.roadTemplates = roadTemplates;
 	}
 
-	private void UpdateObstacleFactoryModel(ObstacleView[] obstacleTemplates)
+	private void UpdateObstacleFactoryModel(Road roadAlias, ObstacleView[] obstacleTemplates)
 	{
-		_obstacleFactoryModel.obstacleTemplates = obstacleTemplates;
+		ObstacleBundle obstacleBundle = System.Array.Find (_obstacleFactoryModel.obstacleBundles, o => o.roadAlias == roadAlias);
+
+		obstacleBundle.obstacleTemplates = obstacleTemplates;
 	}
 
 	private void LoadPlayerSprites()
 	{
 		var playerSprites = Resources.LoadAll<Sprite>( _RCModel.playerSpriteResourcePath );
 
+		GM.instance.PlayerSprites = playerSprites;
+
 		UpdatePlayerModel( playerSprites );
 	}
 		
-	public void LoadRoad(Road roadAlias)
+	public void LoadRoads()
 	{
 		string roadsPrefabPath = _RCModel.roadsPrefabPath;
-		RoadView[] roadTemplate = Resources.LoadAll<RoadView>(GetDirFromPath (roadsPrefabPath) + "/" + GetFolderByRoadAlias(roadAlias));
 
-		ObstacleView[] obstacleTemplates = LoadRoadObstacles (roadAlias);
-			
-		UpdateRoadFactoryModel ( roadTemplate[0] );
-		UpdateObstacleFactoryModel ( obstacleTemplates );
+		List<RoadView> roadTemplates = new List<RoadView>();
+
+		float lastRoadPositionX = 0;
+		float positionGapDistance = game.model.roadFactoryModel.roadsGapLength;
+
+		foreach (string roadName in System.Enum.GetNames(typeof(Road)))
+		{
+			#region Init and instantiate road
+			RoadView[] roadTemplate = Resources.LoadAll<RoadView> (GetDirFromPath (roadsPrefabPath) + "/" + GetFolderByRoadAlias ( GetRoadAliasByName( roadName)));
+			RoadView instantiatedRoad = Instantiate(roadTemplate[0]) as RoadView;
+
+			var roadPosition = instantiatedRoad.transform.position;
+
+			roadPosition.x = lastRoadPositionX;
+
+			instantiatedRoad.transform.position = roadPosition;
+			instantiatedRoad.transform.SetParent (GM.instance.RoadContainer.transform);
+				
+			roadTemplates.Add (instantiatedRoad);
+
+			lastRoadPositionX += positionGapDistance;
+			#endregion
+
+			#region Init and instantiate obstacles for road
+			ObstacleView[] obstacleTemplates = LoadRoadObstacles (GetRoadAliasByName( roadName ) );
+
+			GameObject roadContainerForObstacles = new GameObject ();
+			roadContainerForObstacles.name = roadName;
+			roadContainerForObstacles.transform.SetParent (GM.instance.ObstaclesContainer.transform);
+
+			foreach (ObstacleView obstacleTemplate in obstacleTemplates)
+			{
+				obstacleTemplate.transform.SetParent (roadContainerForObstacles.transform);
+			}
+			#endregion
+
+			UpdateObstacleFactoryModel (GetRoadAliasByName(roadName), obstacleTemplates);
+		}
+
+		UpdateRoadFactoryModel (roadTemplates.ToArray());
 		//_obstacleFactoryModel.obstacleTemplates = obstaclesViews;
 	}
 
@@ -104,6 +161,41 @@ public class ResourcesController : Controller
 		return roadObstacleTemplates.ToArray ();
 	}
 
+	private void ResetRoads()
+	{
+		List<RoadView> roadTemplates = new List<RoadView>();
+
+		foreach (RoadView roadTemplate in GM.instance.RoadContainer.GetComponentsInChildren<RoadView>())
+		{
+			roadTemplates.Add (roadTemplate);
+
+			List<ObstacleView> obstacleTemplates = new List<ObstacleView>();
+			Transform obstaclesContainerForRoad = GM.instance.ObstaclesContainer.transform.FindChild (roadTemplate.GetComponent<RoadModel>().alias.ToString());
+
+			for(int i = 0; i < obstaclesContainerForRoad.childCount; i++)
+				obstacleTemplates.Add (obstaclesContainerForRoad.GetChild(i).GetComponent<ObstacleView>());
+
+			UpdateObstacleFactoryModel (roadTemplate.GetComponent<RoadModel>().alias, obstacleTemplates.ToArray());
+		}
+
+		UpdateRoadFactoryModel (roadTemplates.ToArray());
+	}
+
+	private void ResetCurrentRoadModelToTemplate()
+	{
+		foreach (RoadView roadTemplate in GM.instance.RoadContainer.GetComponentsInChildren<RoadView>())
+		{
+			if (!roadTemplate.GetComponent<RoadModel> ())
+			{
+				RoadModel addedModel = roadTemplate.gameObject.AddComponent<RoadModel> ();
+
+				addedModel.GetCopyOf<RoadModel> (game.model.currentRoadModel);
+
+				break;
+			}
+		}
+	}
+
 	private ObstacleView LoadObstaclePrefab(Road roadAlias, ObstacleState obstacleState)
 	{
 		string roadsPrefabPath = _RCModel.roadsPrefabPath;
@@ -129,7 +221,6 @@ public class ResourcesController : Controller
 		roadDir = (int)roadAlias + "_" + System.Enum.GetName (typeof(Road), roadAlias).ToLower();
 
 		return roadDir;
-
 	}
 
 	private int GetObstacleStateValueByName(string stateName)
@@ -141,6 +232,19 @@ public class ResourcesController : Controller
 		}
 
 		return -1;
+	}
+
+	private Road GetRoadAliasByName(string roadName)
+	{
+		foreach (int value in System.Enum.GetValues (typeof(Road)))
+		{
+			if (System.Enum.GetName (typeof(Road), value) == roadName)
+				return (Road)System.Enum.Parse(typeof(Road), roadName);
+		}
+
+		Debug.LogError ("There is no road = " + roadName);
+
+		return Road.GINGERBREAD_MAN;
 	}
 
 	private string GetDirFromPath(string path)

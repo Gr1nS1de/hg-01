@@ -1,10 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+[System.Serializable]
+public class ObstacleBundle
+{
+	public Road 			roadAlias;
+	[SerializeField]
+	public ObstacleView[]	obstacleTemplates;
+}
+
 public class ObstacleFactoryModel : Model
 {
-	public ObstacleView[]									obstacleTemplates				{ get { return _obstacleTemplates; } set { _obstacleTemplates = value; }}
-	public Dictionary<ObstacleView, ObstacleModel>			currentModelsDictionary			{ get { return _currentModelsDictionary;}}		
+	public ObstacleView[]									obstacleTemplates				{ get { return _obstacleTemplates = System.Array.Find(obstacleBundles, o => o.roadAlias == game.model.currentRoad).obstacleTemplates; } }
+	public ObstacleBundle[]									obstacleBundles					{ get { return _obstacleBundles; } }
+	public Dictionary<ObstacleView, ObstacleModel>			currentModelsDictionary			{ get { return _currentModelsDictionary; } }		
 	public ObstacleView[]									hardObstacleTemplates			{ get { return System.Array.FindAll(obstacleTemplates, o => o.GetComponent<ObstacleModel>().state == ObstacleState.HARD);}}
 	public ObstacleView[]									destructibleObstacleTemplates	{ get { return System.Array.FindAll(obstacleTemplates, o => o.GetComponent<ObstacleModel>().state == ObstacleState.DESTRUCTIBLE);}}
 	public Dictionary<ObstacleState, ObstacleView[]>  		templatesByStateDictionary 		{ get { if(!InitTemplatesDictionaryFlag)InitTemplatesDictionary ();  return _templatesByStateDictionary ;} }
@@ -13,6 +22,8 @@ public class ObstacleFactoryModel : Model
 
 	[SerializeField]
 	private ObstacleView[]									_obstacleTemplates;
+	[SerializeField]
+	private ObstacleBundle[]								_obstacleBundles 				= new ObstacleBundle[System.Enum.GetNames(typeof(Road)).Length];
 	private Dictionary<ObstacleView, ObstacleModel> 		_currentModelsDictionary 		= new Dictionary<ObstacleView, ObstacleModel>();
 	private Dictionary<ObstacleState, ObstacleView[]>		_templatesByStateDictionary		= new Dictionary<ObstacleState, ObstacleView[]>();
 	private GameObject										_obstaclesDynamicContainer;

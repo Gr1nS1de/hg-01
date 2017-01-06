@@ -34,6 +34,10 @@ public class GM : Controller
 	[SerializeField]
 	private float		_gameGradientDuration;
 
+	public GameObject	RoadContainer;
+	public GameObject	ObstaclesContainer;
+	public Sprite[]		PlayerSprites;
+
 	private	GameState	gameState				{ get { return game.model.gameState; } }
 	private GameState	_lastGameState;
 	private bool 		_fadeColorFlag = false;
@@ -63,8 +67,7 @@ public class GM : Controller
 		{
 			case GameState.READY:
 				{
-					float t = Mathf.PingPong (Time.time / menuGradientDuration, 1f);
-					currentBackgroundColor  = backgroundMenuGradient.Evaluate (t);
+					currentBackgroundColor  = EvaluateColorFromGradient(backgroundMenuGradient, menuGradientDuration);
 					break;
 				}
 

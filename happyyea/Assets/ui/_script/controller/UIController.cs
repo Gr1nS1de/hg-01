@@ -5,6 +5,14 @@ using DG.Tweening;
 
 public class UIController : Controller
 {
+	#region Declare controllers reference
+	public UIGameController		UIGameController				{ get { return _UIGameController 		= SearchLocal<UIGameController>(			_UIGameController,		"UIGameController");	} }
+	public UIMenuController		UIMenuController				{ get { return _UIMenuController		= SearchLocal<UIMenuController>(			_UIMenuController,		"UIMenuController");	} }
+
+	private UIGameController	_UIGameController;
+	private UIMenuController	_UIMenuController;
+	#endregion
+
 	private UIMenuModel	UIMenuModel	{ get { return ui.model.UIMenuModel; } }
 	private UIGameModel UIGameModel	{ get { return ui.model.UIGameModel; } }
 
@@ -91,13 +99,20 @@ public class UIController : Controller
 
 	public void OnClickedStart()
 	{
-
-		game.view.cameraView.DOStart(() => {
-			//Wait for camera zoom in
-			Notify(N.GamePlay);
-		});
+		Notify (N.UIClickedStart);
 
 		OnStartGame(null);
 
+	}
+
+	public void OnChangeNextRoad()
+	{
+		game.model.currentRoad = (Road)System.Enum.Parse (typeof(Road), System.Enum.GetNames(typeof(Road))[(int)game.model.currentRoad]);
+	}
+
+	public void OnChangePrevRoad()
+	{
+		Debug.Log((Road)System.Enum.Parse (typeof(Road), System.Enum.GetNames(typeof(Road))[(int)game.model.currentRoad - 2]));
+		game.model.currentRoad = (Road)System.Enum.Parse (typeof(Road), System.Enum.GetNames(typeof(Road))[(int)game.model.currentRoad - 2]);
 	}
 }

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class RCModel : MonoBehaviour 
 {
+	public static bool 		resourcesLoadedFlag 		= false;
+	
 	public string			playerSpriteResourcePath	{ get { return _playerSpriteResourcePath;}}
 	public string			roadsPrefabPath				{ get { return _roadsPrefabPath; } }
 	public string			roadsSpritePath				{ get { return _roadsSpritePath; } }

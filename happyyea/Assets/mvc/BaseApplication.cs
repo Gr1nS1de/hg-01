@@ -16,7 +16,7 @@ public abstract class BaseApplication : Element
 	private void Awake()
 	{
 		InitTweening ();
-		Notify( N.RCStartLoad, Road.GINGER_MAN );
+		Notify( N.RCStartLoad, Road.SNOWMAN );
 	}
 
 	private void Start()
@@ -43,7 +43,9 @@ public abstract class BaseApplication : Element
 
 	private void InitTweening()
 	{
+		DOTween.KillAll();	
+
 		if (Time.realtimeSinceStartup < 1)
-			DOTween.KillAll();		
+			DOTween.Init ();
 	}
 }

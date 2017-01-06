@@ -26,7 +26,7 @@ GameObject:
   - 33: {fileID: 33000010269268002}
   - 114: {fileID: 114000010361015898}
   m_Layer: 0
-  m_Name: road_snow_man
+  m_Name: road_snowman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1661,7 +1661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0637834d7605341eda2a6ec8363afd84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _alias: 1
+  _alias: 2
   _radius: 3
   _width: 0.6
   _segments: 200
