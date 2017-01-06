@@ -4,21 +4,10 @@ using UnityEngine.UI;
 
 public class UIModel : Model
 {
-	public CanvasGroup 	canvasGroupStart		{ get { return _canvasGroupStart; } }
-	public CanvasGroup 	canvasGroupInGame		{ get { return _canvasGroupInGame; } }
-	public Text 		bestScoreText			{ get { return _bestScoreText; } }
-	public Text 		lastScoreText			{ get { return _lastScoreText; } }
-	public Text			scoreText				{ get { return _scoreText;}}
+	public UIGameModel		UIGameModel				{ get { return _UIGameModel 		= SearchLocal<UIGameModel>(			_UIGameModel,		"UIGameModel");	} }
+	public UIMenuModel		UIMenuModel				{ get { return _UIMenuModel			= SearchLocal<UIMenuModel>(			_UIMenuModel,		"UIMenuModel");	} }
 
-	[SerializeField]
-	private CanvasGroup	_canvasGroupStart;
-	[SerializeField]
-	private CanvasGroup	_canvasGroupInGame;
-	[SerializeField]
-	private Text		_bestScoreText;
-	[SerializeField]
-	private Text		_lastScoreText;
-	[SerializeField]
-	private Text		_scoreText;
+	private UIGameModel		_UIGameModel;
+	private UIMenuModel		_UIMenuModel;
 }
 

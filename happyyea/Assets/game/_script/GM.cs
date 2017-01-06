@@ -13,20 +13,31 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Class in charge of the logic of the game. This class will restart the level at game over, handle and save the point, and call the Ads if you import the VERY SIMPLE ADS asset available here: http://u3d.as/oWD
 /// </summary>
-public class GM : MonoBehaviour
+public class GM : Controller
 {
 	public static GM instance;
 
-	public Gradient		backgroundGradient 		{ get { return _backgroundGradient; } }
-	public float		backgroundDuration		{ get { return _backgroundDuration; } }
-	public Color		currentBackgroundColor 	{ get { return _currentBackgroundColor; }	set { _currentBackgroundColor = value; } } 
+	public Gradient		backgroundMenuGradient 	{ get { return _backgroundMenuGradient; }		set { _backgroundMenuGradient = value; } } 
+	public Gradient		backgroundGameGradient 	{ get { return _backgroundGameGradient; } }
+	public float		menuGradientDuration	{ get { return _menuGradientDuration; } }
+	public float		gameGradientDuration	{ get { return _gameGradientDuration; } }
+	public Color		currentBackgroundColor 	{ get { return _currentBackgroundColor; }		set { _currentBackgroundColor = value; } } 
 
 	[SerializeField]
-	private Gradient 	_backgroundGradient;
+	private Gradient	_backgroundMenuGradient;
+	[SerializeField]
+	private Gradient 	_backgroundGameGradient;
 	[SerializeField]
 	private Color		_currentBackgroundColor;
 	[SerializeField]
-	private float		_backgroundDuration;
+	private float		_menuGradientDuration;
+	[SerializeField]
+	private float		_gameGradientDuration;
+
+	private	GameState	gameState				{ get { return game.model.gameState; } }
+	private GameState	_lastGameState;
+	private bool 		_fadeColorFlag = false;
+	private float 		_fadeColorTimestamp = 0f;
 
 	private void Awake()
 	{
@@ -44,8 +55,50 @@ public class GM : MonoBehaviour
 
 	void Update()
 	{
+		if (!game)
+			return;
 		//cam.backgroundColor = gameManager.m_ThemeDynamicColor;
-		float t = Mathf.PingPong( Time.time / _backgroundDuration, 1f );
-		currentBackgroundColor = _backgroundGradient.Evaluate( t );
+
+		switch(gameState)
+		{
+			case GameState.READY:
+				{
+					float t = Mathf.PingPong (Time.time / menuGradientDuration, 1f);
+					currentBackgroundColor  = backgroundMenuGradient.Evaluate (t);
+					break;
+				}
+
+			case GameState.PLAYING:
+				{
+					if (_lastGameState != gameState)
+						_fadeColorFlag = true;
+					
+					currentBackgroundColor = EvaluateColorFromGradient(backgroundGameGradient, gameGradientDuration);
+
+					break;
+				}
+		}
+
+		_lastGameState = gameState;
+	}
+
+	private Color EvaluateColorFromGradient(Gradient gradient, float durationTime)
+	{
+		Color currentColor;
+
+		float t = Mathf.PingPong (Time.time / durationTime, 1f);
+
+		currentColor = gradient.Evaluate (t);
+
+		if (_fadeColorFlag)
+		{
+			_fadeColorTimestamp = Time.time + 1f;
+			_fadeColorFlag = false;
+		}
+
+		if(_fadeColorTimestamp > Time.time)
+			currentColor = Color.Lerp (currentBackgroundColor, currentColor, Time.deltaTime * 5f);
+
+		return currentColor;
 	}
 }

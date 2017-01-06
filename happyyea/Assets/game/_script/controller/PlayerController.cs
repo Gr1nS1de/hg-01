@@ -32,6 +32,13 @@ public class PlayerController : Controller
 
 					break;
 				}
+
+			case N.GameOver:
+				{
+					OnGameOver ();
+
+					break;
+				}
 		}
 	}
 
@@ -87,6 +94,12 @@ public class PlayerController : Controller
 
 		//_gameManager.Add1Point();
 		//FindObjectOfType<CameraManager>().DOShake();
+	}
+
+	private void OnGameOver()
+	{
+		if(game.view.playerSpriteView.GetComponent<Rigidbody2D> ())
+			game.view.playerSpriteView.GetComponent<Rigidbody2D> ().isKinematic = false;
 	}
 		
 }

@@ -28,7 +28,7 @@ public class GameController : Controller
 	private ResourcesController				_resourcesController;
 	#endregion
 
-	private PlayerModel 					_playerModel	{ get { return game.model.playerModel;}}
+	private PlayerModel 					playerModel	{ get { return game.model.playerModel;}}
 
 	public override void OnNotification( string alias, Object target, params object[] data )
 	{
@@ -36,6 +36,7 @@ public class GameController : Controller
 		{
 			case N.GameStart:
 				{
+					game.model.gameState = GameState.READY;
 					OnStart();
 					break;
 				}
@@ -52,8 +53,6 @@ public class GameController : Controller
 					var obstacleView = (ObstacleView)data [0];
 					var collisionPoint = (Vector2)data [1];
 
-					//Debug.Break ();
-
 					OnImpactObstacleByPlayer (obstacleView, collisionPoint);
 					break;
 				}
@@ -68,6 +67,9 @@ public class GameController : Controller
 					var collisionPoint = (Vector2)data [0];
 
 					GameOver (collisionPoint);
+
+					game.model.gameState = GameState.GAMEOVER;
+
 					break;
 				}
 		}
@@ -114,8 +116,7 @@ public class GameController : Controller
 			case ObstacleState.HARD:
 				{
 					//obstacleRenderObject.GetComponent<Rigidbody2D> ().isKinematic = true;
-
-					GameOver (collisionPoint);
+					Notify(N.GameOver, collisionPoint);
 
 					break;
 				}
@@ -144,8 +145,6 @@ public class GameController : Controller
 
 		//ReportScoreToLeaderboard(point);
 
-		game.model.gameState = GameState.GAMEOVER;
-
 		//_player.DesactivateTouchControl();
 
 		DOTween.KillAll();
@@ -157,7 +156,7 @@ public class GameController : Controller
 
 		//_soundManager.PlayFail();
 
-		Notify(N.DestructibleBreakEntity, _playerModel.playerDestructible, game.model.destructibleModel.playerFtactureCount, collisionPoint);
+		Notify(N.DestructibleBreakEntity, playerModel.playerDestructible, game.model.destructibleModel.playerFtactureCount, collisionPoint);
 
 		ui.controller.OnGameOver(() =>
 		{

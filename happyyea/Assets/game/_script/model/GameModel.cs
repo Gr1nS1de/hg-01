@@ -31,7 +31,7 @@ public class GameModel : Model
 	public ObstacleFactoryModel			obstacleFactoryModel	{ get { return _obstacleFactoryModel 		= SearchLocal<ObstacleFactoryModel>(		_obstacleFactoryModel,		"ObstacleFactoryModel" ); } }
 	public DestructibleModel			destructibleModel		{ get { return _destructibleModel 			= SearchLocal<DestructibleModel>( 			_destructibleModel, 		"DestructibleModel" ); } }
 	public PlayerModel					playerModel				{ get { return _playerModel 				= SearchLocal<PlayerModel>(					_playerModel,				"PlayerModel" ); } }
-	public GameSoundModel					soundModel				{ get { return _soundModel 					= SearchLocal<GameSoundModel>(					_soundModel,				"SoundModel" ); } }
+	public GameSoundModel				soundModel				{ get { return _soundModel 					= SearchLocal<GameSoundModel>(					_soundModel,				"SoundModel" ); } }
 	public RCModel						RCModel					{ get { return _RCModel 					= SearchLocal<RCModel>(						_RCModel,					"RCModel" ); } }
 
 	private CameraModel					_cameraModel;
@@ -39,7 +39,7 @@ public class GameModel : Model
 	//private ObstacleModel				_obstacleModel;
 	private DestructibleModel   		_destructibleModel;
 	private PlayerModel					_playerModel;
-	private GameSoundModel					_soundModel;
+	private GameSoundModel				_soundModel;
 	private RCModel						_RCModel;
 	private ObstacleFactoryModel		_obstacleFactoryModel;
 	#endregion

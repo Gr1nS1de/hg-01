@@ -10,8 +10,8 @@ public abstract class Element<T> : Element
 
 public abstract class Element : MonoBehaviour
 {
-	public GameApplication				m_Game			{ get { return _game 	= !_game ? 	SearchGlobal<GameApplication>(_game, "GameApplication") : 	_game; } }
-	public UIApplication				m_UI			{ get { return _ui 		= !_ui ? 	SearchGlobal<UIApplication> (_ui, "UIApplication") : 	_ui;}}
+	public GameApplication				m_Game			{ get { return _game 	= !_game ? 	SearchGlobal<GameApplication>(	_game, 		"GameApplication") : 	_game; } }
+	public UIApplication				m_UI			{ get { return _ui 		= !_ui ? 	SearchGlobal<UIApplication> (	_ui, 		"UIApplication") : 	_ui;}}
 	public Dictionary<string, object>	m_Storage		{ get { return _storage == null ? _storage = new Dictionary<string, object>() : _storage; } }
 	public GameObject					dynamic_objects	{ get { return _dynamic_objects = _dynamic_objects ? _dynamic_objects : GameObject.FindGameObjectWithTag ("dynamic_objects"); }}
 
@@ -31,8 +31,15 @@ public abstract class Element : MonoBehaviour
 			Debug.Log ("Store key = " + storeKey);
 		*/
 		
-		if ( m_Storage.ContainsKey( storeKey ) && storeKey != "" && !update )
-			return (T)m_Storage[storeKey];
+		if (m_Storage.ContainsKey (storeKey) && storeKey != "" && !update)
+			if ((T)m_Storage [storeKey] != null)
+			{
+				return (T)m_Storage [storeKey];
+			}
+			else
+			{
+				m_Storage.Remove (storeKey);
+			}
 
 		var searchFor = GameObject.FindObjectOfType<T>();
 
@@ -51,8 +58,15 @@ public abstract class Element : MonoBehaviour
 
 	public T[] SearchGlobal<T>( T[] obj, string storeKey = "", bool update = false ) where T : Object
 	{
-		if ( m_Storage.ContainsKey( storeKey ) && storeKey != "" )
-			return (T[])m_Storage[storeKey];
+		if (m_Storage.ContainsKey (storeKey) && storeKey != "" && !update)
+			if ((T)m_Storage [storeKey] != null)
+			{
+				return (T[])m_Storage [storeKey];
+			}
+			else
+			{
+				m_Storage.Remove (storeKey);
+			}
 
 		var searchFor = GameObject.FindObjectsOfType<T>();
 
@@ -69,8 +83,15 @@ public abstract class Element : MonoBehaviour
 
 	public T SearchLocal<T>( T obj, string storeKey = "", bool update = false ) where T : Object
 	{
-		if ( m_Storage.ContainsKey( storeKey ) && storeKey != "" && !update )
-			return (T)m_Storage[storeKey];
+		if (m_Storage.ContainsKey (storeKey) && storeKey != "" && !update)
+			if ((T)m_Storage [storeKey] != null)
+			{
+				return (T)m_Storage [storeKey];
+			}
+			else
+			{
+				m_Storage.Remove (storeKey);
+			}
 
 		var searchFor = transform.GetComponent<T>() ? transform.GetComponent<T>() : transform.GetComponentInChildren<T>();
 
@@ -87,8 +108,15 @@ public abstract class Element : MonoBehaviour
 
 	public T[] SearchLocal<T>( T[] obj, string storeKey = "", bool update = false ) where T : Object
 	{
-		if ( m_Storage.ContainsKey( storeKey ) && storeKey != "" && !update )
-			return (T[])m_Storage[storeKey];
+		if (m_Storage.ContainsKey (storeKey) && storeKey != "" && !update)
+			if ((T)m_Storage [storeKey] != null)
+			{
+				return (T[])m_Storage [storeKey];
+			}
+			else
+			{
+				m_Storage.Remove (storeKey);
+			}
 
 		var searchFor = transform.GetComponents<T>().Length > 0 ? transform.GetComponents<T>() : transform.GetComponentsInChildren<T>();
 
