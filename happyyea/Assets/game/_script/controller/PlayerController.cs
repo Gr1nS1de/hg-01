@@ -28,13 +28,28 @@ public class PlayerController : Controller
 
 			case N.GameChangeRoad:
 				{
+					var prevRoadAlias = (Road)data [0];
+
 					DOTween.Pause (Tween.PLAYER_CORE_ROTATION);
+
+					game.view.playerTraceView.transform.SetParent (GM.instance.RoadContainer.transform.GetChild((int)prevRoadAlias - 1));
+					game.view.playerTraceView.transform.localPosition = new Vector3(0f, 0f, 15f);
+					game.view.playerTraceView.GetComponent<ParticleSystem> ().Pause ();
+					game.view.playerTraceView.GetComponent<ParticleSystem> ().simulationSpace = ParticleSystemSimulationSpace.Local;
+
 					break;
 				}
 
 			case N.GameRoadChanged:
 				{
 					DOTween.Play (Tween.PLAYER_CORE_ROTATION);
+
+					game.view.playerTraceView.transform.SetParent (game.view.playerSpriteView.transform);
+					game.view.playerTraceView.transform.localPosition = new Vector3(0f, 0f, 15f);
+					game.view.playerTraceView.GetComponent<ParticleSystem> ().Clear ();
+					game.view.playerTraceView.GetComponent<ParticleSystem> ().Play ();
+					game.view.playerTraceView.GetComponent<ParticleSystem> ().simulationSpace = ParticleSystemSimulationSpace.World;
+
 					break;
 				}
 

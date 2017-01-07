@@ -353,10 +353,10 @@ MonoBehaviour:
     normals: []
     tangents: []
     uvs:
-    - {x: 0.7832051, y: 0.70800877}
-    - {x: 0.81249803, y: 0.70800877}
-    - {x: 0.7832051, y: 0.7226553}
-    - {x: 0.81249803, y: 0.7226553}
+    - {x: 0.9628926, y: 0.66504}
+    - {x: 0.99218553, y: 0.66504}
+    - {x: 0.9628926, y: 0.67968655}
+    - {x: 0.99218553, y: 0.67968655}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -480,24 +480,24 @@ MonoBehaviour:
     attachPoints: []
   - name: ginger_man_bow_tie_frame
     boundsData:
-    - {x: 0, y: -0.019999996, z: 0}
-    - {x: 0.74, y: 0.38, z: 0}
+    - {x: 0.00500001, y: 0.0050000027, z: 0}
+    - {x: 0.71000004, y: 0.37, z: 0}
     untrimmedBoundsData:
-    - {x: 0, y: -0.004999995, z: 0}
-    - {x: 0.74, y: 0.41, z: 0}
+    - {x: 0.004999995, y: 0, z: 0}
+    - {x: 0.75, y: 0.39999998, z: 0}
     texelSize: {x: 0.01, y: 0.01}
     positions:
-    - {x: -0.37, y: -0.21, z: 0}
-    - {x: 0.37, y: -0.21, z: 0}
-    - {x: -0.37, y: 0.17, z: 0}
-    - {x: 0.37, y: 0.17, z: 0}
+    - {x: -0.35, y: -0.17999999, z: 0}
+    - {x: 0.36, y: -0.17999999, z: 0}
+    - {x: -0.35, y: 0.19, z: 0}
+    - {x: 0.36, y: 0.19, z: 0}
     normals: []
     tangents: []
     uvs:
-    - {x: 0.81250197, y: 0.66504}
-    - {x: 0.9570293, y: 0.66504}
-    - {x: 0.81250197, y: 0.7021475}
-    - {x: 0.9570293, y: 0.7021475}
+    - {x: 0.81250197, y: 0.6630869}
+    - {x: 0.9511699, y: 0.6630869}
+    - {x: 0.81250197, y: 0.6992178}
+    - {x: 0.9511699, y: 0.6992178}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -506,7 +506,7 @@ MonoBehaviour:
     indices: 000000000300000001000000020000000300000000000000
     material: {fileID: 2100000, guid: c14a751b327d147aca65f57c610882b8, type: 2}
     materialId: 0
-    sourceTextureGUID: aa68c0e5b15ac4a239c2d405579f2833
+    sourceTextureGUID: 450bdafb4e2844df2845c8a740af9574
     extractRegion: 0
     regionX: 0
     regionY: 0
@@ -527,24 +527,24 @@ MonoBehaviour:
     attachPoints: []
   - name: ginger_man_frill_frame
     boundsData:
-    - {x: -0.0150000155, y: 0, z: 0}
-    - {x: 0.78999996, y: 0.42, z: 0}
+    - {x: -0.004999995, y: 0, z: 0}
+    - {x: 0.78999996, y: 0.39999998, z: 0}
     untrimmedBoundsData:
     - {x: 0, y: 0, z: 0}
-    - {x: 0.82, y: 0.42, z: 0}
+    - {x: 0.79999995, y: 0.42, z: 0}
     texelSize: {x: 0.01, y: 0.01}
     positions:
-    - {x: -0.41, y: -0.21, z: 0}
-    - {x: 0.37999997, y: -0.21, z: 0}
-    - {x: -0.41, y: 0.21, z: 0}
-    - {x: 0.37999997, y: 0.21, z: 0}
+    - {x: -0.39999998, y: -0.19999999, z: 0}
+    - {x: 0.39, y: -0.19999999, z: 0}
+    - {x: -0.39999998, y: 0.19999999, z: 0}
+    - {x: 0.39, y: 0.19999999, z: 0}
     normals: []
     tangents: []
     uvs:
     - {x: 0.82812697, y: 0.62011814}
     - {x: 0.9824199, y: 0.62011814}
-    - {x: 0.82812697, y: 0.66113186}
-    - {x: 0.9824199, y: 0.66113186}
+    - {x: 0.82812697, y: 0.65917873}
+    - {x: 0.9824199, y: 0.65917873}
     normalizedUvs:
     - {x: 0, y: 0}
     - {x: 1, y: 0}
@@ -589,7 +589,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 50
-  buildKey: 1398683736
+  buildKey: 689128555
   dataGuid: a129c7fc7d93d44d8a1ab9d24f446e9f
   managedSpriteCollection: 0
   hasPlatformData: 0

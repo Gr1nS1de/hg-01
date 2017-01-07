@@ -1653,7 +1653,7 @@ namespace Destructible2D
 						clone.tag  = transform.tag;
 
 						// Retain layer
-						clone.gameObject.layer = gameObject.layer;
+						clone.gameObject.layer = LayerMask.NameToLayer(GM.instance.destructibleObstaclePieceLayerName);
 
                         clone.GetComponent<Rigidbody2D>().isKinematic = false;
 

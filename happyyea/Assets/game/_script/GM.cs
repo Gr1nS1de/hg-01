@@ -37,6 +37,8 @@ public class GM : Controller
 	public GameObject	RoadContainer;
 	public GameObject	ObstaclesContainer;
 	public Sprite[]		PlayerSprites;
+	[HideInInspector]
+	public string		destructibleObstaclePieceLayerName = "DestructibleObstaclePiece";
 
 	private	GameState	gameState				{ get { return game.model.gameState; } }
 	private GameState	_lastGameState;

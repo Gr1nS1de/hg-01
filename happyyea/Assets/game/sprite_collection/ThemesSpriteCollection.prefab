@@ -76,7 +76,7 @@ MonoBehaviour:
   atlasWidth: 512
   atlasHeight: 1024
   forceSquareAtlas: 0
-  atlasWastage: 27.18563
+  atlasWastage: 27.25563
   allowMultipleAtlases: 0
   removeDuplicates: 1
   textureParams:
@@ -453,7 +453,7 @@ MonoBehaviour:
     disableTrimming: 0
     additive: 0
     scale: {x: 1, y: 1, z: 1}
-    texture: {fileID: 2800000, guid: aa68c0e5b15ac4a239c2d405579f2833, type: 3}
+    texture: {fileID: 2800000, guid: 450bdafb4e2844df2845c8a740af9574, type: 3}
     materialId: 0
     anchor: 4
     anchorX: 0

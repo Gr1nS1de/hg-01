@@ -59,8 +59,6 @@ public class GameController : Controller
 
 			case N.GameChangeRoad:
 				{
-
-
 					break;
 				}
 
@@ -130,6 +128,8 @@ public class GameController : Controller
 					Destroy (obstacleView);
 
 					Add1Score ();
+
+					obstacleView.gameObject.layer = LayerMask.NameToLayer (GM.instance.destructibleObstaclePieceLayerName);
 
 					Notify (N.DestructibleBreakEntity, obstacleDestructible, game.model.destructibleModel.destructibleObstacleFractureCount, collisionPoint);
 

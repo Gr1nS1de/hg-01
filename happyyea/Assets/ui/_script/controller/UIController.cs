@@ -112,7 +112,6 @@ public class UIController : Controller
 
 	public void OnChangePrevRoad()
 	{
-		Debug.Log((Road)System.Enum.Parse (typeof(Road), System.Enum.GetNames(typeof(Road))[(int)game.model.currentRoad - 2]));
 		game.model.currentRoad = (Road)System.Enum.Parse (typeof(Road), System.Enum.GetNames(typeof(Road))[(int)game.model.currentRoad - 2]);
 	}
 }

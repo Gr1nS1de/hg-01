@@ -116,7 +116,7 @@ MonoBehaviour:
   - scoreCount: 0
     sprite: {fileID: 0}
   - scoreCount: 0
-    sprite: {fileID: 0}
+    sprite: {fileID: 21300000, guid: c5c4400628dde3e47bf732928262699b, type: 3}
   - scoreCount: 0
     sprite: {fileID: 21300000, guid: a8e5124fcef46f6489c27524707ff057, type: 3}
 --- !u!114 &114000013868521004
