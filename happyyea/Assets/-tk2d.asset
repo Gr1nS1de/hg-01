@@ -59,17 +59,17 @@ MonoBehaviour:
     spriteCollectionGUID: a00f49d3e050f4607968c9cbf44bd99e
     spriteCollectionDataGUID: a129c7fc7d93d44d8a1ab9d24f446e9f
     spriteNames:
-    - ginger_man_frill
-    - ginger_man
-    - ginger_man_bow_tie
+    - gingerbread_man_frill
+    - gingerbread_man
+    - gingerbread_man_bow_tie
     - theme_circle
     - snow_man_scarf
     - snow_man_hat
     - snow_man_pearl_button
     - snow_man_nose
     - snow_man_hand
-    - ginger_man_bow_tie_frame
-    - ginger_man_frill_frame
+    - gingerbread_man_bow_tie_frame
+    - gingerbread_man_frill_frame
     spriteTextureGUIDs:
     - c5c4400628dde3e47bf732928262699b
     - d4b3305b11557a34480df22cc2e3dec8

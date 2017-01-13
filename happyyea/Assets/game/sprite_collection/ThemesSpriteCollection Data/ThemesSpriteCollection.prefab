@@ -55,7 +55,7 @@ MonoBehaviour:
   materialIdsValid: 1
   needMaterialInstance: 0
   spriteDefinitions:
-  - name: ginger_man_frill
+  - name: gingerbread_man_frill
     boundsData:
     - {x: 0, y: 0, z: 0}
     - {x: 0.82, y: 0.42, z: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
-  - name: ginger_man
+  - name: gingerbread_man
     boundsData:
     - {x: 0, y: 0, z: 0}
     - {x: 2.6799998, y: 3.32, z: 0}
@@ -149,7 +149,7 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
-  - name: ginger_man_bow_tie
+  - name: gingerbread_man_bow_tie
     boundsData:
     - {x: 0, y: -0.004999995, z: 0}
     - {x: 0.74, y: 0.41, z: 0}
@@ -478,7 +478,7 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
-  - name: ginger_man_bow_tie_frame
+  - name: gingerbread_man_bow_tie_frame
     boundsData:
     - {x: 0.00500001, y: 0.0050000027, z: 0}
     - {x: 0.71000004, y: 0.37, z: 0}
@@ -525,7 +525,7 @@ MonoBehaviour:
     polygonCollider2D: []
     edgeCollider2D: []
     attachPoints: []
-  - name: ginger_man_frill_frame
+  - name: gingerbread_man_frill_frame
     boundsData:
     - {x: -0.004999995, y: 0, z: 0}
     - {x: 0.78999996, y: 0.39999998, z: 0}
@@ -589,7 +589,7 @@ MonoBehaviour:
   loadable: 0
   invOrthoSize: 2
   halfTargetHeight: 50
-  buildKey: 689128555
+  buildKey: 379590553
   dataGuid: a129c7fc7d93d44d8a1ab9d24f446e9f
   managedSpriteCollection: 0
   hasPlatformData: 0

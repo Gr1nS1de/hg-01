@@ -23,11 +23,11 @@ public class RoadModel : Model
 	[SerializeField]
 	private ItemsScoreData[]	_itemsScoreData = new ItemsScoreData[5];
 
-	[System.Serializable]
-	public struct ItemsScoreData
-	{
-		public int scoreCount;
-		public Sprite sprite;
-	}
-
+}
+	
+[System.Serializable]
+public struct ItemsScoreData
+{
+	public int scoreCount;
+	public Sprite sprite;
 }

@@ -25,15 +25,7 @@ public class UIController : Controller
 					OnStart ();
 					break;
 				}
-
-			case N.GameAddScore:
-				{
-					int score = (int) data[0];
-
-					OnAddScore (score);
-
-					break;
-				}
+					
 		}
 	}
 
@@ -43,12 +35,7 @@ public class UIController : Controller
 		UIGameModel.canvasGroupInGame.alpha = 0;
 		UIMenuModel.canvasGroupStart.alpha = 1f;
 	}
-
-	private void OnAddScore(int score)
-	{
-		UIGameModel.scoreText.text = game.model.currentScore.ToString();
-	}
-
+		
 	void UpdateText()
 	{
 		UIMenuModel.bestScoreText.text = "BEST " + Utils.GetBestScore().ToString();

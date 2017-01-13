@@ -7,43 +7,49 @@ using System;
 /// </summary>
 public static class Utils
 {
-	static System.Random random = new System.Random();
+	private const string LastScoreKey = "LAST_SCORE";
+	private const string BestScoreKey = "BEST_SCORE";
 
-	public static double GetRandomNumber(double minimum, double maximum)
-	{ 
-		return random.NextDouble() * (maximum - minimum) + minimum;
-	}
+	public static void AddRoadScore(Road road, int score)
+	{
+		int currentScore = GetRoadScore (road);
 
-	public static float GetRandomNumber(float minimum, float maximum)
-	{ 
-		return (float)random.NextDouble() * (maximum - minimum) + minimum;
+		PlayerPrefs.SetInt (road.ToString(), currentScore + score);
+
+		PlayerPrefs.Save();
 	}
 
 	public static void SetLastScore(int score)
 	{
-		PlayerPrefs.SetInt("_LASTSCORE",score);
+		PlayerPrefs.SetInt(LastScoreKey,score);
 
 		SetBestScore(score);
 
 		PlayerPrefs.Save();
 	}
 
-	static void SetBestScore(int score)
+	public static void SetBestScore(int score)
 	{
 		int b = GetBestScore();
 
 		if(score > b)
-			PlayerPrefs.SetInt("_BESTSCORE",score);
+			PlayerPrefs.SetInt(BestScoreKey,score);
+	}
+
+	public static int GetRoadScore(Road road)
+	{
+		return PlayerPrefs.GetInt (road.ToString(), 0);
 	}
 
 	public static int GetBestScore()
 	{
-		return PlayerPrefs.GetInt("_BESTSCORE",0);
+		return PlayerPrefs.GetInt(BestScoreKey, 0);
 	}
 
 	public static int GetLastScore()
 	{
-		return PlayerPrefs.GetInt("_LASTSCORE",0);
+		return PlayerPrefs.GetInt(LastScoreKey, 0);
 	}
+		
 
 }

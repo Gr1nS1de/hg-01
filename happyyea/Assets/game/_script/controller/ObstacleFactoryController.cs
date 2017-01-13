@@ -57,7 +57,7 @@ public class ObstacleFactoryController : Controller
 			if ( doInstantiateObstacle )
 				InstantiateObstacle();
 
-			yield return new WaitForSeconds( Utils.GetRandomNumber( 0.20f, 0.5f ) );
+			yield return new WaitForSeconds( Random.Range( 0.20f, 0.5f ) );
 		}
 	}
 
@@ -77,7 +77,7 @@ public class ObstacleFactoryController : Controller
 
 		//instantiatedObstacle.gameObject.SetActive( true );
 
-		instantiatedObstacle.OnInit (game.view.playerSpriteView.transform.eulerAngles.z - 30, Utils.GetRandomNumber( 0f, 100f ) < 50  );
+		instantiatedObstacle.OnInit (game.view.playerSpriteView.transform.eulerAngles.z - 30, Random.Range( 0f, 100f ) < 50  );
 	}
 
 	private ObstacleView TryGetObstacleFromRecycleDictionary(ObstacleState obstacleState)
