@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UIView : View<UI>
+public class UIView : View
 {
 
 

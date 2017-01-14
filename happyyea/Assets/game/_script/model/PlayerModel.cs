@@ -25,6 +25,7 @@ public class PlayerModel : Model
 	public float						jumpDuration			{ get { return _jumpDuration;} 			set { _jumpDuration = value; }}
 	public float						speed					{ get { return _speed; } 				set { _speed = value; } }
 	public float						breakForce				{ get { return _breakForce; } }
+	public ParticleSystem				particleTrace			{ get { return game.view.playerTraceView.GetComponent<ParticleSystem> ();}}
 
 	[SerializeField]
 	private Gradient					_lightGradient;

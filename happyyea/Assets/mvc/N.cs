@@ -19,6 +19,7 @@ public class N : MonoBehaviour
 	public const string GameOver					= "game.over";
 
 	public const string GamePlayerImpactObstacle	= "game.player.impact.obstacle";
+	public const string GamePlayerGetScoreItem		= "game.player.get.score_item";
 
 	public const string GameAddScore				= "game.add.score";
 	public const string GameChangeRoad				= "game.road.change";

@@ -40,6 +40,8 @@ public class GM : Controller
 	[HideInInspector]
 	public string		destructibleObstaclePieceLayerName = "DestructibleObstaclePiece";
 
+	public Vector3[] Points;
+
 	private	GameState	gameState				{ get { return game.model.gameState; } }
 	private GameState	_lastGameState;
 	private bool 		_fadeColorFlag = false;
@@ -57,6 +59,18 @@ public class GM : Controller
 			if (instance != this)
 				Destroy (this.gameObject);
 		}
+
+		/*Vector3[] waypoints = new[] { new Vector3(-0.1407235f,1.143139f,10f), new Vector3(0.01516186f,0.8959453f,10f), new Vector3(0.1749056f,1.125976f,10f) };
+		Vector3[] points = Utils.MakeSmoothCurve(waypoints,3.0f);
+		var lineRenderer = GetComponent<LineRenderer> ();
+		lineRenderer.SetColors(Color.white, Color.blue);
+		lineRenderer.SetWidth(0.5f,0.5f);
+		lineRenderer.SetVertexCount(points.Length);
+		var counter = 0;
+		foreach(var i in points){
+			lineRenderer.SetPosition(counter, i);
+			++counter;
+		}*/
 	}
 
 	void Update()

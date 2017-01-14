@@ -7,15 +7,16 @@ using Destructible2D;
 public class GameController : Controller
 {
 	#region Declare controllers reference
-	public CameraController					cameraController				{ get { return _cameraController 			= SearchLocal<CameraController>(			_cameraController,				"CameraController" ); } }
-	public RoadController					roadController					{ get { return _roadController 				= SearchLocal<RoadController>(				_roadController,				"RoadController" ); } }
-	public RoadFactoryController			roadFactoryController			{ get { return _roadFactoryController 		= SearchLocal<RoadFactoryController>(		_roadFactoryController,			"RoadFactoryController" ); } }
-	public ObstacleController				obstacleController				{ get { return _obstacleController			= SearchLocal<ObstacleController>(			_obstacleController,			"ObstacleController" ); } }
-	public ObstacleFactoryController		obstacleFactoryController		{ get { return _obstacleFactoryController 	= SearchLocal<ObstacleFactoryController>(	_obstacleFactoryController,		"ObstacleFactoryController" ); } }
-	public DestructibleController			destructibleController			{ get { return _destructibleController 		= SearchLocal<DestructibleController>(		_destructibleController,		"DestructibleController" ); } }
-	public PlayerController					playerController				{ get { return _playerController 			= SearchLocal<PlayerController>(			_playerController,				"PlayerController" ); } }
-	public GameSoundController				gameSoundController				{ get { return _gameSoundController			= SearchLocal<GameSoundController>(			_gameSoundController,			"GameSoundController" ); } }
-	public ResourcesController				resourcesController				{ get { return _resourcesController 		= SearchLocal<ResourcesController>(			_resourcesController,			"ResourcesController" ); } }
+	public CameraController					cameraController				{ get { return _cameraController 			= SearchLocal<CameraController>(			_cameraController,				typeof(CameraController).Name ); } }
+	public RoadController					roadController					{ get { return _roadController 				= SearchLocal<RoadController>(				_roadController,				typeof(RoadController).Name ); } }
+	public RoadFactoryController			roadFactoryController			{ get { return _roadFactoryController 		= SearchLocal<RoadFactoryController>(		_roadFactoryController,			typeof(RoadFactoryController).Name ); } }
+	public ObstacleController				obstacleController				{ get { return _obstacleController			= SearchLocal<ObstacleController>(			_obstacleController,			typeof(ObstacleController).Name ); } }
+	public ObstacleFactoryController		obstacleFactoryController		{ get { return _obstacleFactoryController 	= SearchLocal<ObstacleFactoryController>(	_obstacleFactoryController,		typeof(ObstacleFactoryController).Name ); } }
+	public DestructibleController			destructibleController			{ get { return _destructibleController 		= SearchLocal<DestructibleController>(		_destructibleController,		typeof(DestructibleController).Name ); } }
+	public PlayerController					playerController				{ get { return _playerController 			= SearchLocal<PlayerController>(			_playerController,				typeof(PlayerController).Name ); } }
+	public GameSoundController				gameSoundController				{ get { return _gameSoundController			= SearchLocal<GameSoundController>(			_gameSoundController,			typeof(GameSoundController).Name ); } }
+	public ResourcesController				resourcesController				{ get { return _resourcesController 		= SearchLocal<ResourcesController>(			_resourcesController,			typeof(ResourcesController).Name ); } }
+	public ObjectsPoolController			objectsPoolController			{ get { return _objectsPoolController 		= SearchLocal<ObjectsPoolController> (		_objectsPoolController, 		typeof(ObjectsPoolController).Name);}}
 
 	private CameraController				_cameraController;
 	private RoadController					_roadController;
@@ -26,6 +27,7 @@ public class GameController : Controller
 	private PlayerController				_playerController;
 	private GameSoundController				_gameSoundController;
 	private ResourcesController				_resourcesController;
+	private ObjectsPoolController 			_objectsPoolController;
 	#endregion
 
 	private PlayerModel 					playerModel	{ get { return game.model.playerModel;}}

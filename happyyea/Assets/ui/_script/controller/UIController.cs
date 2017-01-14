@@ -6,8 +6,8 @@ using DG.Tweening;
 public class UIController : Controller
 {
 	#region Declare controllers reference
-	public UIGameController		UIGameController				{ get { return _UIGameController 		= SearchLocal<UIGameController>(			_UIGameController,		"UIGameController");	} }
-	public UIMenuController		UIMenuController				{ get { return _UIMenuController		= SearchLocal<UIMenuController>(			_UIMenuController,		"UIMenuController");	} }
+	public UIGameController		UIGameController				{ get { return _UIGameController 		= SearchLocal<UIGameController>(			_UIGameController,		typeof(UIGameController).Name);	} }
+	public UIMenuController		UIMenuController				{ get { return _UIMenuController		= SearchLocal<UIMenuController>(			_UIMenuController,		typeof(UIMenuController).Name);	} }
 
 	private UIGameController	_UIGameController;
 	private UIMenuController	_UIMenuController;

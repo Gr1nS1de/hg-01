@@ -32,10 +32,10 @@ public class PlayerController : Controller
 
 					DOTween.Pause (Tween.PLAYER_CORE_ROTATION);
 
-					game.view.playerTraceView.transform.SetParent (GM.instance.RoadContainer.transform.GetChild((int)prevRoadAlias - 1));
-					game.view.playerTraceView.transform.localPosition = new Vector3(0f, 0f, 15f);
-					game.view.playerTraceView.GetComponent<ParticleSystem> ().Pause ();
-					game.view.playerTraceView.GetComponent<ParticleSystem> ().simulationSpace = ParticleSystemSimulationSpace.Local;
+					playerModel.particleTrace.transform.SetParent (GM.instance.RoadContainer.transform.GetChild((int)prevRoadAlias - 1));
+					playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
+					playerModel.particleTrace.Pause ();
+					playerModel.particleTrace.simulationSpace = ParticleSystemSimulationSpace.Local;
 
 					break;
 				}
@@ -44,11 +44,11 @@ public class PlayerController : Controller
 				{
 					DOTween.Play (Tween.PLAYER_CORE_ROTATION);
 
-					game.view.playerTraceView.transform.SetParent (game.view.playerSpriteView.transform);
-					game.view.playerTraceView.transform.localPosition = new Vector3(0f, 0f, 15f);
-					game.view.playerTraceView.GetComponent<ParticleSystem> ().Clear ();
-					game.view.playerTraceView.GetComponent<ParticleSystem> ().Play ();
-					game.view.playerTraceView.GetComponent<ParticleSystem> ().simulationSpace = ParticleSystemSimulationSpace.World;
+					playerModel.particleTrace.transform.SetParent (game.view.playerSpriteView.transform);
+					playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
+					playerModel.particleTrace.Clear ();
+					playerModel.particleTrace.Play ();
+					playerModel.particleTrace.simulationSpace = ParticleSystemSimulationSpace.World;
 
 					break;
 				}
@@ -127,6 +127,8 @@ public class PlayerController : Controller
 	{
 		if(game.view.playerSpriteView.GetComponent<Rigidbody2D> ())
 			game.view.playerSpriteView.GetComponent<Rigidbody2D> ().isKinematic = false;
+
+		playerModel.particleTrace.Stop ();
 	}
 		
 }
