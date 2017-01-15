@@ -1677,6 +1677,7 @@ MonoBehaviour:
     sprite: {fileID: 0}
   - scoreCount: 0
     sprite: {fileID: 0}
+  _roadTweenPath: {fileID: 0}
 --- !u!114 &114000014059479398
 MonoBehaviour:
   m_ObjectHideFlags: 1

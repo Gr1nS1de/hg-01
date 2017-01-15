@@ -4,7 +4,8 @@ using System.Collections;
 
 public class ObstacleFactoryController : Controller
 {
-	private ObstacleFactoryModel _obstacleFactoryModel	{ get { return game.model.obstacleFactoryModel; } }
+	private ObstacleFactoryModel 	obstacleFactoryModel	{ get { return game.model.obstacleFactoryModel; } }
+	private ObjectsPoolModel		objectsPoolModel		{ get { return game.model.objectsPoolModel;}}
 
 	public override void OnNotification (string alias, Object target, params object[] data)
 	{
@@ -28,8 +29,8 @@ public class ObstacleFactoryController : Controller
 
 	private void OnStart()
 	{
-		_obstacleFactoryModel.obstaclesDynamicContainer.name = "ObstaclesContainer";
-		_obstacleFactoryModel.obstaclesDynamicContainer.transform.SetParent (dynamic_objects.transform);
+		obstacleFactoryModel.obstaclesDynamicContainer.name = "ObstaclesContainer";
+		obstacleFactoryModel.obstaclesDynamicContainer.transform.SetParent (dynamic_objects.transform);
 	}
 
 	private void OnGamePlay()
@@ -46,23 +47,26 @@ public class ObstacleFactoryController : Controller
 
 			if ( allObstacles != null && allObstacles.Length > 1 )
 			{
-				var allVisibleObtacles = System.Array.FindAll( allObstacles, o => o.isVisible == true );
+				int visibleObtacles = System.Array.FindAll( allObstacles, o => o.isVisible == true ).Length;
+				int pooledObstacles = System.Array.FindAll( objectsPoolModel.poolingQueue.ToArray (), o => o.poolingType == PoolingObjectType.OBSTACLE).Length;
+				int allObstaclesCount = visibleObtacles + pooledObstacles;
 
-				if ( allVisibleObtacles != null && allVisibleObtacles.Length < game.model.currentScore + 3 )
+				if ( allObstaclesCount < 10 )
 					doInstantiateObstacle = true;
 			}
 			else
 				doInstantiateObstacle = true;
 
 			if ( doInstantiateObstacle )
-				InstantiateObstacle();
+				AddObstacleToPoolQueue();
 
-			yield return new WaitForSeconds( Random.Range( 0.20f, 0.5f ) );
+
+			yield return null;
 		}
 	}
 
-	//Instantiate random obstacle
-	private void InstantiateObstacle()
+	//Add random obstacle to pool queue
+	private void AddObstacleToPoolQueue()
 	{
 		if (game.model.gameState != GameState.PLAYING)
 			return;
@@ -74,16 +78,17 @@ public class ObstacleFactoryController : Controller
 
 		if (!instantiatedObstacle)
 			instantiatedObstacle = CreateNewObstacle (randomObstacleState);
-
-		//instantiatedObstacle.gameObject.SetActive( true );
-
-		instantiatedObstacle.OnInit (game.view.playerSpriteView.transform.eulerAngles.z - 30, Random.Range( 0f, 100f ) < 50  );
+		
+		objectsPoolModel.poolingQueue.Enqueue (new PoolingObject{
+			poolingType = PoolingObjectType.OBSTACLE,
+			poolingObject = instantiatedObstacle
+		});
 	}
 
 	private ObstacleView TryGetObstacleFromRecycleDictionary(ObstacleState obstacleState)
 	{
 		ObstacleView recyclableObstacle = null;
-		var recyclableDictionary = _obstacleFactoryModel.recyclableObstaclesDictionary;
+		var recyclableDictionary = obstacleFactoryModel.recyclableObstaclesDictionary;
 
 		if (recyclableDictionary [obstacleState].Count >= 1)
 		{
@@ -97,7 +102,7 @@ public class ObstacleFactoryController : Controller
 
 	private ObstacleView CreateNewObstacle(ObstacleState obstacleState)
 	{
-		var obstacleTemplatesDictionary = _obstacleFactoryModel.templatesByStateDictionary;
+		var obstacleTemplatesDictionary = obstacleFactoryModel.templatesByStateDictionary;
 		int randomInstanceIndex = UnityEngine.Random.Range( 0, obstacleTemplatesDictionary[obstacleState].Length );
 		ObstacleView obstacleRandomTemplate = obstacleTemplatesDictionary[obstacleState][randomInstanceIndex];
 
@@ -106,40 +111,28 @@ public class ObstacleFactoryController : Controller
 		#region storing obstacle model copy to dictionary
 		ObstacleModel obstacleModel = instanceObstacle.GetComponent<ObstacleModel> ();
 
-		ObstacleModel obstacleModelCopy = _obstacleFactoryModel.gameObject.AddComponent<ObstacleModel>();
+		ObstacleModel obstacleModelCopy = obstacleFactoryModel.gameObject.AddComponent<ObstacleModel>();
 		obstacleModelCopy.GetCopyOf<ObstacleModel> (obstacleModel);
 
-		_obstacleFactoryModel.currentModelsDictionary.Add (instanceObstacle, obstacleModelCopy);
+		obstacleFactoryModel.currentModelsDictionary.Add (instanceObstacle, obstacleModelCopy);
 
 		Destroy (obstacleModel);
 		#endregion
 
-		#region create wrap-base object for obstacle
-		GameObject wrapObject = CreateWrapperForObstacle ();
-
-		wrapObject.transform.SetParent (_obstacleFactoryModel.obstaclesDynamicContainer.transform);
-		#endregion
-
-		instanceObstacle.transform.SetParent (wrapObject.transform);
+		instanceObstacle.transform.SetParent (obstacleFactoryModel.obstaclesDynamicContainer.transform);
 
 		#region create sprite renderer object for checking visibility of obstacle by camera.
 		GameObject spriteForVisible = CreateSpriteForVisibility ();
 
-		spriteForVisible.transform.SetParent (wrapObject.transform);
+		spriteForVisible.transform.SetParent (instanceObstacle.transform);
+		spriteForVisible.transform.localPosition = Vector3.zero;
+
 		obstacleModelCopy.spriteForVisible = spriteForVisible.GetComponent<SpriteRenderer>();
 		#endregion
 
 		return instanceObstacle;
 	}
 
-	private GameObject CreateWrapperForObstacle()
-	{
-		GameObject wrapObject = new GameObject ();
-
-		wrapObject.name = "obstacleWrapper";
-
-		return wrapObject;
-	}
 
 	private GameObject CreateSpriteForVisibility()
 	{

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 
 public class RoadFactoryController : Controller
@@ -23,23 +24,31 @@ public class RoadFactoryController : Controller
 					
 					break;
 				}
+
+			case N.GamePlayerPlacedOnRoad:
+				{
+					game.view.roadView.OnPlayerPlaced ();
+					break;
+				}
 		}
 	}
 
 	private void OnStart()
 	{
-		PlaceRoads ();
+		InitRoads ();
 
-		Notify (N.GameRoadsPlaced);
+		Notify (N.GameRoadInited);
 	}
 
-	public RoadModel PlaceRoads()
+	public RoadModel InitRoads()
 	{
 		RoadModel currentGameRoadModelCopy = null;
 
 		foreach(RoadView roadView in _roadFactoryModel.roadTemplates)
 		{
 			RoadModel roadModel = roadView.GetComponent<RoadModel> ();
+
+			CommitStaticSprites (roadView);
 
 			if (roadModel.alias == game.model.currentRoad)
 			{
@@ -62,22 +71,58 @@ public class RoadFactoryController : Controller
 		return currentGameRoadModelCopy;
 	}
 
+	private void CommitStaticSprites(RoadView road)
+	{
+		tk2dStaticSpriteBatcher staticBatcher = road.GetComponent<tk2dStaticSpriteBatcher> ();
+		tk2dSprite[] roadSprites = road.GetComponentsInChildren<tk2dSprite> ();
+
+		staticBatcher.batchedSprites = new tk2dBatchedSprite[roadSprites.Length];
+
+		int counter = 0;
+
+		foreach(tk2dSprite roadSprite in roadSprites)
+		{
+			tk2dBatchedSprite batchedSprite = new tk2dBatchedSprite ();
+
+			batchedSprite.name = roadSprite.CurrentSprite.name;
+			batchedSprite.spriteCollection = roadSprite.Collection;
+			batchedSprite.spriteId = roadSprite.spriteId;
+
+			Vector3 batchedSpritePosition = roadSprite.transform.position;
+			Vector3 batchedSpriteScale = roadSprite.scale;
+			Quaternion batchedSpriteRotation = roadSprite.transform.rotation;
+
+			// Assign the relative matrix. Use this in place of bs.position
+			//batchedSprite.relativeMatrix.SetTRS(batchedSpritePosition, batchedSpriteRotation, batchedSpriteScale);
+			batchedSprite.position = batchedSpritePosition;
+			batchedSprite.rotation = batchedSpriteRotation;
+			batchedSprite.baseScale = batchedSpriteScale;
+
+			staticBatcher.batchedSprites[counter] = batchedSprite;
+
+			roadSprite.gameObject.SetActive (false);
+
+			counter++;
+		}
+
+		// Don't create colliders when you don't need them. It is very expensive to
+		// generate colliders at runtime.
+		staticBatcher.SetFlag( tk2dStaticSpriteBatcher.Flags.GenerateCollider, false );
+
+		staticBatcher.UpdateMatrices ();
+
+		staticBatcher.Build();
+	}
+
 	private void ChangeRoad()
 	{
 		RoadModel currentGameRoadModelCopy = null;
 
-		foreach (RoadView roadView in _roadFactoryModel.roadTemplates)
-		{
-			RoadModel roadModel = roadView.GetComponent<RoadModel> ();
+		RoadModel roadModel = System.Array.Find (_roadFactoryModel.roadTemplates, roadView => roadView.GetComponent<RoadModel> ().alias == game.model.currentRoad).GetComponent<RoadModel> ();
 
-			if(roadModel)
-				if (roadModel.alias == game.model.currentRoad)
-				{
-					currentGameRoadModelCopy = roadModel.GetCopyOf<RoadModel> (roadModel);
+		currentGameRoadModelCopy = roadModel.GetCopyOf<RoadModel> (roadModel);
 
-					Destroy (roadModel);
-				}
-		}
+		Destroy (roadModel);
 		   
 		game.model.currentRoadModel.GetCopyOf<RoadModel>(currentGameRoadModelCopy);
 		

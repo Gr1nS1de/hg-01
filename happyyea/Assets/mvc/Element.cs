@@ -21,6 +21,7 @@ public abstract class Element : MonoBehaviour
 	private GameObject 					_dynamic_objects;
 
 	public void Notify( string alias, params object[] data ) { m_Game.Notify( alias, this, data ); m_UI.Notify ( alias, this, data ); }
+	public void NotifyNextFrame( string alias, params object[] data ) { m_Game.NotifyNextFrame( alias, this, data ); m_UI.NotifyNextFrame ( alias, this, data ); }
 
 	public T SearchGlobal<T> (T obj, string storeKey = "", bool update = false ) where T : Object
 	{

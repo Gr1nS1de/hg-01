@@ -16,6 +16,7 @@ public class GameModel : Model
 	public int							currentScore			{ get { return _currentScore; } 	set { _currentScore = value; } }
 	public Road							currentRoad				{ get { return _currentRoad;}		set { _prevRoad = _currentRoad; Notify(N.RCResetRoadModelTemplate, _currentRoad); _currentRoad = value; Notify (N.GameChangeRoad, _prevRoad); } }
 	public RoadModel					currentRoadModel		{ get { return _currentRoadModel			= SearchLocal<RoadModel>(					_currentRoadModel,			typeof(RoadModel).Name); } }
+	public Vector3[]					currentRoadWaypoints	{ get { return System.Array.Find (roadFactoryModel.roadBundles, o => o.roadAlias == game.model.currentRoad).roadWaypoints;}}
 
 	[SerializeField]
 	private GameState					_gameState 				= GameState.READY;

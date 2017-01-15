@@ -26,16 +26,32 @@ public class ObjectsPoolController : Controller
 
 	private IEnumerator ObjectsPoolingRoutine()
 	{
-		List<GameObject> poolingList = objectsPoolModel.poolingList;
+		Queue<PoolingObject> poolingQueue = objectsPoolModel.poolingQueue;
 
 		while ( true )
 		{
-			if (poolingList.Count <= 0)
+			if (poolingQueue.Count <= 0)
+			{
+				yield return null;
 				continue;
+			}
 
+			PoolingObject poolingObject = poolingQueue.Dequeue ();
 
+			switch (poolingObject.poolingType)
+			{
+				case PoolingObjectType.OBSTACLE:
+					{
+						ObstacleView obstacleView = (ObstacleView)poolingObject.poolingObject;
 
-			yield return new WaitForSeconds( Random.Range( 0.20f, 0.5f ) );
+						obstacleView.OnInit (game.view.playerSpriteContainerView.transform.eulerAngles.z - 30, Random.Range( 0f, 100f ) < 50  );
+
+						yield return new WaitForSeconds( Random.Range( 0.20f, 0.5f ) );
+
+						break;
+					}
+			}
+					
 		}
 	}
 }

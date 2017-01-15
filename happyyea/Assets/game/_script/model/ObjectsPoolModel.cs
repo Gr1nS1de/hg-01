@@ -2,11 +2,22 @@
 using System.Collections;
 using System.Collections.Generic;
 
+public enum PoolingObjectType
+{
+	OBSTACLE
+}
+
+public class PoolingObject
+{
+	public PoolingObjectType 	poolingType;
+	public Object 				poolingObject;
+}
+
 public class ObjectsPoolModel : Model
 {
-	public List<GameObject>		poolingList		{ get { return _poolingList; } }
+	public Queue<PoolingObject>		poolingQueue		{ get { return _poolingList; } }
 
-	private List<GameObject> 	_poolingList 	= new List<GameObject>();
+	private Queue<PoolingObject> 	_poolingList 	= new Queue<PoolingObject>();
 
 }
 

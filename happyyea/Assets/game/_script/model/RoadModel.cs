@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class RoadModel : Model
 {
@@ -9,6 +10,7 @@ public class RoadModel : Model
 	public int					segments			{ get { return _segments;}}
 	public int					scoreToFinish		{ get { return _scoreToFinish;}}
 	public ItemsScoreData[]		itemsScoreData		{ get { return _itemsScoreData;}}
+	public DOTweenPath			roadTweenPath		{ get { return _roadTweenPath;}}
 
 	[SerializeField]
 	private Road				_alias;
@@ -22,7 +24,8 @@ public class RoadModel : Model
 	private int					_scoreToFinish;
 	[SerializeField]
 	private ItemsScoreData[]	_itemsScoreData = new ItemsScoreData[5];
-
+	[SerializeField]
+	public DOTweenPath			_roadTweenPath;
 }
 	
 [System.Serializable]

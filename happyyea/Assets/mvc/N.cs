@@ -20,11 +20,12 @@ public class N : MonoBehaviour
 
 	public const string GamePlayerImpactObstacle	= "game.player.impact.obstacle";
 	public const string GamePlayerGetScoreItem		= "game.player.get.score_item";
+	public const string GamePlayerPlacedOnRoad		= "game.player.placed_on_road";
 
 	public const string GameAddScore				= "game.add.score";
 	public const string GameChangeRoad				= "game.road.change";
 	public const string GameRoadChanged 			= "game.road.changed";
-	public const string GameRoadsPlaced				= "game.roads.placed";
+	public const string GameRoadInited				= "game.road.inited";
 	#endregion
 
 	#region UI notifications

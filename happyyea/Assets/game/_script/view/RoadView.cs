@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class RoadView : View<Game>
 {
@@ -11,30 +12,19 @@ public class RoadView : View<Game>
 		_roadModel = roadModel;
 
 		_line = GetComponent<LineRenderer>();
-		_line.SetVertexCount (_roadModel.segments + 2);
 		_line.useWorldSpace = false;
-
-		CreatePoints ();
-
-		//_line.material.color = _gameManager.m_CircleColor;
-		_line.SetWidth(_roadModel.width,_roadModel.width);
 	}
 
-	public void CreatePoints ()
+	public void OnPlayerPlaced()
 	{
-		float angle = 20f;
-		float z = 0f;
-		float x;
-		float y;
+		Vector3[] drawPoints = game.model.playerModel.playerPath.PathGetDrawPoints(); 
+		int pointsCount = drawPoints.Length;
 
-		for (int i = 0; i < (_roadModel.segments + 2); i++)
-		{
-			x = Mathf.Sin (Mathf.Deg2Rad * angle) * _roadModel.radius;
-			y = Mathf.Cos (Mathf.Deg2Rad * angle) * _roadModel.radius;
+		_line.SetWidth(_roadModel.width,_roadModel.width);
+		_line.SetVertexCount(pointsCount);
 
-			_line.SetPosition (i,new Vector3(x,y,z) );
+		for (int i = 0; i < pointsCount; ++i)
+			_line.SetPosition(i, drawPoints[i]);
 
-			angle += (360f / _roadModel.segments);
-		}
 	}
 }

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class ObstacleBundle
 {
 	public Road 			roadAlias;
-	[SerializeField]
 	public ObstacleView[]	obstacleTemplates;
 }
 

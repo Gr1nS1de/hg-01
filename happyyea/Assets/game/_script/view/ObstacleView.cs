@@ -24,14 +24,14 @@ public class ObstacleView : View<Game>
 		if(isDown)
 			sign = -1;
 
-		Vector3 correctLocalPosition = SetCorrectLocalPosition(new Vector3(0,0,rotationZ), isDown, null);
+		Vector3 correctLocalPosition = SetCorrectLocalPosition(new Vector3(0,0,rotationZ), isDown);
 
 		gameObject.SetActive(true);
 
 		isVisible = true;
 
-		transform.localPosition = new Vector3(correctLocalPosition.x + sign * 0.2f, correctLocalPosition.y, correctLocalPosition.z);
-		transform.DOLocalMoveX(correctLocalPosition.x, 0.2f).OnComplete(() => {
+		transform.position = new Vector3(correctLocalPosition.x, correctLocalPosition.y + sign * 0.2f, correctLocalPosition.z);
+		transform.DOMoveY(correctLocalPosition.y, 0.2f).OnComplete(() => {
 			
 			StopAllCoroutines();
 
@@ -68,41 +68,16 @@ public class ObstacleView : View<Game>
 		}
 	}
 
-	public Vector3 SetCorrectLocalPosition(Vector3 rotation, bool isDown, System.Action callback)
+	public Vector3 SetCorrectLocalPosition(Vector3 rotation, bool isDown)
 	{
 		float spriteHeightOffset = obstacleSpriteSize.y * transform.localScale.y;//*2f;
-		Vector3 pPosition = new Vector3(game.model.currentRoadModel.radius, 0f, game.view.playerView.transform.position.z );
+		float playerPathElapsedPercentage = game.model.playerModel.playerPath.ElapsedPercentage(false);
+		float forwarpPointPercentage = playerPathElapsedPercentage + 0.1f;
 
-		Vector3 searchPosition;
+		if (forwarpPointPercentage > 1.0f)
+			forwarpPointPercentage -= 1.0f;
 
-		if(isDown)
-		{
-			searchPosition = new Vector3(pPosition.x - spriteHeightOffset, pPosition.y, pPosition.z);
-
-			transform.localPosition = searchPosition;
-
-			searchPosition = transform.position;
-
-			transform.position = searchPosition;
-			transform.localEulerAngles = new Vector3(0,0,-90);
-		}
-		else
-		{
-			searchPosition = new Vector3(pPosition.x + spriteHeightOffset, pPosition.y, pPosition.z);
-
-			transform.localPosition = searchPosition;
-
-			searchPosition = transform.position;
-
-			transform.position = searchPosition;
-			transform.localEulerAngles = new Vector3(0,0,+90);
-		}
-
-		obstacleModel.spriteForVisible.transform.position = searchPosition;
-
-		transform.parent.eulerAngles = rotation;
-
-		return transform.localPosition;
+		return game.model.playerModel.playerPath.PathGetPoint(forwarpPointPercentage);
 	}
 
 }
