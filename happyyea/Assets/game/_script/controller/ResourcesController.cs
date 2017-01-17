@@ -67,7 +67,7 @@ public class ResourcesController : Controller
 
 	private void LoadPlayerSprites()
 	{
-		var playerSprites = Resources.LoadAll<Sprite>( _RCModel.playerSpriteResourcePath );
+		var playerSprites = Resources.LoadAll<Sprite>( GetDirFromPath( _RCModel.playerSpriteResourcePath) );
 
 		GM.instance.PlayerSprites = playerSprites;
 

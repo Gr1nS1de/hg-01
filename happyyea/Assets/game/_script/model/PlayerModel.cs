@@ -23,10 +23,11 @@ public class PlayerModel : Model
 	public PlayerPositionState			positionState			{ get { return _positionState; } 		set { _positionState = value; } }
 	public float 						jumpWidth				{ get { return _jumpWidth 				= game.model.currentRoadModel.width / 2f - currentSprite.bounds.size.x * 0.5f * game.view.playerSpriteView.transform.localScale.x; } }
 	public float						jumpDuration			{ get { return _jumpDuration;} 			set { _jumpDuration = value; }}
-	public float						speed					{ get { return _speed; } 				set { _speed = value; } }
+	public float						pathDuration			{ get { return _pathDuration; } 		set { _pathDuration = value; } }
 	public float						breakForce				{ get { return _breakForce; } }
 	public ParticleSystem				particleTrace			{ get { return game.view.playerTraceView.GetComponent<ParticleSystem> ();}}
-	public Tweener						playerPath				{ get { return _playerPath;} set { _playerPath = value;}}
+	public Tweener						playerPath				{ get { return _playerPath;} 			set { _playerPath = value;}}
+	public int							playerPathWPIndex		{ get { return 	_playerPathWPIndex;} 	set { _playerPathWPIndex = value; }}
 
 	[SerializeField]
 	private Gradient					_lightGradient;
@@ -37,16 +38,17 @@ public class PlayerModel : Model
 //	private SFLight						m_Light;
 //	private float						m_LightDuration;
 	[SerializeField]
-	private float						_deathDuration;
+	private float						_deathDuration 	= 3f;
 	[SerializeField]
 	private PlayerPositionState 		_positionState;
 	private float						_jumpWidth;
 	[SerializeField]
-	private float						_jumpDuration;
+	private float						_jumpDuration	= 0.2f;
 	[SerializeField]
-	private float						_speed;
+	private float						_pathDuration	= 10f;
 	[SerializeField]
-	private float						_breakForce;
+	private float						_breakForce		= 100f;
 	private Tweener 					_playerPath;
+	private int							_playerPathWPIndex;
 }
 	

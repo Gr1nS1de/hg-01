@@ -27,7 +27,7 @@ public class RoadFactoryController : Controller
 
 			case N.GamePlayerPlacedOnRoad:
 				{
-					game.view.roadView.OnPlayerPlaced ();
+					game.view.currentRoadView.OnPlayerPlaced ();
 					break;
 				}
 		}
@@ -48,8 +48,6 @@ public class RoadFactoryController : Controller
 		{
 			RoadModel roadModel = roadView.GetComponent<RoadModel> ();
 
-			CommitStaticSprites (roadView);
-
 			if (roadModel.alias == game.model.currentRoad)
 			{
 				currentGameRoadModelCopy = roadModel.GetCopyOf<RoadModel> (roadModel);
@@ -69,49 +67,6 @@ public class RoadFactoryController : Controller
 		game.model.currentRoadModel.GetCopyOf<RoadModel>(currentGameRoadModelCopy);
 
 		return currentGameRoadModelCopy;
-	}
-
-	private void CommitStaticSprites(RoadView road)
-	{
-		tk2dStaticSpriteBatcher staticBatcher = road.GetComponent<tk2dStaticSpriteBatcher> ();
-		tk2dSprite[] roadSprites = road.GetComponentsInChildren<tk2dSprite> ();
-
-		staticBatcher.batchedSprites = new tk2dBatchedSprite[roadSprites.Length];
-
-		int counter = 0;
-
-		foreach(tk2dSprite roadSprite in roadSprites)
-		{
-			tk2dBatchedSprite batchedSprite = new tk2dBatchedSprite ();
-
-			batchedSprite.name = roadSprite.CurrentSprite.name;
-			batchedSprite.spriteCollection = roadSprite.Collection;
-			batchedSprite.spriteId = roadSprite.spriteId;
-
-			Vector3 batchedSpritePosition = roadSprite.transform.position;
-			Vector3 batchedSpriteScale = roadSprite.scale;
-			Quaternion batchedSpriteRotation = roadSprite.transform.rotation;
-
-			// Assign the relative matrix. Use this in place of bs.position
-			//batchedSprite.relativeMatrix.SetTRS(batchedSpritePosition, batchedSpriteRotation, batchedSpriteScale);
-			batchedSprite.position = batchedSpritePosition;
-			batchedSprite.rotation = batchedSpriteRotation;
-			batchedSprite.baseScale = batchedSpriteScale;
-
-			staticBatcher.batchedSprites[counter] = batchedSprite;
-
-			roadSprite.gameObject.SetActive (false);
-
-			counter++;
-		}
-
-		// Don't create colliders when you don't need them. It is very expensive to
-		// generate colliders at runtime.
-		staticBatcher.SetFlag( tk2dStaticSpriteBatcher.Flags.GenerateCollider, false );
-
-		staticBatcher.UpdateMatrices ();
-
-		staticBatcher.Build();
 	}
 
 	private void ChangeRoad()

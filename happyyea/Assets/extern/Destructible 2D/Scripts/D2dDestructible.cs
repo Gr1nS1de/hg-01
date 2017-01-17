@@ -1666,7 +1666,7 @@ namespace Destructible2D
 						if (clone.GetComponent<D2dDestroyer> ())
 							clone.GetComponent<D2dDestroyer> ().enabled = true;
 
-						// Retain transform
+						// Retain clones in container
 						clone.transform.SetParent(transform.parent, false);
 
 						clone.transform.localPosition = transform.localPosition;
@@ -1674,12 +1674,7 @@ namespace Destructible2D
 						clone.transform.localScale    = transform.localScale;
 
                         // Disable childrens
-                        if ( clone.transform.childCount > 0 )
-                            for ( int j = 0; j < clone.transform.childCount; j++ )
-                            {
-                                clone.transform.GetChild( j ).gameObject.SetActive( false );
-                                clone.transform.GetChild( j ).gameObject.isStatic = true;
-                            }
+						Utils.ActivateTransformChildrens(clone.transform, false);
 						
                         //Reset all unity colliders on clones
 						if (clone.GetComponent<Collider2D> ())

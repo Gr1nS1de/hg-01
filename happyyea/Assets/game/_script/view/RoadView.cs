@@ -18,13 +18,17 @@ public class RoadView : View<Game>
 	public void OnPlayerPlaced()
 	{
 		Vector3[] drawPoints = game.model.playerModel.playerPath.PathGetDrawPoints(); 
-		int pointsCount = drawPoints.Length;
+		int secondVertexForPerfectClampedLR = 1;
+		int pointsCount = drawPoints.Length + secondVertexForPerfectClampedLR ;
 
 		_line.SetWidth(_roadModel.width,_roadModel.width);
 		_line.SetVertexCount(pointsCount);
 
 		for (int i = 0; i < pointsCount; ++i)
-			_line.SetPosition(i, drawPoints[i]);
+			if (i == pointsCount - 1)
+				_line.SetPosition (i, drawPoints [1]);
+			else
+				_line.SetPosition(i, drawPoints[i]);
 
 	}
 }

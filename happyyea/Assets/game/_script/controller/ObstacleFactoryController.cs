@@ -45,13 +45,13 @@ public class ObstacleFactoryController : Controller
 			var allObstacles = FindObjectsOfType<ObstacleView>();
 			bool doInstantiateObstacle = false;
 
-			if ( allObstacles != null && allObstacles.Length > 1 )
+			if ( allObstacles != null && allObstacles.Length >= 1 )
 			{
 				int visibleObtacles = System.Array.FindAll( allObstacles, o => o.isVisible == true ).Length;
 				int pooledObstacles = System.Array.FindAll( objectsPoolModel.poolingQueue.ToArray (), o => o.poolingType == PoolingObjectType.OBSTACLE).Length;
 				int allObstaclesCount = visibleObtacles + pooledObstacles;
 
-				if ( allObstaclesCount < 10 )
+				if ( allObstaclesCount < Mathf.Clamp( game.model.currentScore + 3, 0, 7) )
 					doInstantiateObstacle = true;
 			}
 			else

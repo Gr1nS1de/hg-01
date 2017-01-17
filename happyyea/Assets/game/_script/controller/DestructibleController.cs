@@ -44,21 +44,21 @@ public class DestructibleController : Controller
 			_destructibleModel.entityBreakPoint = collisionPoint;
 
 		// Register split event
-		destructible.OnEndSplit.AddListener(OnEndSplit);
+		destructible.OnEndSplit.AddListener((piecesList)=>{OnEndSplit(destructible, piecesList);});
 
 		// Split via fracture
 		D2dQuadFracturer.Fracture(destructible, fractureCount, 0.1f);
-
-		// Unregister split event
-		destructible.OnEndSplit.RemoveListener(OnEndSplit);
 	}
 
-	private void OnEndSplit(List<D2dDestructible> clones)
+	private void OnEndSplit(D2dDestructible destructible, List<D2dDestructible> piecesList)
 	{
+		//destructible.GetComponent<D2dDestroyer> ().enabled = true;
+		//Utils.ActivateTransformChildrens (destructible.transform, false);
+		
 		// Go through all clones in the clones list
-		for (var i = clones.Count - 1; i >= 0; i--)
+		for (var i = piecesList.Count - 1; i >= 0; i--)
 		{
-			var clone = clones[i];
+			var clone = piecesList[i];
 			var rigidbody = clone.GetComponent<Rigidbody2D>();
 
 			// Does this clone have a Rigidbody2D?

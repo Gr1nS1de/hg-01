@@ -42,6 +42,18 @@ public static class Utils
 		return(curvedPoints.ToArray());
 	}
 
+	public static void ActivateTransformChildrens(Transform obj, bool isActivate)
+	{
+		if (!obj)
+			Debug.LogError ("Try to activate null Transform");
+		
+		for(int i = 0; i < obj.transform.childCount; i++)
+		{
+			if(!obj.transform.GetChild (i).gameObject.activeInHierarchy)
+				obj.transform.GetChild (i).gameObject.SetActive(isActivate);
+		}
+	}
+
 	public static void AddRoadScore(Road road, int score)
 	{
 		int currentScore = GetRoadScore (road);

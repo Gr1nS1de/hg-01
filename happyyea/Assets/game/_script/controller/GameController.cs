@@ -127,8 +127,6 @@ public class GameController : Controller
 				{
 					var obstacleDestructible = obstacleView.GetComponent<D2dDestructible> ();
 
-					Destroy (obstacleView);
-
 					Add1Score ();
 
 					obstacleView.gameObject.layer = LayerMask.NameToLayer (GM.instance.destructibleObstaclePieceLayerName);

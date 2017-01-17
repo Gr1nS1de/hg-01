@@ -71,6 +71,6 @@ public class ObstacleController : Controller
 		_obstacleFactoryModel.currentModelsDictionary.Remove (obstacleView);
 
 		//Destroy obstacle wrapper
-		Destroy(obstacleView.gameObject);
+		DestroyImmediate (obstacleView.gameObject);
 	}
 }

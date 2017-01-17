@@ -21,7 +21,7 @@ public class PlayerController : Controller
 
 			case N.GameRoadInited:
 				{
-					PlacePlayerOnRoad ();
+					PlacePlayerCurrentRoad ();
 
 					break;
 				}
@@ -79,26 +79,32 @@ public class PlayerController : Controller
 		playerModel.currentSprite = playerModel.sprites [0];
 	}
 
-	private void PlacePlayerOnRoad()
+	private void PlacePlayerCurrentRoad()
 	{
 		//Sequence sequence = DOTween.Sequence();
-		Vector3[] roadWaypoints = game.model.currentRoadModel.roadTweenPath.GetTween().PathGetDrawPoints();
-
+		Vector3[] roadWaypoints = game.model.currentRoadWaypoints;
+		Debug.Log (roadWaypoints.Length);
 		//game.view.playerSpriteContainerView.transform.position = new Vector2(game.model.currentRoadModel.radius, 0f);
 		game.view.playerSpriteView.transform.localPosition = new Vector3(0, +playerModel.jumpWidth, 0);
 
 		game.view.playerSpriteContainerView.transform.position = game.model.currentRoadModel.roadTweenPath.transform.position;
 
-		Tweener playerPath = game.view.playerSpriteContainerView.transform.DOPath (roadWaypoints, playerModel.speed, PathType.CatmullRom, PathMode.TopDown2D, 10, Color.green)
+		Tweener playerPath = game.view.playerSpriteContainerView.transform.DOPath (roadWaypoints, playerModel.pathDuration, PathType.Linear, PathMode.TopDown2D, 10, Color.green)
 			.SetOptions(true)
 			.SetLookAt(0.01f);
 		playerPath.SetLoops (-1);
 		playerPath.SetEase (Ease.Linear);
+
+
 		playerPath.ForceInit ();
+
+		playerPath.OnWaypointChange ((waypointIndex ) =>
+		{
+			OnPathWaypointChanged(waypointIndex);
+		});
 
 		playerModel.playerPath = playerPath;
 		playerModel.positionState = PlayerPositionState.ON_CIRCLE;
-
 
 		//playerModel.playerPath = game.view.playerSpriteContainerView.transform.DOPath (roadWaypoints, playerModel.speed, PathType.CatmullRom, PathMode.TopDown2D, 10, Color.green);
 		//playerView.transform.DORotate(new Vector3(0,0,-360f), playerModel.speed, RotateMode.FastBeyond360).SetId(Tween.PLAYER_CORE_ROTATION).SetEase(Ease.Linear).SetLoops(-1,LoopType.Incremental);
@@ -147,6 +153,11 @@ public class PlayerController : Controller
 
 		//_gameManager.Add1Point();
 		//FindObjectOfType<CameraManager>().DOShake();
+	}
+
+	private void OnPathWaypointChanged(int waypointIndex)
+	{
+		playerModel.playerPathWPIndex = waypointIndex; 
 	}
 
 	private void OnGameOver()

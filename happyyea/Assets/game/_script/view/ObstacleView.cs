@@ -2,7 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 
-public class ObstacleView : View<Game>
+public class ObstacleView : View
 {
 	public bool 			isVisible				{ get { return _isVisible; } 		private set { _isVisible = value; } }
 	private ObstacleModel	obstacleModel 			{ get { return game.model.obstacleFactoryModel.currentModelsDictionary[this]; } }
@@ -11,27 +11,34 @@ public class ObstacleView : View<Game>
 	[SerializeField]
 	private bool 			_isVisible 	= true;
 
-	public void OnInit(float rotationZ, bool isDown)
+	public void OnInit(Vector3 pathPosition, Quaternion rotation, bool isDownDirection)
 	{
-		StartPlacingObstacle(rotationZ, isDown);
+		PlaceObstacle(pathPosition, rotation, isDownDirection);
 	}
 
-	private void StartPlacingObstacle(float rotationZ, bool isDown)
+	private void PlaceObstacle(Vector3 pathPosition, Quaternion rotation, bool isDownDirection)
 	{
+		transform.rotation = rotation;
 
-		int sign = +1;
+		Vector3 lookDirection = isDownDirection ? -transform.up : transform.up;
 
-		if(isDown)
-			sign = -1;
+		lookDirection.z = pathPosition.z = 5f;
 
-		Vector3 correctLocalPosition = SetCorrectLocalPosition(new Vector3(0,0,rotationZ), isDown);
+		Vector3 correctPosition = pathPosition + Vector3.ClampMagnitude (lookDirection - pathPosition, obstacleSpriteSize.y) * (isDownDirection ? -1 : 1);
+		Vector3	obstacleOutsidePosition = pathPosition + Vector3.ClampMagnitude (pathPosition - lookDirection, obstacleSpriteSize.y * 2f) * (isDownDirection ? 1 : -1);
+
+		if (game.model.currentRoadModel.width / 2f - obstacleSpriteSize.y < 0.0f)
+		{
+			Debug.LogError ("Obstacle [" + transform.name + "] sprite height is bigger than half of current road width.");
+		}
+
+		correctPosition.z = obstacleOutsidePosition.z = 5f;
 
 		gameObject.SetActive(true);
-
 		isVisible = true;
 
-		transform.position = new Vector3(correctLocalPosition.x, correctLocalPosition.y + sign * 0.2f, correctLocalPosition.z);
-		transform.DOMoveY(correctLocalPosition.y, 0.2f).OnComplete(() => {
+		transform.position = obstacleOutsidePosition;
+		transform.DOMove(correctPosition, 0.2f).OnComplete(() => {
 			
 			StopAllCoroutines();
 
@@ -66,18 +73,6 @@ public class ObstacleView : View<Game>
 
 			yield return null;	
 		}
-	}
-
-	public Vector3 SetCorrectLocalPosition(Vector3 rotation, bool isDown)
-	{
-		float spriteHeightOffset = obstacleSpriteSize.y * transform.localScale.y;//*2f;
-		float playerPathElapsedPercentage = game.model.playerModel.playerPath.ElapsedPercentage(false);
-		float forwarpPointPercentage = playerPathElapsedPercentage + 0.1f;
-
-		if (forwarpPointPercentage > 1.0f)
-			forwarpPointPercentage -= 1.0f;
-
-		return game.model.playerModel.playerPath.PathGetPoint(forwarpPointPercentage);
 	}
 
 }
