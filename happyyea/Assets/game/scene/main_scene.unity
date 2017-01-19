@@ -5217,10 +5217,10 @@ MonoBehaviour:
   _currentSprite: {fileID: 0}
   _sprites: []
   _deathDuration: 3
-  _positionState: 0
+  _positionState: 1
   _jumpDuration: 0.2
   _pathDuration: 10
-  _breakForce: 100
+  _breakForce: 50
 --- !u!4 &1578184159
 Transform:
   m_ObjectHideFlags: 0
@@ -5397,7 +5397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6718ec4dd6fca4391a8b62575c017a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gapPercentage: 0.1
+  _gapPercentage: 0.05
 --- !u!114 &1649479573
 MonoBehaviour:
   m_ObjectHideFlags: 0

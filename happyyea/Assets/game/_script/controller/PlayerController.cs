@@ -45,11 +45,7 @@ public class PlayerController : Controller
 							Notify(N.GameRoadChangeEnd);
 						});
 							
-
-					playerModel.particleTrace.transform.SetParent (GM.instance.RoadContainer.transform.GetChild((int)prevRoadAlias - 1));
-					playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
-					playerModel.particleTrace.Pause ();
-					playerModel.particleTrace.simulationSpace = ParticleSystemSimulationSpace.Local;
+					SetParticleTraceActive(false);
 
 					break;
 				}
@@ -61,12 +57,7 @@ public class PlayerController : Controller
 					
 					DOTween.Play (Tween.PLAYER_CONTAINER_MOVE);
 
-					playerModel.particleTrace.transform.SetParent (game.view.playerSpriteView.transform);
-					playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
-					playerModel.particleTrace.Clear ();
-					playerModel.particleTrace.Play ();
-					playerModel.particleTrace.simulationSpace = ParticleSystemSimulationSpace.World;
-
+					SetParticleTraceActive(true);
 					break;
 				}
 
@@ -127,7 +118,7 @@ public class PlayerController : Controller
 		});
 
 		playerModel.playerPath = playerPath;
-		playerModel.positionState = PlayerPositionState.ON_CIRCLE;
+		playerModel.positionState = PlayerPositionState.OUT_CIRCLE;
 
 		//playerModel.playerPath = game.view.playerSpriteContainerView.transform.DOPath (roadWaypoints, playerModel.speed, PathType.CatmullRom, PathMode.TopDown2D, 10, Color.green);
 		//playerView.transform.DORotate(new Vector3(0,0,-360f), playerModel.speed, RotateMode.FastBeyond360).SetId(Tween.PLAYER_CORE_ROTATION).SetEase(Ease.Linear).SetLoops(-1,LoopType.Incremental);
@@ -140,6 +131,9 @@ public class PlayerController : Controller
 
 	private void PlayerJump()
 	{ 
+		if (game.model.gameState == GameState.GAMEOVER)
+			return;
+		
 		Notify (N.PlayerJumpStart);
 
 		switch(playerModel.positionState)
@@ -191,6 +185,25 @@ public class PlayerController : Controller
 
 		Notify(N.DestructibleBreakEntity___, playerModel.playerDestructible, game.model.destructibleModel.playerFtactureCount, collisionPoint);
 
+	}
+
+	private void SetParticleTraceActive(bool isActive)
+	{
+		if (isActive)
+		{
+			playerModel.particleTrace.transform.SetParent (game.view.playerSpriteView.transform);
+			playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
+			playerModel.particleTrace.Clear ();
+			playerModel.particleTrace.Play ();
+			playerModel.particleTrace.simulationSpace = ParticleSystemSimulationSpace.World;
+		}
+		else
+		{
+			playerModel.particleTrace.transform.SetParent (GM.instance.RoadContainer.transform.GetChild((int)game.model.prevRoad - 1));
+			playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
+			playerModel.particleTrace.Pause ();
+			playerModel.particleTrace.simulationSpace = ParticleSystemSimulationSpace.Local;
+		}
 	}
 		
 }

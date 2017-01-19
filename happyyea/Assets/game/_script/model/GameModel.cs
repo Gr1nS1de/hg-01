@@ -16,6 +16,7 @@ public class GameModel : Model
 	public GameState					gameState				{ get { return _gameState; } 		set { _gameState 	= value; } }
 	public int							currentScore			{ get { return _currentScore; } 	set { _currentScore = value; } }
 	public Road							currentRoad				{ get { return _currentRoad;}		set { _prevRoad = _currentRoad; Notify(N.RCResetRoadModelTemplate, _currentRoad); _currentRoad = value; Notify (N.GameRoadChangeStart__, _prevRoad, _currentRoad); } }
+	public Road							prevRoad				{ get { return _prevRoad;}}
 	public RoadModel					currentRoadModel		{ get { return _currentRoadModel			= SearchLocal<RoadModel>(					_currentRoadModel,			typeof(RoadModel).Name); } }
 	public Vector3[]					currentRoadWaypoints	{ get { return game.model.currentRoadModel.roadTweenPath.GetTween ().PathGetDrawPoints ();}}
 

@@ -1708,7 +1708,7 @@ MonoBehaviour:
   - scoreCount: 0
     sprite: {fileID: 0}
   _roadTweenPath: {fileID: 114000014281738738}
-  _pathDuration: 20
+  _pathDuration: 25
 --- !u!114 &114000014059479398
 MonoBehaviour:
   m_ObjectHideFlags: 1
