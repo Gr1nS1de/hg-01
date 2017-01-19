@@ -15,14 +15,20 @@ public class RoadController : Controller
 
 					break;
 				}
+			case N.GameRoadsPlaced:
+				{
+					InitRoads ();
 
-			case N.GameRoadChanged:
+					break;
+				}
+
+			case N.GameRoadChangeEnd:
 				{
 					break;
 				}
 
 		
-			case N.GameOver:
+			case N.GameOver_:
 				{
 				
 					break;
@@ -33,6 +39,16 @@ public class RoadController : Controller
 	private void OnStart()
 	{
 		CommitStaticSprites (game.view.currentRoadView);
+	}
+
+	private void InitRoads()
+	{
+		foreach (RoadView roadView in _roadFactoryModel.roadTemplates)
+		{
+			RoadModel roadModel = roadView.GetComponent<RoadModel> ();
+
+			roadView.OnInit (roadModel);
+		}
 	}
 		
 	private void CommitStaticSprites(RoadView road)

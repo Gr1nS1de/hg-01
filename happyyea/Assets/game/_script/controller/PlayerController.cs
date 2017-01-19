@@ -6,7 +6,6 @@ public class PlayerController : Controller
 {
 	private PlayerModel 	playerModel 		{ get { return game.model.playerModel; } }
 	private PlayerView		playerView			{ get { return game.view.playerView; } } 
-	private PlayerTraceView	playerTraceView		{ get { return game.view.playerTraceView; } }
 
 	public override void OnNotification( string alias, Object target, params object[] data )
 	{
@@ -19,18 +18,33 @@ public class PlayerController : Controller
 					break;
 				}
 
-			case N.GameRoadInited:
+			case N.GameRoadsPlaced:
 				{
-					PlacePlayerCurrentRoad ();
+					game.view.playerSpriteContainerView.transform.position = game.model.currentRoadModel.roadTweenPath.transform.position;
+
+					InitPlayerOnCurrentRoad ();
 
 					break;
 				}
 
-			case N.GameChangeRoad:
+			case N.GameRoadChangeStart__:
 				{
 					var prevRoadAlias = (Road)data [0];
+					var newRoadAlias = (Road)data [1];
+					Vector3 currentRoadPathPoint = (Vector2)System.Array.Find (game.model.roadFactoryModel.roadTemplates, roadView => roadView.GetComponent<RoadModel> ().alias == newRoadAlias).GetComponent<RoadModel> ().roadTweenPath.transform.position;
 
-					DOTween.Pause (Tween.PLAYER_CORE_ROTATION);
+					currentRoadPathPoint.z = game.view.playerSpriteContainerView.transform.position.z;
+
+					DOTween.Kill (Tween.PLAYER_CONTAINER_MOVE);
+
+					game.view.playerSpriteContainerView.transform.DOMove ( 
+						currentRoadPathPoint
+						, 0.5f)
+						.OnComplete(() => 
+						{
+							Notify(N.GameRoadChangeEnd);
+						});
+							
 
 					playerModel.particleTrace.transform.SetParent (GM.instance.RoadContainer.transform.GetChild((int)prevRoadAlias - 1));
 					playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
@@ -40,9 +54,12 @@ public class PlayerController : Controller
 					break;
 				}
 
-			case N.GameRoadChanged:
+			case N.GameRoadChangeEnd:
 				{
-					DOTween.Play (Tween.PLAYER_CORE_ROTATION);
+					//Debug.Log ("Road changed to " + game.model.currentRoad.ToString());
+					InitPlayerOnCurrentRoad ();
+					
+					DOTween.Play (Tween.PLAYER_CONTAINER_MOVE);
 
 					playerModel.particleTrace.transform.SetParent (game.view.playerSpriteView.transform);
 					playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
@@ -60,9 +77,11 @@ public class PlayerController : Controller
 					break;
 				}
 
-			case N.GameOver:
+			case N.GameOver_:
 				{
-					OnGameOver ();
+					Vector2 collisionPoint = (Vector2)data [0];
+
+					OnGameOver (collisionPoint);
 
 					break;
 				}
@@ -79,24 +98,28 @@ public class PlayerController : Controller
 		playerModel.currentSprite = playerModel.sprites [0];
 	}
 
-	private void PlacePlayerCurrentRoad()
+	private void InitPlayerOnCurrentRoad()
 	{
 		//Sequence sequence = DOTween.Sequence();
 		Vector3[] roadWaypoints = game.model.currentRoadWaypoints;
-		Debug.Log (roadWaypoints.Length);
-		//game.view.playerSpriteContainerView.transform.position = new Vector2(game.model.currentRoadModel.radius, 0f);
+
 		game.view.playerSpriteView.transform.localPosition = new Vector3(0, +playerModel.jumpWidth, 0);
 
-		game.view.playerSpriteContainerView.transform.position = game.model.currentRoadModel.roadTweenPath.transform.position;
+		if(playerModel.playerPath != null && playerModel.playerPath.IsActive ())
+			playerModel.playerPath.Kill ();
+
+		//game.view.playerSpriteContainerView.transform.position = game.model.currentRoadModel.roadTweenPath.transform.position;
 
 		Tweener playerPath = game.view.playerSpriteContainerView.transform.DOPath (roadWaypoints, playerModel.pathDuration, PathType.Linear, PathMode.TopDown2D, 10, Color.green)
-			.SetOptions(true)
-			.SetLookAt(0.01f);
+			.SetOptions (true)
+			.SetLookAt (0.01f)
+			.SetId(Tween.PLAYER_CONTAINER_MOVE);
+		
 		playerPath.SetLoops (-1);
 		playerPath.SetEase (Ease.Linear);
-
-
 		playerPath.ForceInit ();
+
+		//playerPath.Goto (0.5f);
 
 		playerPath.OnWaypointChange ((waypointIndex ) =>
 		{
@@ -108,7 +131,7 @@ public class PlayerController : Controller
 
 		//playerModel.playerPath = game.view.playerSpriteContainerView.transform.DOPath (roadWaypoints, playerModel.speed, PathType.CatmullRom, PathMode.TopDown2D, 10, Color.green);
 		//playerView.transform.DORotate(new Vector3(0,0,-360f), playerModel.speed, RotateMode.FastBeyond360).SetId(Tween.PLAYER_CORE_ROTATION).SetEase(Ease.Linear).SetLoops(-1,LoopType.Incremental);
-
+		Debug.Log("Player placed on road");
 		Notify(N.GamePlayerPlacedOnRoad);
 
 		//sequence.Append(playerPath  );
@@ -117,6 +140,8 @@ public class PlayerController : Controller
 
 	private void PlayerJump()
 	{ 
+		Notify (N.PlayerJumpStart);
+
 		switch(playerModel.positionState)
 		{
 			case PlayerPositionState.ON_CIRCLE:
@@ -147,12 +172,8 @@ public class PlayerController : Controller
 
 	private void OnCompleteJump()
 	{
+		Notify (N.PlayerJumpFinish);
 
-		if(DOTween.IsTweening(Camera.main))
-			return;
-
-		//_gameManager.Add1Point();
-		//FindObjectOfType<CameraManager>().DOShake();
 	}
 
 	private void OnPathWaypointChanged(int waypointIndex)
@@ -160,12 +181,16 @@ public class PlayerController : Controller
 		playerModel.playerPathWPIndex = waypointIndex; 
 	}
 
-	private void OnGameOver()
+	private void OnGameOver(Vector2 collisionPoint)
 	{
 		if(game.view.playerSpriteView.GetComponent<Rigidbody2D> ())
 			game.view.playerSpriteView.GetComponent<Rigidbody2D> ().isKinematic = false;
 
-		playerModel.particleTrace.Stop ();
+		playerModel.playerPath.Kill ();		
+		playerModel.particleTrace.gameObject.SetActive (false);
+
+		Notify(N.DestructibleBreakEntity___, playerModel.playerDestructible, game.model.destructibleModel.playerFtactureCount, collisionPoint);
+
 	}
 		
 }

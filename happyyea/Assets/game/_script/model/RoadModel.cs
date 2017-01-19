@@ -11,6 +11,7 @@ public class RoadModel : Model
 	public int					scoreToFinish		{ get { return _scoreToFinish;}}
 	public ItemsScoreData[]		itemsScoreData		{ get { return _itemsScoreData;}}
 	public DOTweenPath			roadTweenPath		{ get { return _roadTweenPath;}}
+	public float				pathDuration		{ get { return _pathDuration;}}
 
 	[SerializeField]
 	private Road				_alias;
@@ -25,7 +26,9 @@ public class RoadModel : Model
 	[SerializeField]
 	private ItemsScoreData[]	_itemsScoreData = new ItemsScoreData[5];
 	[SerializeField]
-	public DOTweenPath			_roadTweenPath;
+	private DOTweenPath			_roadTweenPath;
+	[SerializeField]
+	private float 				_pathDuration;
 }
 	
 [System.Serializable]

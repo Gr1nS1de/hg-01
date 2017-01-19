@@ -36,6 +36,7 @@ public class ObjectsPoolController : Controller
 		Queue<PoolingObject> poolingQueue = objectsPoolModel.poolingQueue;
 
 		yield return null;
+		yield return null;
 
 		while ( true )
 		{
@@ -83,6 +84,7 @@ public class ObjectsPoolController : Controller
 
 			_lastObstaclePoolerViewPosition = forwardPosition;
 
+			yield return null;
 			yield return null;
 		}
 	}

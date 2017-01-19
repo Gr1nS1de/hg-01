@@ -174,9 +174,9 @@ MonoBehaviour:
   HealTex: {fileID: 0}
   Indestructible: 0
   RecordAlphaCount: 1
-  AutoSharpen: 1
+  AutoSharpen: 0
   AutoSplit: 1
-  MinSplitPixels: 5
+  MinSplitPixels: 4
   LocalSplitExpand: 20
   FeatherSplit: 1
   Sharpness: 1

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class CameraController : Controller
 {
@@ -22,6 +23,12 @@ public class CameraController : Controller
 					});
 					break;
 				}
+
+			case N.PlayerJumpFinish:
+				{
+					//ShakeCamera ();
+					break;
+				}
 		}
 	 }
 
@@ -29,4 +36,16 @@ public class CameraController : Controller
 	{
 		game.view.cameraView.OnStart ();
 	}
+
+	/*
+	private void ShakeCamera()
+	{
+		if(DOTween.IsTweening(Camera.main))
+			return;
+		
+		game.view.cameraView.DOShake ();
+		//_gameManager.Add1Point();
+		//FindObjectOfType<CameraManager>().DOShake();
+	}
+*/
 }

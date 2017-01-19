@@ -38,6 +38,7 @@ public class GameController : Controller
 		{
 			case N.GameStart:
 				{
+					//PlayerPrefs.DeleteAll ();
 					game.model.gameState = GameState.READY;
 					OnStart();
 					break;
@@ -50,7 +51,7 @@ public class GameController : Controller
 				}
 
 
-			case N.GamePlayerImpactObstacle:
+			case N.GamePlayerImpactObstacle__:
 				{
 					var obstacleView = (ObstacleView)data [0];
 					var collisionPoint = (Vector2)data [1];
@@ -59,12 +60,12 @@ public class GameController : Controller
 					break;
 				}
 
-			case N.GameChangeRoad:
+			case N.GameRoadChangeStart__:
 				{
 					break;
 				}
 
-			case N.GameOver:
+			case N.GameOver_:
 				{
 					var collisionPoint = (Vector2)data [0];
 
@@ -118,7 +119,7 @@ public class GameController : Controller
 			case ObstacleState.HARD:
 				{
 					//obstacleRenderObject.GetComponent<Rigidbody2D> ().isKinematic = true;
-					Notify(N.GameOver, collisionPoint);
+					Notify(N.GameOver_, collisionPoint);
 
 					break;
 				}
@@ -131,7 +132,7 @@ public class GameController : Controller
 
 					obstacleView.gameObject.layer = LayerMask.NameToLayer (GM.instance.destructibleObstaclePieceLayerName);
 
-					Notify (N.DestructibleBreakEntity, obstacleDestructible, game.model.destructibleModel.destructibleObstacleFractureCount, collisionPoint);
+					Notify (N.DestructibleBreakEntity___, obstacleDestructible, game.model.destructibleModel.destructibleObstacleFractureCount, collisionPoint);
 
 					break;
 				}
@@ -149,16 +150,16 @@ public class GameController : Controller
 
 		//_player.DesactivateTouchControl();
 
-		DOTween.KillAll();
+		//DOTween.KillAll();
 		StopAllCoroutines();
 
 		Utils.SetLastScore(game.model.currentScore);
 
+		playerModel.particleTrace.Stop ();
+
 		//ShowAds();
 
 		//_soundManager.PlayFail();
-
-		Notify(N.DestructibleBreakEntity, playerModel.playerDestructible, game.model.destructibleModel.playerFtactureCount, collisionPoint);
 
 		ui.controller.OnGameOver(() =>
 		{

@@ -66,7 +66,7 @@ public abstract class BaseApplication : Element
 
 	private void InitTweening()
 	{
-		DOTween.KillAll();	
+		//DOTween.KillAll();	
 
 		if (Time.realtimeSinceStartup < 1)
 			DOTween.Init ();

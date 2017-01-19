@@ -43,15 +43,15 @@ public class CameraView : View<Game>
 			yield return 0;
 		}
 	}
-
+	/*
 	public void DOShake()
 	{
 		if(DOTween.IsTweening(cam))
 			return;
 
-		cam.DOOrthoSize(playZoomSize * 1.03f, 0.02f).OnComplete(() => {
-			cam.DOOrthoSize(playZoomSize * 0.97f, 0.04f).OnComplete(() => {
-				cam.DOOrthoSize(playZoomSize, 0.02f).OnComplete(() => {
+		cam.DOOrthoSize(playZoomSize * 1.03f, 0.002f).OnComplete(() => {
+			cam.DOOrthoSize(playZoomSize * 0.97f, 0.004f).OnComplete(() => {
+				cam.DOOrthoSize(playZoomSize, 0.002f).OnComplete(() => {
 					cam.orthographicSize = playZoomSize;
 				});
 				//				cam.DOOrthoSize(orthoSize * 1.03f, 0.04f).OnComplete(() => {
@@ -67,5 +67,5 @@ public class CameraView : View<Game>
 		});
 
 	}
-
+*/
 }

@@ -18,7 +18,7 @@ public class DestructibleController : Controller
 					break;
 				}
 
-			case N.DestructibleBreakEntity:
+			case N.DestructibleBreakEntity___:
 				{
 					var obstacleDestructible = (D2dDestructible)data [0];
 					var fractureCount = (int)data [1];
@@ -35,7 +35,7 @@ public class DestructibleController : Controller
 	private void OnStart()
 	{}
 
-	private void BreakEntity( D2dDestructible destructible, int fractureCount, Vector2 collisionPoint)
+	private void BreakEntity( D2dDestructible destructible, int fractureCount, Vector2 collisionPoint = default(Vector2))
 	{
 		// Store explosion point (used in OnEndSplit)
 		if (collisionPoint == Vector2.zero)
@@ -44,7 +44,10 @@ public class DestructibleController : Controller
 			_destructibleModel.entityBreakPoint = collisionPoint;
 
 		// Register split event
-		destructible.OnEndSplit.AddListener((piecesList)=>{OnEndSplit(destructible, piecesList);});
+		destructible.OnEndSplit.AddListener((piecesList)=>
+		{
+			OnEndSplit(destructible, piecesList);
+		});
 
 		// Split via fracture
 		D2dQuadFracturer.Fracture(destructible, fractureCount, 0.1f);

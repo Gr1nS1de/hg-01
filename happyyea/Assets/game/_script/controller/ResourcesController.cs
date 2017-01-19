@@ -26,7 +26,7 @@ public class ResourcesController : Controller
 				}
 
 			case N.RCResetRoadModelTemplate:
-			case N.GameOver:
+			case N.GameOver_:
 				{
 					ResetCurrentRoadModelToTemplate ();
 					break;

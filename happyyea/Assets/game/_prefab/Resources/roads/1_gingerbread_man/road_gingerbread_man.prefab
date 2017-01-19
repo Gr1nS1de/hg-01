@@ -1295,7 +1295,7 @@ MonoBehaviour:
   _radius: 3
   _width: 0.6
   _segments: 200
-  _scoreToFinish: 1000
+  _scoreToFinish: 300
   _itemsScoreData:
   - scoreCount: 0
     sprite: {fileID: 0}
@@ -1303,11 +1303,12 @@ MonoBehaviour:
     sprite: {fileID: 0}
   - scoreCount: 0
     sprite: {fileID: 0}
-  - scoreCount: 300
+  - scoreCount: 100
     sprite: {fileID: 21300000, guid: c5c4400628dde3e47bf732928262699b, type: 3}
-  - scoreCount: 700
+  - scoreCount: 200
     sprite: {fileID: 21300000, guid: a8e5124fcef46f6489c27524707ff057, type: 3}
   _roadTweenPath: {fileID: 114000013302617918}
+  _pathDuration: 10
 --- !u!114 &114000012646875538
 MonoBehaviour:
   m_ObjectHideFlags: 1

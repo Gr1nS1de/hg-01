@@ -7,17 +7,23 @@ public class RoadView : View<Game>
 	private LineRenderer 	_line;
 	private RoadModel 		_roadModel;
 
-	public void OnStart (RoadModel roadModel)
+	public void OnInit (RoadModel roadModel)
 	{
 		_roadModel = roadModel;
 
+		gameObject.SetActive (true);
+
 		_line = GetComponent<LineRenderer>();
-		_line.useWorldSpace = false;
+		_line.useWorldSpace = true;
+
+		//_roadModel.roadTweenPath.DOPlay ();
+
+		DrawRoad ();
 	}
 
-	public void OnPlayerPlaced()
+	public void DrawRoad()
 	{
-		Vector3[] drawPoints = game.model.playerModel.playerPath.PathGetDrawPoints(); 
+		Vector3[] drawPoints = _roadModel.roadTweenPath.GetTween().PathGetDrawPoints(); 
 		int secondVertexForPerfectClampedLR = 1;
 		int pointsCount = drawPoints.Length + secondVertexForPerfectClampedLR ;
 

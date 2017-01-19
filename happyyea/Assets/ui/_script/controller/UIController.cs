@@ -77,7 +77,7 @@ public class UIController : Controller
 
 			UIMenuModel.canvasGroupStart.alpha = 1;
 
-			DOTween.KillAll();
+			//DOTween.KillAll();
 
 			if(complete!=null)
 				complete();

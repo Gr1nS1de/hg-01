@@ -31,6 +31,22 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!1 &1000010207926740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000010731156862}
+  - 114: {fileID: 114000014281738738}
+  m_Layer: 0
+  m_Name: TweenPath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1000010219537386
 GameObject:
@@ -406,6 +422,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000013412188294}
   m_RootOrder: 0
+--- !u!4 &4000010731156862
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010207926740}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.954, y: -0.524, z: -3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000010976885006}
+  m_RootOrder: 5
 --- !u!4 &4000010976885006
 Transform:
   m_ObjectHideFlags: 1
@@ -422,6 +451,7 @@ Transform:
   - {fileID: 4000012111016632}
   - {fileID: 4000012733141594}
   - {fileID: 4000011189032170}
+  - {fileID: 4000010731156862}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &4000011189032170
@@ -1677,7 +1707,8 @@ MonoBehaviour:
     sprite: {fileID: 0}
   - scoreCount: 0
     sprite: {fileID: 0}
-  _roadTweenPath: {fileID: 0}
+  _roadTweenPath: {fileID: 114000014281738738}
+  _pathDuration: 20
 --- !u!114 &114000014059479398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1726,6 +1757,440 @@ MonoBehaviour:
   meshColliderPositions: []
   meshColliderMesh: {fileID: 0}
   renderLayer: 0
+--- !u!114 &114000014281738738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010207926740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -333801856, guid: aa0b1eebb5db27a419fa4564bbe5c9c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  updateType: 2
+  isSpeedBased: 0
+  hasOnStart: 0
+  hasOnPlay: 0
+  hasOnUpdate: 0
+  hasOnStepComplete: 0
+  hasOnComplete: 0
+  hasOnTweenCreated: 0
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onStepComplete:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  onTweenCreated:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  delay: 0
+  duration: 10
+  easeType: 1
+  easeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  loops: -1
+  id: 
+  loopType: 0
+  orientType: 0
+  lookAtTransform: {fileID: 0}
+  lookAtPosition: {x: 0, y: 0, z: 0}
+  lookAhead: 0.01
+  autoPlay: 0
+  autoKill: 1
+  relative: 1
+  isLocal: 0
+  isClosedPath: 1
+  pathResolution: 20
+  pathMode: 2
+  lockRotation: 0
+  assignForwardAndUp: 0
+  forwardDirection: {x: 0, y: 0, z: 1}
+  upDirection: {x: 0, y: 1, z: 0}
+  wps:
+  - {x: 1.4091182, y: -1.6559367, z: 7}
+  - {x: 0.71411824, y: -2.8955226, z: 7}
+  - {x: 0.8003206, y: -5.0584555, z: 7}
+  - {x: -1.9545745, y: -5.6972275, z: 7}
+  - {x: -3.6931827, y: -3.4902527, z: 7}
+  - {x: -2.7488146, y: -1.3733879, z: 7}
+  - {x: -5.12119, y: -0.39926386, z: 7}
+  - {x: -3.1293845, y: 1.2447455, z: 7}
+  - {x: -1.7200744, y: 2.497334, z: 7}
+  - {x: -0.23318851, y: 3.486299, z: 7}
+  - {x: 3.7046683, y: 5.703997, z: 7}
+  - {x: 9.017986, y: 3.03608, z: 7}
+  fullWps: []
+  path:
+    wpLengths:
+    - 0
+    - 1.924485
+    - 1.4468677
+    - 2.2245545
+    - 2.9187334
+    - 2.8962054
+    - 2.3912876
+    - 2.6291225
+    - 2.6323848
+    - 1.8860214
+    - 1.7876387
+    - 4.6086435
+    - 6.1860924
+    - 7.1194024
+    type: 1
+    subdivisionsXSegment: 10
+    subdivisions: 140
+    wps:
+    - {x: 2.954, y: -0.524, z: 7}
+    - {x: 1.4091182, y: -1.6559367, z: 7}
+    - {x: 0.71411824, y: -2.8955226, z: 7}
+    - {x: 0.8003206, y: -5.0584555, z: 7}
+    - {x: -1.9545745, y: -5.6972275, z: 7}
+    - {x: -3.6931827, y: -3.4902527, z: 7}
+    - {x: -2.7488146, y: -1.3733879, z: 7}
+    - {x: -5.12119, y: -0.39926386, z: 7}
+    - {x: -3.1293845, y: 1.2447455, z: 7}
+    - {x: -1.7200744, y: 2.497334, z: 7}
+    - {x: -0.23318851, y: 3.486299, z: 7}
+    - {x: 3.7046683, y: 5.703997, z: 7}
+    - {x: 9.017986, y: 3.03608, z: 7}
+    - {x: 2.954, y: -0.524, z: 7}
+    controlPoints:
+    - a: {x: 9.017986, y: 3.03608, z: 7}
+      b: {x: 0, y: 0, z: 0}
+    - a: {x: 1.4091182, y: -1.6559367, z: 7}
+      b: {x: 0, y: 0, z: 0}
+    length: 40.656578
+    isFinalized: 1
+    timesTable:
+    - 0.007142857
+    - 0.014285714
+    - 0.021428572
+    - 0.028571429
+    - 0.035714287
+    - 0.042857144
+    - 0.05
+    - 0.057142857
+    - 0.06428572
+    - 0.071428575
+    - 0.07857143
+    - 0.08571429
+    - 0.092857145
+    - 0.1
+    - 0.10714286
+    - 0.114285715
+    - 0.12142857
+    - 0.12857144
+    - 0.13571429
+    - 0.14285715
+    - 0.15
+    - 0.15714286
+    - 0.16428572
+    - 0.17142858
+    - 0.17857143
+    - 0.18571429
+    - 0.19285715
+    - 0.2
+    - 0.20714286
+    - 0.21428572
+    - 0.22142857
+    - 0.22857143
+    - 0.23571429
+    - 0.24285714
+    - 0.25
+    - 0.25714287
+    - 0.2642857
+    - 0.27142859
+    - 0.27857143
+    - 0.2857143
+    - 0.29285714
+    - 0.3
+    - 0.30714285
+    - 0.31428573
+    - 0.32142857
+    - 0.32857144
+    - 0.33571428
+    - 0.34285715
+    - 0.35
+    - 0.35714287
+    - 0.3642857
+    - 0.37142858
+    - 0.37857142
+    - 0.3857143
+    - 0.39285713
+    - 0.4
+    - 0.40714285
+    - 0.41428572
+    - 0.42142856
+    - 0.42857143
+    - 0.43571427
+    - 0.44285715
+    - 0.45
+    - 0.45714286
+    - 0.46428573
+    - 0.47142857
+    - 0.47857144
+    - 0.4857143
+    - 0.49285716
+    - 0.5
+    - 0.50714284
+    - 0.51428574
+    - 0.5214286
+    - 0.5285714
+    - 0.53571427
+    - 0.54285717
+    - 0.55
+    - 0.55714285
+    - 0.5642857
+    - 0.5714286
+    - 0.57857144
+    - 0.5857143
+    - 0.5928571
+    - 0.6
+    - 0.60714287
+    - 0.6142857
+    - 0.62142855
+    - 0.62857145
+    - 0.6357143
+    - 0.64285713
+    - 0.65
+    - 0.6571429
+    - 0.6642857
+    - 0.67142856
+    - 0.6785714
+    - 0.6857143
+    - 0.69285715
+    - 0.7
+    - 0.7071429
+    - 0.71428573
+    - 0.7214286
+    - 0.7285714
+    - 0.7357143
+    - 0.74285716
+    - 0.75
+    - 0.75714284
+    - 0.76428574
+    - 0.7714286
+    - 0.7785714
+    - 0.78571427
+    - 0.79285717
+    - 0.8
+    - 0.80714285
+    - 0.8142857
+    - 0.8214286
+    - 0.82857144
+    - 0.8357143
+    - 0.8428571
+    - 0.85
+    - 0.85714287
+    - 0.8642857
+    - 0.87142855
+    - 0.87857145
+    - 0.8857143
+    - 0.89285713
+    - 0.9
+    - 0.9071429
+    - 0.9142857
+    - 0.92142856
+    - 0.92857146
+    - 0.9357143
+    - 0.94285715
+    - 0.95
+    - 0.9571429
+    - 0.96428573
+    - 0.9714286
+    - 0.9785714
+    - 0.9857143
+    - 0.99285716
+    - 1
+    lengthsTable:
+    - 0.37553844
+    - 0.6792181
+    - 0.9217521
+    - 1.1138811
+    - 1.2663971
+    - 1.3901834
+    - 1.4962236
+    - 1.59552
+    - 1.6989199
+    - 1.8170358
+    - 1.9591845
+    - 2.1039035
+    - 2.2407074
+    - 2.3712907
+    - 2.4974885
+    - 2.6213117
+    - 2.7449625
+    - 2.8708174
+    - 3.001382
+    - 3.1392243
+    - 3.2869093
+    - 3.4477558
+    - 3.6307552
+    - 3.8362591
+    - 4.0590153
+    - 4.2919855
+    - 4.5275254
+    - 4.7581267
+    - 4.9771557
+    - 5.1799793
+    - 5.365982
+    - 5.5418887
+    - 5.729794
+    - 5.9540653
+    - 6.210904
+    - 6.493152
+    - 6.792754
+    - 7.1013136
+    - 7.410386
+    - 7.711741
+    - 7.9976535
+    - 8.261418
+    - 8.498306
+    - 8.728548
+    - 8.980918
+    - 9.252981
+    - 9.540106
+    - 9.836532
+    - 10.135869
+    - 10.431412
+    - 10.716343
+    - 10.9839525
+    - 11.227901
+    - 11.443036
+    - 11.648737
+    - 11.869925
+    - 12.110542
+    - 12.366277
+    - 12.628734
+    - 12.887743
+    - 13.132741
+    - 13.3541155
+    - 13.545479
+    - 13.7090025
+    - 13.865497
+    - 14.053414
+    - 14.288819
+    - 14.565594
+    - 14.870323
+    - 15.187049
+    - 15.498918
+    - 15.7890005
+    - 16.041136
+    - 16.241877
+    - 16.3876
+    - 16.510786
+    - 16.661552
+    - 16.85481
+    - 17.088438
+    - 17.354513
+    - 17.643026
+    - 17.94312
+    - 18.24356
+    - 18.533007
+    - 18.800196
+    - 19.034254
+    - 19.238375
+    - 19.432278
+    - 19.617775
+    - 19.796267
+    - 19.969133
+    - 20.137745
+    - 20.303473
+    - 20.467705
+    - 20.631857
+    - 20.797388
+    - 20.965714
+    - 21.122766
+    - 21.262117
+    - 21.390478
+    - 21.514582
+    - 21.641186
+    - 21.77707
+    - 21.92901
+    - 22.103785
+    - 22.308153
+    - 22.548868
+    - 22.833097
+    - 23.170382
+    - 23.555735
+    - 23.978584
+    - 24.427687
+    - 24.89195
+    - 25.361038
+    - 25.826044
+    - 26.280422
+    - 26.721376
+    - 27.151726
+    - 27.59833
+    - 28.144852
+    - 28.777473
+    - 29.466856
+    - 30.182888
+    - 30.895367
+    - 31.574562
+    - 32.191956
+    - 32.721924
+    - 33.146385
+    - 33.47055
+    - 33.785545
+    - 34.231087
+    - 34.816395
+    - 35.516983
+    - 36.299866
+    - 37.129078
+    - 37.967434
+    - 38.777187
+    - 39.52039
+    - 40.159206
+    - 40.656578
+  inspectorMode: 0
+  pathType: 1
+  handlesType: 0
+  livePreview: 1
+  handlesDrawMode: 0
+  perspectiveHandleSize: 0.5
+  showIndexes: 1
+  showWpLength: 0
+  pathColor: {r: 0, g: 0, b: 0, a: 0.5}
+  lastSrcPosition: {x: 2.954, y: -0.524, z: 7}
+  wpsDropdown: 1
 --- !u!120 &120000011800057780
 LineRenderer:
   m_ObjectHideFlags: 1

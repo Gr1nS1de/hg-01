@@ -3,7 +3,8 @@ using System.Collections;
 
 public enum Tween
 {
-	PLAYER_CORE_ROTATION
+	PLAYER_CONTAINER_MOVE,
+	ROADS_PATH
 }
 
 public class TweenManager : MonoBehaviour
