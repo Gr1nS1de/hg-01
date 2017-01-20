@@ -105,7 +105,7 @@ public class ObstacleController : Controller
 
 		recyclableDictionary[obstacleModel.state].Add (obstacleView);
 
-		obstacleView.gameObject.SetActive (false);
+		obstacleView.transform.parent.gameObject.SetActive (false);
 	}
 
 	private void DeleteObstacle(ObstacleView obstacleView)
@@ -117,6 +117,6 @@ public class ObstacleController : Controller
 		_obstacleFactoryModel.currentModelsDictionary.Remove (obstacleView);
 
 		//Destroy obstacle wrapper
-		DestroyImmediate (obstacleView.gameObject);
+		DestroyImmediate (obstacleView.transform.parent.gameObject);
 	}
 }

@@ -31,10 +31,29 @@ public class ObjectsPoolController : Controller
 		StartCoroutine( ObjectsPoolingRoutine() );
 	}
 
+	public IEnumerator MovePoolerViewRoutine()
+	{
+		objectsPoolModel.gapPercentage = 1.884f / game.model.currentRoadModel.roadTweenPath.GetTween ().PathLength ();
+
+		while (true)
+		{
+			Vector3 poolerPosition = objectsPoolView.transform.position;
+
+			objectsPoolModel.poolerPositionDelta = poolerPosition - _lastObstaclePoolerViewPosition;
+
+			_lastObstaclePoolerViewPosition = poolerPosition;
+
+			objectsPoolView.UpdateMovePooler ();
+
+			yield return null;
+		}
+	}
+
 	private IEnumerator ObjectsPoolingRoutine()
 	{
 		Queue<PoolingObject> poolingQueue = objectsPoolModel.poolingQueue;
 
+		//wait before move`1asqzx
 		yield return null;
 		yield return null;
 
@@ -54,6 +73,7 @@ public class ObjectsPoolController : Controller
 					{
 						ObstacleView obstacleView = (ObstacleView)poolingObject.poolingObject;
 
+
 						PoolObstacle (obstacleView);
 
 						yield return new WaitForSeconds( Random.Range( 0.20f, 0.5f ) );
@@ -62,30 +82,6 @@ public class ObjectsPoolController : Controller
 					}
 			}
 					
-		}
-	}
-
-	private IEnumerator MovePoolerViewRoutine()
-	{
-		while (true)
-		{
-			//float spriteHeightOffset = obstacleSpriteSize.y * transform.localScale.y;//*2f;
-			float playerPathElapsedPercentage = game.model.playerModel.playerPath.ElapsedPercentage(false);
-			float forwarpPointPercentage = playerPathElapsedPercentage + objectsPoolModel.gapPercentage;
-
-			if (forwarpPointPercentage > 1.0f)
-				forwarpPointPercentage -= 1.0f;
-
-			Vector3 forwardPosition = game.model.playerModel.playerPath.PathGetPoint(forwarpPointPercentage);
-
-			objectsPoolView.transform.position = forwardPosition;
-
-			objectsPoolModel.poolerPositionDelta = forwardPosition - _lastObstaclePoolerViewPosition;
-
-			_lastObstaclePoolerViewPosition = forwardPosition;
-
-			yield return null;
-			yield return null;
 		}
 	}
 

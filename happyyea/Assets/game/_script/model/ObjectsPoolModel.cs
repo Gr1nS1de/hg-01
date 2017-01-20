@@ -16,12 +16,11 @@ public class PoolingObject
 public class ObjectsPoolModel : Model
 {
 	public Queue<PoolingObject>		poolingQueue		{ get { return _poolingList; } }
-	public float					gapPercentage		{ get { return _gapPercentage;}}
+	public float					gapPercentage		{ get { return _gapPercentage;} set { _gapPercentage = value; }}
 	public Vector3					poolerPositionDelta	{ get { return _poolerPositionDelta;} set { _poolerPositionDelta = value;}}
 
 	private Queue<PoolingObject> 	_poolingList 	= new Queue<PoolingObject>();
-	[SerializeField]
-	private float					_gapPercentage = 0.1f;
+	private float					_gapPercentage;
 	private Vector3					_poolerPositionDelta;
 }
 

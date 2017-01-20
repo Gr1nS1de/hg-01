@@ -181,7 +181,7 @@ public class PlayerController : Controller
 			game.view.playerSpriteView.GetComponent<Rigidbody2D> ().isKinematic = false;
 
 		playerModel.playerPath.Kill ();		
-		playerModel.particleTrace.gameObject.SetActive (false);
+		playerModel.particleTrace.transform.SetParent (game.view.playerSpriteContainerView.transform);
 
 		Notify(N.DestructibleBreakEntity___, playerModel.playerDestructible, game.model.destructibleModel.playerFtactureCount, collisionPoint);
 

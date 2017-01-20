@@ -105,13 +105,21 @@ public class ObstacleFactoryController : Controller
 		var obstacleTemplatesDictionary = obstacleFactoryModel.templatesByStateDictionary;
 		int randomInstanceIndex = UnityEngine.Random.Range( 0, obstacleTemplatesDictionary[obstacleState].Length );
 		ObstacleView obstacleRandomTemplate = obstacleTemplatesDictionary[obstacleState][randomInstanceIndex];
-
+		GameObject obstacleWrapper = new GameObject ();
 		ObstacleView instanceObstacle = Instantiate( obstacleRandomTemplate ) as ObstacleView;
+		GameObject spriteForVisible = CreateSpriteForVisibility ();
+		ObstacleModel obstacleModel = instanceObstacle.GetComponent<ObstacleModel> ();
+		ObstacleModel obstacleModelCopy = obstacleFactoryModel.gameObject.AddComponent<ObstacleModel>();
+
+		obstacleWrapper.transform.SetParent (obstacleFactoryModel.obstaclesDynamicContainer.transform);
+		instanceObstacle.transform.SetParent (obstacleWrapper.transform);
+		spriteForVisible.transform.SetParent (obstacleWrapper.transform);
+
+		instanceObstacle.transform.localPosition = Vector3.zero;
+		instanceObstacle.transform.localRotation = Quaternion.Euler (Vector3.zero);
+		spriteForVisible.transform.localPosition = Vector3.zero;
 
 		#region storing obstacle model copy to dictionary
-		ObstacleModel obstacleModel = instanceObstacle.GetComponent<ObstacleModel> ();
-
-		ObstacleModel obstacleModelCopy = obstacleFactoryModel.gameObject.AddComponent<ObstacleModel>();
 		obstacleModelCopy.GetCopyOf<ObstacleModel> (obstacleModel);
 
 		obstacleFactoryModel.currentModelsDictionary.Add (instanceObstacle, obstacleModelCopy);
@@ -119,20 +127,10 @@ public class ObstacleFactoryController : Controller
 		Destroy (obstacleModel);
 		#endregion
 
-		instanceObstacle.transform.SetParent (obstacleFactoryModel.obstaclesDynamicContainer.transform);
-
-		#region create sprite renderer object for checking visibility of obstacle by camera.
-		GameObject spriteForVisible = CreateSpriteForVisibility ();
-
-		spriteForVisible.transform.SetParent (instanceObstacle.transform);
-		spriteForVisible.transform.localPosition = Vector3.zero;
-
 		obstacleModelCopy.spriteForVisible = spriteForVisible.GetComponent<SpriteRenderer>();
-		#endregion
 
 		return instanceObstacle;
 	}
-
 
 	private GameObject CreateSpriteForVisibility()
 	{
