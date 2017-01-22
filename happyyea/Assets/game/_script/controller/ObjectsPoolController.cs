@@ -9,6 +9,7 @@ public class ObjectsPoolController : Controller
 	public ObjectsPoolView	objectsPoolView		{ get { return game.view.objectsPoolView;}}
 
 	private Vector3			_lastObstaclePoolerViewPosition;
+	private float 			_desirableGapLength = 1.884f;
 
 	public override void OnNotification (string alias, Object target, params object[] data)
 	{
@@ -33,7 +34,7 @@ public class ObjectsPoolController : Controller
 
 	public IEnumerator MovePoolerViewRoutine()
 	{
-		objectsPoolModel.gapPercentage = 1.884f / game.model.currentRoadModel.roadTweenPath.GetTween ().PathLength ();
+		objectsPoolModel.gapPercentage = _desirableGapLength / game.model.currentRoadModel.roadTweenPath.GetTween ().PathLength ();
 
 		while (true)
 		{

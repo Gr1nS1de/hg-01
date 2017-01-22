@@ -175,6 +175,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 33000012005160044, guid: 6e769aef374434a39a4fb080ae057de9,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6e769aef374434a39a4fb080ae057de9, type: 2}
   m_IsPrefabParent: 0
@@ -5397,7 +5402,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6718ec4dd6fca4391a8b62575c017a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gapPercentage: 0.05
 --- !u!114 &1649479573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5613,6 +5617,30 @@ Prefab:
         type: 2}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000010052536390, guid: 07f777c8d4240446abee8be99720be30, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010936503026, guid: 07f777c8d4240446abee8be99720be30,
+        type: 2}
+      propertyPath: _scale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010936503026, guid: 07f777c8d4240446abee8be99720be30,
+        type: 2}
+      propertyPath: _scale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010650963562, guid: 07f777c8d4240446abee8be99720be30,
+        type: 2}
+      propertyPath: _scale.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010650963562, guid: 07f777c8d4240446abee8be99720be30,
+        type: 2}
+      propertyPath: _scale.y
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 07f777c8d4240446abee8be99720be30, type: 2}

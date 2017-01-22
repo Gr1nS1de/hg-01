@@ -35,6 +35,9 @@ public class ObstacleView : View
 
 		isVisible = true;
 
+		//Reset position to outside.
+		transform.localPosition += new Vector3 (0f, -obstacleSpriteSize.y * 2f, 0f );
+
 		transform.DOLocalMoveY(-obstacleSpriteSize.y, 0.2f).OnComplete(() => {
 			StopAllCoroutines();
 

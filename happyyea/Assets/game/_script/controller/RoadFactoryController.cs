@@ -18,16 +18,6 @@ public class RoadFactoryController : Controller
 					break;
 				}
 
-			case N.GameRoadChangeStart__:
-				{
-					var prevRoadAlias = (Road)data [0];
-					var newRoadAlias = (Road)data [1];
-
-					ChangeCurrentRoad (newRoadAlias);
-					
-					break;
-				}
-
 			case N.GamePlayerPlacedOnRoad:
 				{
 					//game.view.currentRoadView.OnPlayerPlaced ();
@@ -70,26 +60,6 @@ public class RoadFactoryController : Controller
 
 		return currentGameRoadModelCopy;
 	}
-
-	private void ChangeCurrentRoad(Road roadAlias)
-	{
-		RoadModel currentGameRoadModelCopy = null;
-		RoadView roadView = System.Array.Find (_roadFactoryModel.roadTemplates, rView => rView.GetComponent<RoadModel> ().alias == roadAlias);
-		RoadModel roadModel = roadView.GetComponent<RoadModel> ();
-
-		currentGameRoadModelCopy = roadModel.GetCopyOf<RoadModel> (roadModel);
-
-		Destroy (roadModel);
-		   
-		game.model.currentRoadModel.GetCopyOf<RoadModel>(currentGameRoadModelCopy);
-
-		/*
-		GM.instance.RoadContainer.transform.DOMoveX (-(_roadFactoryModel.roadsGapLength * ( (int)game.model.currentRoad - 1)), 0.5f)
-			.OnComplete(() => 
-			{
-				Notify(N.GameRoadChanged);
-			});
-			*/
-	}
+		
 }
 	

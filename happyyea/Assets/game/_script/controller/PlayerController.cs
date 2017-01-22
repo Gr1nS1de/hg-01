@@ -192,7 +192,7 @@ public class PlayerController : Controller
 		if (isActive)
 		{
 			playerModel.particleTrace.transform.SetParent (game.view.playerSpriteView.transform);
-			playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
+			playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 5f);
 			playerModel.particleTrace.Clear ();
 			playerModel.particleTrace.Play ();
 			playerModel.particleTrace.simulationSpace = ParticleSystemSimulationSpace.World;
@@ -200,7 +200,7 @@ public class PlayerController : Controller
 		else
 		{
 			playerModel.particleTrace.transform.SetParent (GM.instance.RoadContainer.transform.GetChild((int)game.model.prevRoad - 1));
-			playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 15f);
+			playerModel.particleTrace.transform.localPosition = new Vector3(0f, 0f, 5f);
 			playerModel.particleTrace.Pause ();
 			playerModel.particleTrace.simulationSpace = ParticleSystemSimulationSpace.Local;
 		}

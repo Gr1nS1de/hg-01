@@ -15,6 +15,17 @@ public class RoadController : Controller
 
 					break;
 				}
+
+			case N.GameRoadChangeStart__:
+				{
+					var prevRoadAlias = (Road)data [0];
+					var newRoadAlias = (Road)data [1];
+
+					ChangeCurrentRoad (newRoadAlias);
+
+					break;
+				}
+
 			case N.GameRoadsPlaced:
 				{
 					InitRoads ();
@@ -70,13 +81,15 @@ public class RoadController : Controller
 			batchedSprite.spriteCollection = roadSprite.Collection;
 			batchedSprite.spriteId = roadSprite.spriteId;
 
-			Vector3 batchedSpritePosition = roadSprite.transform.position;
+			Vector3 batchedSpritePosition = new Vector3( roadSprite.transform.localPosition.x, roadSprite.transform.localPosition.y, roadSprite.transform.position.z - 10f);
 			Vector3 batchedSpriteScale = roadSprite.scale;
 			Quaternion batchedSpriteRotation = roadSprite.transform.rotation;
+			Color batchedSpriteColor = roadSprite.color;
 
 			batchedSprite.position = batchedSpritePosition;
 			batchedSprite.rotation = batchedSpriteRotation;
 			batchedSprite.baseScale = batchedSpriteScale;
+			batchedSprite.color = batchedSpriteColor;
 
 			staticBatcher.batchedSprites[counter] = batchedSprite;
 
@@ -92,5 +105,28 @@ public class RoadController : Controller
 		staticBatcher.UpdateMatrices ();
 
 		staticBatcher.Build();
+	}
+
+	private void ChangeCurrentRoad(Road roadAlias)
+	{
+		RoadModel currentGameRoadModelCopy = null;
+		RoadView roadView = System.Array.Find (_roadFactoryModel.roadTemplates, rView => rView.GetComponent<RoadModel> ().alias == roadAlias);
+		RoadModel roadModel = roadView.GetComponent<RoadModel> ();
+
+		currentGameRoadModelCopy = roadModel.GetCopyOf<RoadModel> (roadModel);
+
+		Destroy (roadModel);
+
+		game.model.currentRoadModel.GetCopyOf<RoadModel>(currentGameRoadModelCopy);
+
+		CommitStaticSprites(roadView);
+
+		/*
+		GM.instance.RoadContainer.transform.DOMoveX (-(_roadFactoryModel.roadsGapLength * ( (int)game.model.currentRoad - 1)), 0.5f)
+			.OnComplete(() => 
+			{
+				Notify(N.GameRoadChanged);
+			});
+			*/
 	}
 }

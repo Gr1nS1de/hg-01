@@ -119,8 +119,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012004445708}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.026654338, w: -0.99964476}
+  m_LocalPosition: {x: 0.053635273, y: 3.017413, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -286,7 +286,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Destructible2D.D2dDestructibleListEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  MainTex: {fileID: 0}
+  MainTex: {fileID: 2800000, guid: 50198a680980045a5ab81d30d06297a2, type: 3}
   DensityTex: {fileID: 0}
   HealTex: {fileID: 0}
   Indestructible: 0
@@ -303,26 +303,26 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0
-    height: 0
+    width: 1
+    height: 1
   originalRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
+    x: -0.12
+    y: -0.12
+    width: 0.24
+    height: 0.24
   alphaRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
-  alphaWidth: 0
-  alphaHeight: 0
-  alphaCount: 0
-  originalAlphaCount: 0
-  alphaData: 
-  alphaScale: {x: 0, y: 0}
+    x: -0.12
+    y: -0.12
+    width: 0.24
+    height: 0.24
+  alphaWidth: 24
+  alphaHeight: 24
+  alphaCount: 312
+  originalAlphaCount: 312
+  alphaData: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000077cceeffffeecc77000000000000000000000000000077eeffffffffffffffffff770000000000000000000000bbffffffffffffffffffffffffbb000000000000000000bbffffffffffffffffffffffffffffbb0000000000000077ffffffffffffffffffffffffffffffff77000000000000ffffffffffffffffffffffffffffffffffff000000000077ffffffffffffffffffffffffffffffffffff7700000000ccffffffffffffffffffffffffffffffffffffdd00000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff00000000ffffffffffffffffffffffffffffffffffffffff00000000eeffffffffffffffffffffffffffffffffffffee00000000bbffffffffffffffffffffffffffffffffffffbb0000000044ffffffffffffffffffffffffffffffffffff440000000000ddffffffffffffffffffffffffffffffffdd00000000000022ffffffffffffffffffffffffffffffff330000000000000066ffffffffffffffffffffffffffff6600000000000000000055ffffffffffffffffffffffff66000000000000000000000022bbffffffffffffffffbb2200000000000000000000000000004499bbeeeeaa99440000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  alphaScale: {x: 1, y: 1}
   alphaOffset: {x: 0, y: 0}
 --- !u!114 &114000014229313218
 MonoBehaviour:
@@ -396,7 +396,7 @@ ParticleSystem:
   moveWithTransform: 0
   autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: -950015757
+  randomSeed: -1753067030
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -562,7 +562,7 @@ ParticleSystem:
       maxColor: {r: 0.50980395, g: 0.7372549, b: 0.9647059, a: 1}
       minMaxState: 0
     startSize:
-      scalar: 0.22
+      scalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -578,7 +578,7 @@ ParticleSystem:
         serializedVersion: 2
         m_Curve:
         - time: 0
-          value: 0.6818182
+          value: 0.8333333
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -2140,9 +2140,9 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012598850590}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0, z: 0.0000002644956, w: -1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 224000014209174286}
@@ -2151,7 +2151,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 0.24, y: 0.24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000011398287798
@@ -2161,7 +2161,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010083882762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 15}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
